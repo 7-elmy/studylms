@@ -181,7 +181,7 @@ export default function MainSlider() {
         className="mySwiper relative h-[100vh] w-full !bg-[#2222]"
       >
         <SwiperSlide className="h-[100vh] w-full pt-12  flex flex-col items-center justify-center ">
-          <div className="text-white flex justify-center items-center h-[60vh] bg-[#2222] w-full">
+          <div className="text-white flex justify-center items-center  bg-[#2222] w-full">
             <div className='w-[80%] space-y-4 p-6'>
               <h2 className="text-3xl hidden md:block   md:text-6xl font-bold md:ps-4 text-left animate-title">
                 Education & Training <br/>
@@ -208,7 +208,7 @@ export default function MainSlider() {
           </div>
         </SwiperSlide>
         <SwiperSlide className="h-[100vh] w-full pt-12  flex flex-col items-center justify-center ">
-          <div className="text-white flex justify-center items-center h-[60vh] bg-[#22222] w-full">
+          <div className="text-white flex justify-center items-center  bg-[#22222] w-full">
             <div className='w-[80%] space-y-4 p-6'>
                    <h2 className="text-3xl hidden md:block   md:text-6xl font-bold md:ps-4 text-left animate-title">
                 Education & Training <br/>
@@ -235,7 +235,7 @@ export default function MainSlider() {
           </div>
         </SwiperSlide>
         <SwiperSlide className="h-[100vh] w-full pt-12  flex flex-col items-center justify-center ">
-          <div className="text-white flex justify-center items-center h-[60vh] bg-[#22222] w-full">
+          <div className="text-white flex justify-center items-center  bg-[#22222] w-full">
             <div className='w-[80%] space-y-4 p-6'>
                     <h2 className="text-3xl hidden md:block   md:text-6xl font-bold md:ps-4 text-left animate-title">
                 Education & Training <br/>
