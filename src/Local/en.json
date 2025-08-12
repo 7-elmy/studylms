@@ -1,0 +1,39 @@
+{
+  "navbar": {
+    "home": "Home",
+    "courses": "Courses", 
+    "events": "Events",
+    "pages": "Pages",
+    "blog": "Blog",
+    "shop": "Shop",
+    "contact": "Contact",
+    "search_placeholder": "Search...",
+    "submenu": {
+      "home_1": "Home 1",
+      "home_2": "Home 2", 
+      "home_3": "Home 3",
+      "course_list": "Course List",
+      "course_single": "Course Single",
+      "event_list": "Event List",
+      "event_single": "Event Single",
+      "404_page": "404 Page",
+      "about_us": "About Us",
+      "forum_page": "Forum Page",
+      "forum_single": "Forum Single",
+      "instructors_list": "Instructors List",
+      "instructors_single": "Instructors Single",
+      "login_register": "Login & Register",
+      "blog_list": "Blog List",
+      "blog_single": "Blog Single",
+      "shop_list": "Shop List",
+      "shop_single": "Shop Single",
+      "cart_page": "Cart Page",
+      "checkout": "Checkout"
+    }
+  },
+  "language_modal": {
+    "title": "Language Changed",
+    "description": "You must log in again to apply language changes.",
+    "ok_button": "OK"
+  }
+}

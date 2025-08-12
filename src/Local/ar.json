@@ -1,0 +1,39 @@
+{
+  "navbar": {
+    "home": "الرئيسية",
+    "courses": "الدورات",
+    "events": "الفعاليات", 
+    "pages": "الصفحات",
+    "blog": "المدونة",
+    "shop": "المتجر",
+    "contact": "اتصل بنا",
+    "search_placeholder": "بحث...",
+    "submenu": {
+      "home_1": "الرئيسية 1",
+      "home_2": "الرئيسية 2",
+      "home_3": "الرئيسية 3",
+      "course_list": "قائمة الدورات",
+      "course_single": "دورة واحدة",
+      "event_list": "قائمة الفعاليات",
+      "event_single": "فعالية واحدة",
+      "404_page": "صفحة 404",
+      "about_us": "من نحن",
+      "forum_page": "صفحة المنتدى",
+      "forum_single": "منتدى واحد",
+      "instructors_list": "قائمة المدربين",
+      "instructors_single": "مدرب واحد",
+      "login_register": "تسجيل الدخول والتسجيل",
+      "blog_list": "قائمة المدونة",
+      "blog_single": "مقال واحد",
+      "shop_list": "قائمة المتجر",
+      "shop_single": "منتج واحد",
+      "cart_page": "صفحة السلة",
+      "checkout": "الدفع"
+    }
+  },
+  "language_modal": {
+    "title": "تم تغيير اللغة",
+    "description": "يجب عليك تسجيل الدخول مرة أخرى لتطبيق تغييرات اللغة.",
+    "ok_button": "موافق"
+  }
+}
