@@ -46,12 +46,12 @@ export default function Home() {
     <CourseSlider/>
     </div>
 
-    <Statistics/>
+    {/* <Statistics/> */}
 
     <UpcomingEvents/>
 
 
-    <CourseSearch/>
+    {/* <CourseSearch/> */}
 
     <CoachingTrainingPage/>
 
