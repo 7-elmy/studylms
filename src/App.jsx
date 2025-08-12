@@ -3,7 +3,7 @@ import { useState } from 'react'
 import './App.css'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import AuthLayout from './Layouts/AuthLayout'
-import LoginPage from './Pages/Auth/Login/login'
+ import LoginPage from './Pages/Auth/Login/Login'
 
 import RegisterPage from './Pages/Auth/Register/Register'
 import { useTranslation } from 'react-i18next'

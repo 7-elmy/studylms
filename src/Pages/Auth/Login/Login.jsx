@@ -1,40 +1,4 @@
-// import React from 'react'
 
-// export default function LoginPage() {
-//   return (
-//     <div className='h-[calc(100vh-230px)] flex items-center justify-center'>
-
-//         <div className='border border-gray-300  px-5  rounded-lg py-8 bg-white w-[550px]'>
-
-//             <h2 className='text-2xl  mb-4 '>Login form</h2>
-
-// <form action="flex flex-col items-center justify-center">
-
-//             <input type="text" placeholder='UserName or email address *' className='border my-4 border-gray-200 w-[500px] p-3' />
-//             <input type="password" placeholder='Password *' className='border border-gray-200 mb-4 w-[500px] p-3' /> <br/>
-
-// <div className=' flex items-center justify-between w-[500px]'>
-
-//             <button className='bg-custom-yellow p-2 px-6 text-white'> login </button>
-
-//             <div>
-//                 <input
-//   type="checkbox"
- 
-  
-// />
-//                 <span className='text-custom-yellow ps-1 text-sm pb-4'>REMEMBER ME</span>
-//             </div>
-
-//             <p className='text-custom-yellow'>Lost your password ?</p>
-// </div>
-// </form>
-
-//         </div>
-      
-//     </div>
-//   )
-// }
 
 
 import React from 'react'
