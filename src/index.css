@@ -56,7 +56,7 @@ input[type="checkbox"]:checked::before {
 .swiper-slide {
   text-align: center;
   font-size: 18px;
-  background: #444;
+ 
 
   /* Center slide text vertically */
   display: flex;
@@ -73,3 +73,85 @@ input[type="checkbox"]:checked::before {
 /* input[type="radio"] {
   accent-color: yellow !important;
 } */
+
+
+
+
+
+
+/* Disable text selection globally 
+* {
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+  -webkit-user-drag: none !important;
+  -webkit-touch-callout: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+/* Allow text selection only in input fields and textareas 
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="search"],
+textarea,
+[contenteditable="true"] {
+  -webkit-user-select: text !important;
+  -moz-user-select: text !important;
+  -ms-user-select: text !important;
+  user-select: text !important;
+}
+
+/* Disable image dragging 
+img {
+  -webkit-user-drag: none !important;
+  -moz-user-drag: none !important;
+  user-drag: none !important;
+  pointer-events: none;
+}
+
+/* Disable highlighting 
+::selection {
+  background: transparent !important;
+}
+
+::-moz-selection {
+  background: transparent !important;
+}
+
+/* Disable print styles 
+@media print {
+  * {
+    display: none !important;
+  }
+  
+  body::before {
+    content: "Printing is not allowed!";
+    display: block !important;
+    font-size: 24px;
+    text-align: center;
+    margin-top: 50px;
+  }
+}
+
+/* Watermark overlay for extra protection 
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 50px,
+      rgba(255, 255, 255, 0.02) 50px,
+      rgba(255, 255, 255, 0.02) 100px
+    );
+  pointer-events: none;
+  z-index: 9999;
+} */
+

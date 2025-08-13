@@ -249,11 +249,12 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Users, MessageSquare, Star } from 'lucide-react';
 import CourseCard from '../../Components/Ui/CourseCard';
+import { useTranslation } from 'react-i18next';
 
 const CourseSlider = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(4);
-
+  const { t, i18n } = useTranslation();
   const courses = [
     {
       id: 1,
@@ -362,11 +363,13 @@ const CourseSlider = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-6 py-8">
+    <div dir='ltr' className="max-w-7xl mx-auto px-6 py-8">
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
-        <h2 className="text-3xl font-bold text-gray-900">Most Popular Courses</h2>
-        <div className="flex space-x-2">
+        {i18n.language =="ar" ?
+         <>
+        
+        <div dir='ltr' className="flex space-x-2">
           <button
             onClick={prevSlide}
             disabled={currentSlide === 0}
@@ -382,6 +385,33 @@ const CourseSlider = () => {
             <ChevronRight className="w-5 h-5 text-gray-600" />
           </button>
         </div>
+        <h2 className="text-3xl font-bold text-gray-900">{t("course.relatedVideos")}</h2>
+        
+        </>
+        :
+        <>
+        
+        <h2 className="text-3xl font-bold text-gray-900">Most Popular Courses</h2>
+        <div dir='ltr' className="flex space-x-2">
+          <button
+            onClick={prevSlide}
+            disabled={currentSlide === 0}
+            className="p-2 rounded-full border border-gray-300 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <ChevronLeft className="w-5 h-5 text-gray-600" />
+          </button>
+          <button
+            onClick={nextSlide}
+            disabled={currentSlide >= maxSlide}
+            className="p-2 rounded-full border border-gray-300 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <ChevronRight className="w-5 h-5 text-gray-600" />
+          </button>
+        </div>
+        
+        </>
+        
+        }
       </div>
 
       {/* Slider */}

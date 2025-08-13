@@ -1,15 +1,13 @@
 
-
-
 import { Clock, Calendar, FileText, AlertCircle, MoveRight } from "lucide-react";
 import { Link } from "react-router-dom";
 
-export default function AssignmentSubmission() {
+export default function QuizSubmission() {
   return (
     <div className="max-w-md  p-6 bg-white rounded-lg shadow-md">
       {/* Header */}
       <div className="text-center mb-6">
-        <h1 className="text-2xl font-bold text-gray-800 mb-2">Start Assignment</h1>
+        <h1 className="text-2xl font-bold text-gray-800 mb-2">Start Quiz</h1>
         <div className="w-16 h-1 bg-yellow-500 mx-auto"></div>
       </div>
 
@@ -44,7 +42,7 @@ export default function AssignmentSubmission() {
       </div>
 
       {/* Start Button */}
-      <Link to={`/assignmentDetails/1`} className="w-full bg-yellow-600 hover:bg-yellow-700 text-white font-medium py-3 px-4 rounded-lg transition duration-200 flex gap-2 items-center justify-center">
+      <Link to={`/QuizDetails/1`} className="w-full bg-yellow-600 hover:bg-yellow-700 text-white font-medium py-3 px-4 rounded-lg transition duration-200 flex gap-2 items-center justify-center">
         <span className="ml-2">Start</span>
        <MoveRight className="w-6 h-6 text-white" />
       </Link>

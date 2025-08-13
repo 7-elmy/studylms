@@ -108,8 +108,10 @@
 
 
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export default function SubscriptionModal() {
+  const {t, i18n}=useTranslation()
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState({
     term: '',
@@ -146,7 +148,8 @@ export default function SubscriptionModal() {
         onClick={() => setIsOpen(true)}
         className="px-4 py-2 w-full text-sm font-medium bg-amber-400 hover:bg-amber-500 text-gray-900 rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-2"
       >
-        Subscription
+        {t("course.subscriptions")}
+        {/* Subscription */}
       </button>
 
       {/* Modal Overlay */}
@@ -208,7 +211,8 @@ export default function SubscriptionModal() {
                   onClick={() => setIsOpen(false)}
                   className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500"
                 >
-                  Cancel
+                  
+                  {t("course.cancel")}
                 </button>
                 <button
                   type="submit"
@@ -219,7 +223,8 @@ export default function SubscriptionModal() {
                       : 'bg-amber-300 cursor-not-allowed'
                   } transition-colors duration-200`}
                 >
-                  Confirm Subscription
+                  {/* Confirm Subscription */}
+                  {t("course.confirm")}
                 </button>
               </div>
             </form>

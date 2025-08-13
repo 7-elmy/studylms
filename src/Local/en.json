@@ -32,9 +32,157 @@
       "subscriptions": "Subscriptions"
     }
   },
-  "language_modal": {
-    "title": "Language Changed",
-    "description": "You must log in again to apply language changes.",
-    "ok_button": "OK"
-  }
+  "auth":{
+    "back":"Back To Selection",
+    "login":{
+        "loginForm":"Login Form",
+        "email":"Phone Or Email Address *",
+        "password":"Password",
+        "rememberme":"Remember Me",
+        "forget":"Lost your password ?",
+        "login":"Login",
+        "account":"Don't have an account ?",
+        "register":"Register"
+    },
+    "register":{
+      "choose":"Choose Registration Type",
+      "student":"Student Registration",
+      "student_desc":"Register as a student to access learning materials",
+      "parent":"Parent Registration",
+      "parent_desc":"Register as a parent to monitor your child's progress",
+      "fullName":"Full Name",
+      "email":"Email Address",
+      "phone":"Phone Number",
+      "governorate":"Select Governorate",
+      "grade":"Select Grade",
+      "Code":"Student Code",
+      "password":"Password",
+      "confirmPassword":"Confirm Password",
+      "agree":"i agree to the",
+      "term":"Terms of Services",
+      "and":"and",
+      "privacy":"Privacy Policy",
+      "register":"Register",
+      "account":"Already have an acoount ?",
+      "login":"Login"
+
+    }
+  },
+  "course":{
+  "relatedVideos": "Related Videos",
+   "subscriptions": "Subscriptions",
+   "viewDetails":"view Details",
+   "confirm":"Confirm Subscription",
+   "cancel":"Cancel",
+    "free": "FREE",
+    "students": "students",
+      "comments": "comments"
+  
+
+}, 
+"class":{
+  
+ 
+    "title": "How Our Classes Work",
+    "description": "Share your work to collaborate with our vibrant design element.",
+    "steps": [
+      {
+        "title": "Become A Member",
+        "description": "We choose to go to the moon in this decade and the other."
+      },
+      {
+        "title": "Learn By Doing",
+        "description": "We choose to go to the moon in this decade and the other."
+      },
+      {
+        "title": "Preview The Syllabus",
+        "description": "We choose to go to the moon in this decade and the other."
+      },
+      {
+        "title": "Take A Course",
+        "description": "We choose to go to the moon in this decade and the other."
+      }
+    ],
+    "cta": "Get Started Today"
+  },
+  "hero": {
+      "heading": "Learn from the best. anywhere",
+      "subheading": "Creative and business skills you can use today",
+      "tagline": "Learn anything online",
+      "stats": {
+        "courses": "Online courses +25000",
+        "instructors": "More than 320 Instructors"
+      },
+      "search": {
+   "placeholder": "What do you want to learn today?"
+ } 
+},
+"newsletter": {
+     "title": "Signup for Newsletter",
+     "cta": "Subscribe now and receive weekly newsletter with new updates",
+     "emailPlaceholder": "Enter your email...",
+     "submit": "SUBMIT",
+     "submitted": "SUBMITTED!",
+     "successMessage": "Thank you for subscribing!"
+   },
+  "about": {
+      "title": "About Me",
+      "name": "Michael Chen",
+      "description": "Professional, reliable, and innovative. This collaboration has been instrumental in achieving our project goals and milestones.",
+      "imageAlt": "Profile photo",
+      "testimonials": [
+        {
+          "text": "Trent from punchy rollie grab us a waggin school. Flat out like a bludger where he hasn't got a damper. As stands out like brass razoo heaps it'll be relo. As busy as a paddock.",
+          "author": "Nethor",
+          "position": "Developer",
+          "company": "Nethor Doct"
+        },
+        {
+          "text": "Amazing experience working with this team. They delivered exactly what we needed and exceeded our expectations in every way possible.",
+          "author": "Sarah Johnson",
+          "position": "Product Manager",
+          "company": "Tech Corp"
+        },
+        {
+          "text": "Professional, reliable, and innovative. This collaboration has been instrumental in achieving our project goals and milestones.",
+          "author": "Michael Chen",
+          "position": "CTO",
+          "company": "StartupXYZ"
+        }
+      ]
+    },
+    "slider": {
+      "buttons": {
+        "register": "Register Now",
+        "signin": "Sign In"
+      },
+      "slides": [
+        {
+          "title": "Education & Training",
+          "subtitle": "Organization",
+          "description": "We offer the most complete course package in the country, for the research, design and development of Education."
+        },
+        {
+          "title": "Advanced Learning",
+          "subtitle": "Platform",
+          "description": "Discover innovative teaching methods and comprehensive educational resources designed for modern learning experiences."
+        },
+        {
+          "title": "Future Ready",
+          "subtitle": "Education",
+          "description": "Prepare students for tomorrow's challenges with our cutting-edge curriculum and expert-led training programs."
+        }
+      ],
+      "courses": [
+        "First Preparatory",
+        "Second Preparatory",
+        "Third Preparatory",
+        "First Secondary",
+        "Second Secondary",
+        "Third Secondary"
+      ]
+    }
+ 
+
+
 }
