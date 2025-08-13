@@ -248,6 +248,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Users, MessageSquare, Star } from 'lucide-react';
+import CourseCard from '../../Components/Ui/CourseCard';
 
 const CourseSlider = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -392,65 +393,20 @@ const CourseSlider = () => {
           {courses.map((course) => (
             <div
               key={course.id}
-              className={`px-3 flex-shrink-0 ${
+              className={`px-3 flex-shrink-0   ${
                 itemsPerPage === 1
                   ? 'w-full'
                   : itemsPerPage === 2
                   ? 'w-1/2'
                   : itemsPerPage === 3
                   ? 'w-1/3'
-                  : 'w-1/4'
+                  : 'w-1/3'
               }`}
             >
-              <div
-                className={`bg-white rounded-xl shadow-sm border hover:shadow-lg overflow-hidden group ${
-                  course.featured ? 'border-cyan-300 ring-2 ring-cyan-100' : 'border-gray-200'
-                }`}
-              >
-                <div className="relative">
-                  <div className="w-full h-48 bg-gradient-to-br from-yellow-100 to-yellow-200 flex items-center justify-center">
-                    <span className="text-yellow-600 text-sm font-medium">Course Image</span>
-                  </div>
-                  <div className="absolute top-4 left-4">
-                    <span
-                      className={`px-3 py-1 rounded-full text-sm font-semibold ${
-                        course.price === 'FREE'
-                          ? 'bg-green-500 text-white'
-                          : 'bg-cyan-400 text-white'
-                      }`}
-                    >
-                      {course.price}
-                    </span>
-                  </div>
-                </div>
-                <div className="p-6">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-3 line-clamp-2 group-hover:text-custom-yellow">
-                    {course.title}
-                  </h3>
-                  <div className="flex items-center mb-4">
-                    <div className="w-8 h-8 bg-cyan-100 rounded-full flex items-center justify-center mr-3">
-                      <span className="text-cyan-600 text-xs font-medium">
-                        {course.instructor.split(' ').map(n => n[0]).join('')}
-                      </span>
-                    </div>
-                    <span className="text-gray-600 text-sm">{course.instructor}</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-4">
-                      <div className="flex items-center text-gray-500 text-sm">
-                        <Users className="w-4 h-4 mr-1" />
-                        <span>{course.students}</span>
-                      </div>
-                      <div className="flex items-center text-gray-500 text-sm">
-                        <MessageSquare className="w-4 h-4 mr-1" />
-                        <span>{course.comments}</span>
-                      </div>
-                    </div>
-                    <div className="flex items-center">{renderStars(course.rating)}</div>
-                  </div>
-                </div>
-              </div>
+              <CourseCard course={course} renderStars={renderStars}  itemsPerPage={itemsPerPage}/>
+              
             </div>
+
           ))}
         </div>
       </div>

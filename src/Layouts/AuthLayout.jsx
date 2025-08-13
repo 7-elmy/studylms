@@ -8,7 +8,7 @@ export default function AuthLayout() {
     <div>
       
       <Navbar/>
-      {/* Hero Section */}
+      {/* 
       <div className='bg-gradient-to-r from-gray-400 to-gray-300 py-12 md:py-16 lg:py-20 px-4'>
         <div className='max-w-7xl mx-auto'>
           <div className=''>
@@ -20,7 +20,7 @@ export default function AuthLayout() {
         </div>
       </div>
 
-      {/* Breadcrumb Section */}
+     
       <div className='bg-white border-b border-gray-200'>
         <div className='max-w-7xl mx-auto  px-4 sm:px-6 lg:px-8'>
           <div className=' h-12 '>
@@ -49,7 +49,7 @@ export default function AuthLayout() {
             
           </div>
         </div>
-      </div>
+      </div> */}
 
         <Outlet/>
       <Footer/>

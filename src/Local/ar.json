@@ -28,7 +28,8 @@
       "shop_list": "قائمة المتجر",
       "shop_single": "منتج واحد",
       "cart_page": "صفحة السلة",
-      "checkout": "الدفع"
+      "checkout": "الدفع",
+      "subscriptions":"الاشتراكات"
     }
   },
   "language_modal": {

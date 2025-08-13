@@ -9,12 +9,14 @@ import RegisterPage from './Pages/Auth/Register/Register'
 import { useTranslation } from 'react-i18next'
 import Home from './Pages/Home/Home'
 import MainLayout from './Layouts/MainLayout'
-import Home_2 from './Pages/Home_2/Home_2'
 import CoursesPage from './Pages/Courses/Courses'
 import CourseDetailPage from './Pages/Courses/SingleCourse'
-import EventsListing from './Pages/EventList/EventList'
-import Shop from './Pages/Shop/Shop'
+
 import ContactUs from './Pages/ContactUs/ContactUs'
+import NotFound from './Pages/NotFound/NotFound'
+import Subscriptions from './Pages/Subscriptions/Subscriptions'
+import AssignmentDetails from './Pages/AssignmentDetails/AssignmentDetails'
+import ProfilePage from './Pages/Profile/Profile'
 
 
 function App() {
@@ -33,16 +35,18 @@ function App() {
     </Route>
           <Route  element={<MainLayout />}>
       <Route path="/home" element={<Home />} />
-      <Route path="/home_2" element={<Home_2 />} />
       <Route path="/courses" element={<CoursesPage />} />
       <Route path="/courses/:id" element={<CourseDetailPage />} />
-      <Route path="/eventsList" element={<EventsListing />} />
-      <Route path="/shop" element={<Shop />} />
+      
+      
       <Route path="/contact" element={<ContactUs />} />
+      <Route path="/subscriptions" element={<Subscriptions />} />
+      <Route path="/assignmentDetails/:id" element={<AssignmentDetails />} />
+      <Route path="/profile" element={<ProfilePage />} />
 
     </Route>
        
-        
+        <Route path='*' element={<NotFound/>}/>
         </Routes>
       </BrowserRouter>
 

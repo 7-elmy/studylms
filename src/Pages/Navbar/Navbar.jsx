@@ -8,6 +8,7 @@ import TopBar from './TopBar';
 import logo from "../../assets/logo-dark.png";
 import arabic from "../../assets/eg.jpeg";
 import english from "../../assets/usa.png";
+import { getInitials } from '../../Utils/getInitials';
 
 const Header = () => {
     const navigate = useNavigate();
@@ -64,12 +65,7 @@ const Header = () => {
     const menuItems = [
         {
             name: t("navbar.home"),
-            href: '/home',
-            submenu: [
-                { name: t("navbar.submenu.home_1"), href: '/home' },
-                { name:t("navbar.submenu.home_2"), href: '/home_2' },
-                // { name:t("navbar.submenu.home_3"), href: '/home' }
-            ]
+            href: '/home'
         },
         {
             name: t("navbar.courses"),
@@ -118,6 +114,11 @@ const Header = () => {
         //         { name:  t("navbar.submenu.checkout"), href: '/' }
         //     ]
         // },
+        {
+            name: t("navbar.submenu.subscriptions"),
+            href: '/subscriptions',
+            submenu: null
+        },
         {
             name: t("navbar.contact"),
             href: '/contact',
@@ -172,8 +173,8 @@ const Header = () => {
 
                                 {/* Desktop Search & Language */}
                                 <div className="hidden lg:flex items-center space-x-4">
-                                    {/* Search */}
-                                    <div className="relative">
+                                    
+                                    {/* <div className="relative">
                                         <button
                                             onClick={handleToggleSearch}
                                             className="text-gray-600 hover:text-blue-600 p-2 transition-colors"
@@ -194,7 +195,9 @@ const Header = () => {
                                                 </div>
                                             </div>
                                         )}
-                                    </div>
+                                    </div> */}
+
+                                      
 
                                     {/* Language Dropdown */}
                                     <div className="relative">
@@ -241,17 +244,27 @@ const Header = () => {
                                             </div>
                                         )}
                                     </div>
+
+
+                                    <div className=' w-10 h-10  rounded-full flex justify-center items-center bg-yellow-100 text-yellow-400' >
+{getInitials("Ahmed" , "helmy")}
+
+                                            </div>
+
+                                          
+
                                 </div>
                             </nav>
 
                             {/* Mobile menu button */}
                             <div className="lg:hidden flex items-center space-x-2">
-                                <button
+                                {/* <button
                                     onClick={handleToggleSearch}
                                     className="text-gray-600 hover:text-blue-600 p-2 transition-colors"
                                 >
                                     <Search className="h-5 w-5" />
-                                </button>
+                                </button> */}
+
                                 
                                 {/* Mobile Language Dropdown */}
                                 <div className="relative">
@@ -296,6 +309,13 @@ const Header = () => {
                                         </div>
                                     )}
                                 </div>
+                                <Link to={"/profile"}>
+                                
+                                                                  <div className=' w-10 h-10  rounded-full flex justify-center items-center bg-yellow-100 text-yellow-400' >
+{getInitials("Ahmed" , "helmy")}
+
+                                            </div>
+                                </Link>
                                 
                                 <button
                                     onClick={handleMobileMenuToggle}

@@ -1,7 +1,9 @@
-import React from 'react';
+import React from 'react'
+import DynamicBreadcrumb from '../../Components/Ui/DynamicBreadcrumb';
+import { href } from 'react-router-dom';
 
-const EventsListing = () => {
-  const events = [
+export default function Subscriptions() {
+    const events = [
     {
       date: '01',
       month: 'MARCH',
@@ -51,13 +53,13 @@ const EventsListing = () => {
 
   return (
     <div>
-         <div className="bg-gray-400 px-6 py-16">
+         {/* <div className="bg-gray-400 px-6 py-16">
         <div className="max-w-7xl mx-auto">
           <h1 className="text-white text-5xl font-bold">Courses</h1>
         </div>
       </div>
 
-      {/* Breadcrumb */}
+      
       <div className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center space-x-2 text-gray-600">
@@ -66,7 +68,9 @@ const EventsListing = () => {
             <span className="text-gray-900">Events</span>
           </div>
         </div>
-      </div>
+      </div> */}
+
+      <DynamicBreadcrumb MainTitle={"Subscriptions"} BreadCrumbs={[{label:"Home" ,href:"/home"} ,{label:"subscriptions"}]}/>
 
     <div className="max-w-7xl mx-auto p-6">
       <div className="space-y-8">
@@ -124,8 +128,4 @@ const EventsListing = () => {
     </div>
     </div>
   );
-};
-
-export default EventsListing;
-
-
+}

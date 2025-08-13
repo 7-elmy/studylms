@@ -28,7 +28,8 @@
       "shop_list": "Shop List",
       "shop_single": "Shop Single",
       "cart_page": "Cart Page",
-      "checkout": "Checkout"
+      "checkout": "Checkout",
+      "subscriptions": "Subscriptions"
     }
   },
   "language_modal": {

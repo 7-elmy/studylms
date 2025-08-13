@@ -67,3 +67,9 @@ input[type="checkbox"]:checked::before {
   height: 80vh;
   width: 100%;
 }
+
+
+/* Apply to all radio buttons */
+/* input[type="radio"] {
+  accent-color: yellow !important;
+} */
