@@ -201,6 +201,27 @@
       "generalError": "Failed to reset password. Please try again."
     }
   },
+  "footer": {
+    "default_description": "Your premier online learning platform offering quality courses across various disciplines.",
+    "quick_links": "Quick Links",
+    "all_courses": "All Courses",
+    "summer_sessions": "Summer Sessions",
+    "recent_exams": "Recent Exams",
+    "professional_courses": "Professional Courses",
+    "privacy_policy": "Privacy Policy",
+    "terms_of_use": "Terms of Use",
+    "contact_us": "Contact Us",
+    "contact_description": "If you want to contact us about any issue, our support is available to help you from 8am-7pm Monday to Saturday.",
+    "address": "Address",
+    "default_address": "123 Education St, Learning City",
+    "call": "Call",
+    "default_phone": "+20 100 000 0000",
+    "email": "Email",
+    "default_email": "info@studylms.com",
+    "all_rights_reserved": "All rights reserved"
+  }
+
+,
 
   "course":{
   "relatedVideos": "Related Videos",

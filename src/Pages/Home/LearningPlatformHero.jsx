@@ -10,7 +10,7 @@ export default function LearningPlatformHero() {
   const { t, i18n } = useTranslation();
 
   const handleSearch = () => {
-    console.log('Searching for:', searchQuery);
+    //console.log('Searching for:', searchQuery);
     // Handle search logic here
   };
 

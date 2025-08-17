@@ -8,7 +8,7 @@
 //   const handleSubmit = () => {
 //     if (email && email.includes('@')) {
 //       // Handle newsletter signup logic here
-//       console.log('Newsletter signup:', email);
+//       //console.log('Newsletter signup:', email);
 //       setIsSubmitted(true);
 //       setTimeout(() => {
 //         setIsSubmitted(false);
@@ -89,7 +89,7 @@ export default function NewsletterSignup() {
   const handleSubmit = () => {
     if (email && email.includes('@')) {
       // Handle newsletter signup logic here
-      console.log('Newsletter signup:', email);
+      //console.log('Newsletter signup:', email);
       setIsSubmitted(true);
       setTimeout(() => {
         setIsSubmitted(false);

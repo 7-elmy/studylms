@@ -57,7 +57,7 @@ export default function ProfilePage({ userType = 'student' }) {
     const [userData, setUserData] = useState(mockUserData[userType])
     const [editedData, setEditedData] = useState(mockUserData[userType])
     let {profile} = useSelector(state=>state.api);
-    console.log({profile});
+    //console.log({profile});
     
 
     let dispatch = useDispatch();
@@ -95,10 +95,11 @@ export default function ProfilePage({ userType = 'student' }) {
             entity:"profile",
             url:"api/show_profile",
              headers: {
-              language: sessionStorage.getItem('token') 
+              "Authorization": sessionStorage.getItem('token') ,
+             "Accept-Language": localStorage.getItem('language') || 'en',
             },
         }))
-    },[])
+    },[dispatch, localStorage.getItem('language')]);
 
     return (
         <div className='min-h-[calc(100vh-230px)] px-4 py-8'>

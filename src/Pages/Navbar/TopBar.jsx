@@ -33,16 +33,20 @@ let dispatch = useDispatch();
     
   }
 
-  console.log({contactus});
+  //console.log({contactus});
   
 
   useEffect(()=>{
     dispatch(apiRequest({
       entity: "contactus",
       url: "api/contact_us",
-      method: "GET"
+      method: "GET",
+       headers: {
+             "Accept-Language": localStorage.getItem('language') || 'en',
+              
+            },
     }))
-  },[])
+  },[dispatch , localStorage.getItem('language')]);
 
   return (
     <div 

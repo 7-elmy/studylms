@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export default function DynamicBreadcrumb({BreadCrumbs=[] , MainTitle}) {
   // Example data - you can pass this as props
-  console.log(BreadCrumbs);
+  //console.log(BreadCrumbs);
   
   const [breadcrumbs, setBreadcrumbs] = useState(BreadCrumbs);
 

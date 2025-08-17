@@ -7,7 +7,7 @@ export default function Privacy() {
     let dispatch = useDispatch();
     let { t, i18n } = useTranslation();
     let { privacy } = useSelector((state) => state.api);
-        console.log({privacy});
+        //console.log({privacy});
         
     useEffect(()=>{
         dispatch(apiRequest({

@@ -56,14 +56,14 @@
 //       }))
       
 //       // Handle successful verification
-//       console.log('✅ Verification Response:', response);
+//       //console.log('✅ Verification Response:', response);
 //       if(response.payload.success == true){
 //         navigate("/")
 //       }
     
       
 //     } catch (error) {
-//       console.log('❌ Verification Error:', error);
+//       //console.log('❌ Verification Error:', error);
 //     //   if (error.response?.data?.message) {
 //     //     setOtpError(error.response.data.message);
 //     //   } else {
@@ -87,7 +87,7 @@
 //         data: { email }
 //       }));
       
-//       console.log('✅ Resend Response:', response);
+//       //console.log('✅ Resend Response:', response);
 //       setResendSuccess(true);
 //       setCountdown(60); // 60 second cooldown
       
@@ -95,7 +95,7 @@
 //       setTimeout(() => setResendSuccess(false), 3000);
       
 //     } catch (error) {
-//       console.log('❌ Resend Error:', error);
+//       //console.log('❌ Resend Error:', error);
 //       if (error.response?.data?.message) {
 //         setOtpError(error.response.data.message);
 //       } else {
@@ -307,7 +307,11 @@ const OTPVerify = () => {
         entity: "verify",
         url: "api/verify",
         method: "POST",
-        data: { email, otp }
+        data: { email, otp },
+         headers: {
+             "Accept-Language": localStorage.getItem('language') || 'en',
+              
+            },
       }))
       
       if(response.payload.success == true){

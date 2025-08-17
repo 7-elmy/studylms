@@ -95,7 +95,7 @@
 //             data: formData
 //           }))
           
-//           console.log({'✅ Send OTP Response:': response});
+//           //console.log({'✅ Send OTP Response:': response});
 //           if(response.payload.success ==true){
     
 //             //    navigate("/send-otp")
@@ -104,7 +104,7 @@
 //             //   setSendSuccess(true);
 //           }
 //     } catch (error) {
-//         console.log(error);
+//         //console.log(error);
         
 //       setErrors(error.data.message);
 //     } finally {

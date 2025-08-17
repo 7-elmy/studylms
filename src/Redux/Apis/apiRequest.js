@@ -153,7 +153,7 @@
 //             // toast.error(errorMessage || "Gone: The requested resource is no longer available");
 //             break;
 //           // case 422:
-//           //   console.log(backendError , errorMessage);
+//           //   //console.log(backendError , errorMessage);
 //           //   backendError.map(ele=>toast.error(ele[0] ))
             
             
@@ -224,7 +224,7 @@ export const apiRequest = createAsyncThunk(
         data,
         headers: {
           authorization: `${sessionStorage.getItem("token")}`,
-           "Accept-Language": localStorage.getItem('language') || 'en',
+        
           ...headers,
         },
       });

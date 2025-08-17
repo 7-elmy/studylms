@@ -25,7 +25,7 @@
 //   const [loading, setLoading] = useState(false);
 //   const [countrySearchLoading, setCountrySearchLoading] = useState(false);
 //   const [governorateSearchLoading, setGovernorateSearchLoading] = useState(false);
-// console.log({register});
+// //console.log({register});
 
 //   // Form data
 //   const [formData, setFormData] = useState({
@@ -267,7 +267,7 @@
 //     })
 //         ).unwrap();
 //         navigate(`/verify-email/${formData.email}`)
-//         console.log('✅ API Response:', response);
+//         //console.log('✅ API Response:', response);
 
       
 //     } catch (error) {
@@ -914,14 +914,16 @@ const RegisterPage = () => {
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
 
-  useEffect(() => { loadCountries(); }, []);
+  useEffect(() => { loadCountries(); }, [dispatch , localStorage.getItem('language') ]);
   useEffect(() => resetForm(), [activeTab]);
   useEffect(() => { updateGovernorates(); }, [formData.country_id]);
 
   const loadCountries = async () => {
     setLoading(true);
     try {
-      await dispatch(apiRequest({ url: "api/countries", entity: "countries" }));
+      await dispatch(apiRequest({ url: "api/countries", entity: "countries" , headers:{
+        "Accept-Language": localStorage.getItem('language') || 'en'
+      } }));
     } finally { setLoading(false); }
   };
 

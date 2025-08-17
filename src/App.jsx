@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import './App.css'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
@@ -27,11 +27,41 @@ import SendotpForgetPassword from './Pages/Auth/ForgetPassword/OTP'
 import ResetPassword from './Pages/Auth/ForgetPassword/resetPassword'
 import Terms from './Pages/Terms&Privacy/Terms'
 import Privacy from './Pages/Terms&Privacy/Privacy'
+import { ChevronUp } from 'lucide-react'
 
 
 
 function App() {
  let {i18n} =useTranslation()
+ const [showScrollTop, setShowScrollTop] = useState(true);
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+
+  
+  // Handle scroll event to show/hide the scroll-to-top button
+  useEffect(() => {
+    const handleScroll = () => {
+      // Show button when scrolled down more than 300px from the top
+      if (window.scrollY > 300) {
+        setShowScrollTop(true);
+      } else {
+        setShowScrollTop(false);
+      }
+    };
+
+    // Add scroll event listener
+    window.addEventListener('scroll', handleScroll);
+
+    // Cleanup function to remove event listener
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []); // Empty dependency array means this effect runs once on mount
+
+
+
   return (
     <div dir={i18n.language === "ar" ? "rtl" : "ltr"}>
     <BrowserRouter >
@@ -72,7 +102,15 @@ function App() {
 
       <Toaster />
 
-     
+       {showScrollTop && (
+        <button
+          onClick={scrollToTop}
+          className="fixed bottom-8 right-8 w-12 h-12 bg-yellow-500 text-white rounded-lg shadow-lg hover:bg-yellow-600 focus:ring-4 focus:ring-yellow-200 transition-all duration-200 transform hover:scale-110 z-50"
+          aria-label="Scroll to top"
+        >
+          <ChevronUp className="w-6 h-6 mx-auto" />
+        </button>
+      )}
     </div>
   )
 }
@@ -505,8 +543,8 @@ export default App
 //     // Console protection
 //     const consoleWarning = () => {
 //       console.clear();
-//       console.log('%cSTOP!', 'color: red; font-size: 50px; font-weight: bold;');
-//       console.log('%cThis is a protected application. Unauthorized access attempts are logged.', 'color: red; font-size: 16px;');
+//       //console.log('%cSTOP!', 'color: red; font-size: 50px; font-weight: bold;');
+//       //console.log('%cThis is a protected application. Unauthorized access attempts are logged.', 'color: red; font-size: 16px;');
 //     };
 
 //     // Apply all protections

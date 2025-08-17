@@ -1,8 +1,10 @@
 
 
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+import { apiRequest } from '../../Redux/Apis/apiRequest';
 
 export default function SubscriptionModal() {
   const {t, i18n}=useTranslation()
@@ -12,14 +14,21 @@ export default function SubscriptionModal() {
     section: '',
     month: ''
   });
+let dispatch = useDispatch();
+  let {Packages}= useSelector((state) => state.api);
+  //console.log({Packages});
 
-  const subscriptionOptions = {
-    term: [
-      { id: 'term1', label: 'Term', salary: '$100' },
-      { id: 'monthly', label: 'Monthly', salary: '$50' },
-      { id: 'sectionA', label: 'Section', salary: '$80' },
-    ]
-  };
+  useEffect(()=>{
+    dispatch(apiRequest({
+      entity: "Packages",
+      url: "api/packages",
+      method: "GET",
+      headers: {
+        "Accept-Language": localStorage.getItem('language') || 'en',}
+        }))
+  },[dispatch , localStorage.getItem('language')]);
+
+
 
   const handleOptionChange = (value) => {
     setSelectedOption(prev => ({
@@ -30,7 +39,7 @@ export default function SubscriptionModal() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Selected subscription:', selectedOption);
+    //console.log('Selected subscription:', selectedOption);
     setIsOpen(false);
     // Add your submission logic here
   };
@@ -71,7 +80,7 @@ export default function SubscriptionModal() {
                 <div>
                   <h3 className="text-sm font-medium text-gray-700 mb-3">Select your subscription plan</h3>
                   <div className="space-y-3">
-                    {subscriptionOptions.term.map(option => (
+                    {Packages?.data?.data?.map(option => (
                       <label 
                         key={option.id}
                         className={`flex items-center justify-between p-3 rounded-lg border ${
@@ -86,12 +95,12 @@ export default function SubscriptionModal() {
                             name="subscription"
                             value={option.id}
                             checked={selectedOption.term === option.id}
-                            onChange={() => handleOptionChange(option.id)}
+                            onChange={() => handleOptionChange(option?.id)}
                             className="h-4 w-4 text-amber-500 focus:!ring-amber-500  border-yellow-300"
                           />
-                          <span className="ml-3 text-gray-700 font-medium">{option.label}</span>
+                          <span className="ml-3 text-gray-700 font-medium">{option?.duration_label}</span>
                         </div>
-                        <span className="text-gray-600 font-medium">{option.salary}</span>
+                        <span className="text-gray-600 font-medium">{option?.price}</span>
                       </label>
                     ))}
                   </div>

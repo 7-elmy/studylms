@@ -46,10 +46,14 @@ let navigate = useNavigate()
         entity: "sendOTP",
         url: "api/otp",
         method: "POST",
-        data: { email }
+        data: { email },
+         headers: {
+             "Accept-Language": localStorage.getItem('language') || 'en',
+              
+            }
       }))
       
-      console.log({'✅ Send OTP Response:': response.payload.success});
+      //console.log({'✅ Send OTP Response:': response.payload.success});
       if(response.payload.success ==true){
 
           navigate("/send-otp")
@@ -64,7 +68,7 @@ let navigate = useNavigate()
       }
       
     } catch (error) {
-      console.log('❌ Send OTP Error:', error);
+      //console.log('❌ Send OTP Error:', error);
       if (error.response?.data?.message) {
         setEmailError(error.response.data.message);
       } else {

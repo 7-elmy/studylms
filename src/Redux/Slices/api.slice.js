@@ -19,7 +19,8 @@ const apiSlice = createSlice({
   terms:{data: null, loading: false, error: null},
   privacy:{data: null, loading: false, error: null},
   logout:{data: null, loading: false, error: null},
-  categories:{data: null, loading: false, error: null}
+  categories:{data: null, loading: false, error: null},
+  Packages:{data: null, loading: false, error: null},
   },
   reducers: {
     clearApiError: (state, action) => {
@@ -28,7 +29,7 @@ const apiSlice = createSlice({
         state[entity].error = null;
       }
     },
-  }, // No reducers needed since we're handling everything in `extraReducers`
+  },
   extraReducers: (builder) => {
     builder
       .addCase(apiRequest.pending, (state, action) => {
@@ -42,7 +43,7 @@ const apiSlice = createSlice({
         state[entity].data = data;
       })
       .addCase(apiRequest.rejected, (state, action) => {
-        console.log({ reject: action.payload.error });
+        //console.log({ reject: action.payload.error });
         // toast.error(action.payload.error)
 
         const { entity } = action.payload;

@@ -56,7 +56,7 @@
 //         data: { email, otp }
 //       }));
 
-//       console.log('✅ Verification Response:', response);
+//       //console.log('✅ Verification Response:', response);
 //       if( response?.payload?.success == true){
 
         
@@ -67,7 +67,7 @@
      
       
 //     } catch (error) {
-//       console.log('❌ Verification Error:', error);
+//       //console.log('❌ Verification Error:', error);
 //       if (error.response?.data?.message) {
 //         setOtpError(error.response.data.message);
 //       } else {
@@ -94,7 +94,7 @@
 
 //       if(response.payload.success == true){
 
-//           console.log('✅ Resend Response:', response);
+//           //console.log('✅ Resend Response:', response);
 //           setResendSuccess(true);
 //           setCountdown(60); // 60 second cooldown
 //           setTimeout(() => setResendSuccess(false), 3000);
@@ -104,7 +104,7 @@
 //       // Auto-hide success message after 3 seconds
       
 //     } catch (error) {
-//       console.log('❌ Resend Error:', error);
+//       //console.log('❌ Resend Error:', error);
 //       if (error.response?.data?.message) {
 //         setOtpError(error.response.data.message);
 //       } else {

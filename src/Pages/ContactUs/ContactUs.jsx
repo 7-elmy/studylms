@@ -2,7 +2,8 @@ import React from 'react'
 import DynamicBreadcrumb from '../../Components/Ui/DynamicBreadcrumb'
 import { useState } from "react";
 import { Phone, Mail, MapPin, ChevronUp, Smartphone } from "lucide-react";
-import { MapComponent } from '../../Components/Ui/Map';
+import MapComponent from '../../Components/Ui/Map';
+
 
 export default function ContactUs() {
 
@@ -12,7 +13,7 @@ export default function ContactUs() {
     message: ''
   });
   
-  const [showScrollTop, setShowScrollTop] = useState(true);
+  // const [showScrollTop, setShowScrollTop] = useState(true);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -24,15 +25,14 @@ export default function ContactUs() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
+    //console.log('Form submitted:', formData);
     // Handle form submission here
     alert('Message sent successfully!');
     setFormData({ name: '', email: '', message: '' });
   };
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+
+
   return (
     <div>
       <DynamicBreadcrumb   MainTitle={"Contact Us"} BreadCrumbs={[{label:"home" , href:"/home"} , {label:"contact"}]} />
@@ -176,16 +176,7 @@ export default function ContactUs() {
 
       <MapComponent/>
 
-      {/* Scroll to Top Button */}
-      {showScrollTop && (
-        <button
-          onClick={scrollToTop}
-          className="fixed bottom-8 right-8 w-12 h-12 bg-yellow-500 text-white rounded-lg shadow-lg hover:bg-yellow-600 focus:ring-4 focus:ring-yellow-200 transition-all duration-200 transform hover:scale-110 z-50"
-          aria-label="Scroll to top"
-        >
-          <ChevronUp className="w-6 h-6 mx-auto" />
-        </button>
-      )}
+   
     </div>
 
     </div>

@@ -49,7 +49,7 @@
 //         data: { email }
 //       }))
       
-//       console.log({'✅ Send OTP Response:': response});
+//       //console.log({'✅ Send OTP Response:': response});
 //       if(response.payload.success ==true){
 
 //         //    navigate("/send-otp")
@@ -66,7 +66,7 @@
 //       }
       
 //     } catch (error) {
-//       console.log('❌ Send OTP Error:', error);
+//       //console.log('❌ Send OTP Error:', error);
 //       if (error.response?.data?.message) {
 //         setEmailError(error.response.data.message);
 //       } else {

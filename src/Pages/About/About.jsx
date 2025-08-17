@@ -12,7 +12,7 @@ export default function About() {
   // const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const { t, i18n } = useTranslation();
     let {about} = useSelector((state) => state.api);
-  //  console.log({about});
+  //  //console.log({about});
   
   let dispatch = useDispatch();
   
@@ -26,7 +26,7 @@ export default function About() {
       entity: "about",
       url:"api/about_us"
     }))
-  },[]);
+  },[dispatch , localStorage.getItem('language') ]);
 
 
 
