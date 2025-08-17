@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { apiRequest } from '../../Redux/Apis/apiRequest'
+import { getInitials } from '../../Utils/getInitials'
 
 // Mock data - in real app, this would come from your backend/database
 const mockUserData = {
@@ -53,6 +56,12 @@ export default function ProfilePage({ userType = 'student' }) {
     const [isEditing, setIsEditing] = useState(false)
     const [userData, setUserData] = useState(mockUserData[userType])
     const [editedData, setEditedData] = useState(mockUserData[userType])
+    let {profile} = useSelector(state=>state.api);
+    console.log({profile});
+    
+
+    let dispatch = useDispatch();
+
 
     const handleInputChange = (field, value) => {
         setEditedData(prev => ({
@@ -74,11 +83,22 @@ export default function ProfilePage({ userType = 'student' }) {
     }
 
     const getGradeColor = (grade) => {
-        if (grade.startsWith('A')) return 'text-green-600 bg-green-50'
+        if (grade.startsWith('ث')) return 'text-green-600 bg-green-50'
         if (grade.startsWith('B')) return 'text-blue-600 bg-blue-50'
         if (grade.startsWith('C')) return 'text-yellow-600 bg-yellow-50'
         return 'text-red-600 bg-red-50'
     }
+
+
+    useEffect(()=>{
+        dispatch(apiRequest({
+            entity:"profile",
+            url:"api/show_profile",
+             headers: {
+              language: sessionStorage.getItem('token') 
+            },
+        }))
+    },[])
 
     return (
         <div className='min-h-[calc(100vh-230px)] px-4 py-8'>
@@ -86,15 +106,13 @@ export default function ProfilePage({ userType = 'student' }) {
                 {/* Header */}
                 <div className='bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6'>
                     <div className='flex flex-col sm:flex-row items-center gap-6'>
-                        <div className='w-20 h-20 bg-yellow-100 rounded-full flex items-center justify-center'>
-                            <svg className='w-10 h-10 text-yellow-500' fill='currentColor' viewBox='0 0 20 20'>
-                                <path fillRule='evenodd' d='M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z' clipRule='evenodd' />
-                            </svg>
+                        <div className='w-20 h-20 text-yellow-400 font-bold text-2xl bg-yellow-100 rounded-full flex items-center justify-center'>
+                          {getInitials(profile?.data?.data?.name)}
                         </div>
                         <div className='text-center sm:text-left flex-1'>
-                            <h1 className='text-2xl font-semibold text-gray-900'>{userData.name}</h1>
-                            <p className='text-gray-600'>{userType === 'student' ? `Student - ${userData.grade}` : `Parent of ${userData.childName}`}</p>
-                            <p className='text-sm text-gray-500'>Member since {new Date(userData.joinDate).toLocaleDateString()}</p>
+                            <h1 className='text-2xl font-semibold text-gray-900'>{profile?.data?.data?.name}</h1>
+                            <p className='text-gray-600'>{profile?.data?.data?.type == 'student' ? `${profile?.data?.data?.type} - ${profile?.data?.data?.class?profile?.data?.data?.class : ""}` : `Parent of ${userData.childName}`}</p>
+                            {/* <p className='text-sm text-gray-500'>Member since {new Date(userData.joinDate).toLocaleDateString()}</p> */}
                         </div>
                         <div className='flex gap-2'>
                             <button
@@ -153,7 +171,7 @@ export default function ProfilePage({ userType = 'student' }) {
                                                 className='w-full p-3 border border-gray-200 rounded focus:outline-none focus:ring-2 focus:ring-yellow-500'
                                             />
                                         ) : (
-                                            <p className='p-3 bg-gray-50 rounded text-gray-900'>{userData.name}</p>
+                                            <p className='p-3 bg-gray-50 rounded text-gray-900'>{profile?.data?.data?.name}</p>
                                         )}
                                     </div>
 
@@ -167,7 +185,7 @@ export default function ProfilePage({ userType = 'student' }) {
                                                 className='w-full p-3 border border-gray-200 rounded focus:outline-none focus:ring-2 focus:ring-yellow-500'
                                             />
                                         ) : (
-                                            <p className='p-3 bg-gray-50 rounded text-gray-900'>{userData.email}</p>
+                                            <p className='p-3 bg-gray-50 rounded text-gray-900'>{profile?.data?.data?.email}</p>
                                         )}
                                     </div>
 
@@ -181,28 +199,43 @@ export default function ProfilePage({ userType = 'student' }) {
                                                 className='w-full p-3 border border-gray-200 rounded focus:outline-none focus:ring-2 focus:ring-yellow-500'
                                             />
                                         ) : (
-                                            <p className='p-3 bg-gray-50 rounded text-gray-900'>{userData.phone}</p>
+                                            <p className='p-3 bg-gray-50 rounded text-gray-900'>{profile?.data?.data?.phone}</p>
                                         )}
                                     </div>
+                                     {userType === 'student' && (
+                                          <div>
+                                        <label className='block text-sm font-medium text-gray-700 mb-2'>Governorate</label>
+                                        {/* {isEditing ? (
+                                            <input
+                                                type='text'
+                                                value={editedData.country}
+                                                onChange={(e) => handleInputChange('country', e.target.value)}
+                                                className='w-full p-3 border border-gray-200 rounded focus:outline-none focus:ring-2 focus:ring-yellow-500'
+                                            />
+                                        ) : ( */}
+                                            <p className='p-3 bg-gray-50 rounded text-gray-900'>{profile?.data?.data?.country}</p>
+                                         {/* )} */}
+                                    </div>
+                                    )}
 
                                     <div>
                                         <label className='block text-sm font-medium text-gray-700 mb-2'>Governorate</label>
-                                        {isEditing ? (
+                                        {/* {isEditing ? (
                                             <input
                                                 type='text'
                                                 value={editedData.governorate}
                                                 onChange={(e) => handleInputChange('governorate', e.target.value)}
                                                 className='w-full p-3 border border-gray-200 rounded focus:outline-none focus:ring-2 focus:ring-yellow-500'
                                             />
-                                        ) : (
-                                            <p className='p-3 bg-gray-50 rounded text-gray-900'>{userData.governorate}</p>
-                                        )}
+                                        ) : ( */}
+                                            <p className='p-3 bg-gray-50 rounded text-gray-900'>{profile?.data?.data?.governorate}</p>
+                                        {/* )} */}
                                     </div>
 
                                     {userType === 'student' && (
                                         <div>
                                             <label className='block text-sm font-medium text-gray-700 mb-2'>Grade</label>
-                                            <p className='p-3 bg-gray-50 rounded text-gray-900'>{userData.grade}</p>
+                                            <p className='p-3 bg-gray-50 rounded text-gray-900'>{profile?.data?.data?.class}</p>
                                         </div>
                                     )}
 
@@ -210,7 +243,7 @@ export default function ProfilePage({ userType = 'student' }) {
                                         <label className='block text-sm font-medium text-gray-700 mb-2'>
                                             {userType === 'student' ? 'Student Code' : 'Child\'s Student Code'}
                                         </label>
-                                        <p className='p-3 bg-gray-50 rounded text-gray-900'>{userData.studentCode}</p>
+                                        <p className='p-3 bg-gray-50 rounded text-gray-900'>{profile?.data?.data?.child_code}</p>
                                     </div>
                                 </div>
 

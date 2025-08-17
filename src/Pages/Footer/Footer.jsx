@@ -1,7 +1,44 @@
-import React from 'react';
+import React, { use, useEffect } from 'react';
 import logo from '../../assets/logo.png';
+import { useDispatch, useSelector } from 'react-redux';
+import { apiRequest } from '../../Redux/Apis/apiRequest';
 
 export default function Footer() {
+  let dispatch = useDispatch();
+  let {about, categories} = useSelector((state) => state.api);
+  console.log({about, categories});
+
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      await Promise.all([
+        dispatch(apiRequest({
+          entity: "about",
+          url: "api/about_us",
+          method: "GET"
+          //   headers: {
+          //   "Accept-Language": localStorage.getItem('language') || 'en',
+          //   "Content-Type": "application/json",
+          // }
+        })),
+        dispatch(apiRequest({
+          entity: "categories",
+          url: "api/categories",
+          method: "GET"
+          // headers: {
+          //   "Accept-Language": localStorage.getItem('language') || 'en',
+          //   "Content-Type": "application/json",
+          // }
+        }))
+      ]);
+    } catch (error) {
+      // Handle errors here
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  fetchData();
+}, [dispatch]);
   return (
    <div className='flex items-center bg-[#222222] justify-center  text-gray-300 py-4'>
 

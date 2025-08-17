@@ -252,12 +252,15 @@ const Header = () => {
                       </div>
                     )}
                   </div>
-
+{sessionStorage.getItem("token")? 
                   <Link to={"/profile"}>
                     <div className=" w-10 h-10  cursor-pointer rounded-full flex justify-center items-center bg-yellow-100 text-yellow-400">
                       {getInitials("Ahmed", "helmy")}
                     </div>
                   </Link>
+
+:"" }
+
                 </div>
               </nav>
 

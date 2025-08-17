@@ -33,6 +33,13 @@
     }
   },
   "auth":{
+   
+    "validation": {
+      "invalidEmail": "Please enter a valid email address",
+      "required": "This field is required",
+      "passwordMinLength": "Password must be at least {{min}} characters"
+    },
+
     "back":"Back To Selection",
     "login":{
         "loginForm":"Login Form",
@@ -42,32 +49,159 @@
         "forget":"Lost your password ?",
         "login":"Login",
         "account":"Don't have an account ?",
-        "register":"Register"
+        "register":"Register",
+        "loggingIn":"logging In"
+    },   
+  "Register": {
+    "title": "Register",
+    "chooseType": "Choose Registration Type",
+    "student": {
+      "title": "Student Registration",
+      "description": "Register as a student to access learning materials"
     },
-    "register":{
-      "choose":"Choose Registration Type",
-      "student":"Student Registration",
-      "student_desc":"Register as a student to access learning materials",
-      "parent":"Parent Registration",
-      "parent_desc":"Register as a parent to monitor your child's progress",
-      "fullName":"Full Name",
-      "email":"Email Address",
-      "phone":"Phone Number",
-      "governorate":"Select Governorate",
-      "grade":"Select Grade",
-      "Code":"Student Code",
-      "password":"Password",
-      "confirmPassword":"Confirm Password",
-      "agree":"i agree to the",
-      "term":"Terms of Services",
-      "and":"and",
-      "privacy":"Privacy Policy",
-      "register":"Register",
-      "account":"Already have an acoount ?",
-      "login":"Login"
+    "parent": {
+      "title": "Parent Registration",
+      "description": "Register as a parent to monitor your child's progress"
+    },
+    "back": "Back to selection",
+    "form": {
+      "name": "Full Name *",
+      "email": "Email Address *",
+      "phone": "Phone Number *",
+      "country": "Select Country *",
+      "governorate": "Select Governorate *",
+      "class": "Class *",
+      "childCode": "Child Code *",
+      "password": "Password *",
+      "confirmPassword": "Confirm Password *",
+      "searchCountries": "Search countries...",
+      "searchGovernorates": "Search governorates...",
+      "noGovernorates": "Please select a country first",
+      "terms": "I agree to the",
+      "termsLink": "Terms of Service",
+      "privacyLink": "Privacy Policy",
+      "submit": "Register as ",
+      "processing": "Processing...",
+      "haveAccount": "Already have an account? ",
+      "login": "Sign In",
+      "student": "Student",
+      "parent": "Parent"
+    },
+    "errors": {
+      "required": "This field is required",
+      "invalidEmail": "Invalid email",
+      "invalidPhone": "Phone must be 11 digits",
+      "passwordLength": "Password must be at least 8 characters",
+      "passwordMatch": "Passwords must match",
+      "nameLength": "Name is too long",
+      "acceptTerms": "You must accept the terms and conditions"
+    },
+    "serverError": "An error occurred during registration. Please try again."
+  }
 
+  },
+  "OTPVerify": {
+    "title": "Verify Your Account",
+    "subtitle": "We've sent a 4-digit verification code to",
+    "enterCode": "Enter Verification Code",
+    "verifyButton": {
+      "default": "Verify Account",
+      "verifying": "Verifying..."
+    },
+    "resend": {
+      "prompt": "Didn't receive the code?",
+      "countdown": "Resend in {countdown} seconds",
+      "button": {
+        "default": "Resend Code",
+        "sending": "Sending..."
+      },
+      "success": "New OTP sent successfully!"
+    },
+    "footer": {
+      "support": "Having trouble? Contact our support team for assistance.",
+      "expiry": "The verification code will expire in 10 minutes for security."
+    },
+    "demo": "Demo: Enter \"1234\" as OTP to simulate successful verification.",
+    "errors": {
+      "required": "OTP is required",
+      "length": "OTP must be exactly 4 digits",
+      "failed": "Verification failed. Please try again.",
+      "resendFailed": "Failed to resend OTP. Please try again."
     }
   },
+  "otpVerification": {
+    "title": "Verify Your Account",
+    "subtitle": "We've sent a 4-digit verification code to",
+    "otpLabel": "Enter Verification Code",
+    "otpPlaceholder": "0000",
+    "verifyButton": "Verify Account",
+    "verifyingButton": "Verifying...",
+    "didNotReceive": "Didn't receive the code?",
+    "resendButton": "Resend Code",
+    "resendingButton": "Sending...",
+    "resendSuccess": "New OTP sent successfully!",
+    "resendCountdown": "Resend in {{count}} seconds",
+    "supportText": "Having trouble? Contact our support team for assistance.",
+    "expiryNotice": "The verification code will expire in 10 minutes for security.",
+    "errors": {
+      "otpRequired": "OTP is required",
+      "invalidOtpLength": "OTP must be exactly 4 digits",
+      "verificationFailed": "Verification failed. Please try again.",
+      "resendFailed": "Failed to resend OTP. Please try again."
+    }
+  }
+  ,
+  "forgetPassword": {
+    "title": "Forgot Password",
+    "description": "Enter your email to receive a verification code",
+    "emailLabel": "Email Address",
+    "emailPlaceholder": "your.email@example.com",
+    "submitButton": "Send Verification Code",
+    "sendingButton": "Sending OTP...",
+    "success": {
+      "title": "OTP Sent Successfully!",
+      "subtitle": "We've sent a 4-digit verification code to",
+      "instructions": "Please check your email inbox and enter the verification code to reset your password.",
+      "tryAgain": "Send to Different Email",
+      "notReceived": "Didn't receive the email? Check your spam folder or try again.",
+      "expiry": "The verification code will expire in 10 minutes for security."
+    },
+    "errors": {
+      "emailRequired": "Email address is required",
+      "invalidEmail": "Please enter a valid email address",
+      "sendFailed": "Failed to send OTP. Please try again."
+    },
+    "securityNotice": {
+      "title": "Secure Verification",
+      "description": "We'll send a 4-digit code to verify your email address. This helps keep your account secure."
+    },
+    "terms": "By continuing, you agree to our terms of service and privacy policy.",
+    "demo": "<strong>Demo:</strong> Enter any valid email format to simulate sending OTP."
+  },
+  "resetPassword": {
+    "title": "Reset Your Password",
+    "subtitle": "Enter your email and new password below",
+    "emailLabel": "Email Address",
+    "emailPlaceholder": "your.email@example.com",
+    "passwordLabel": "New Password",
+    "passwordPlaceholder": "Enter your new password",
+    "confirmLabel": "Confirm New Password",
+    "confirmPlaceholder": "Confirm your new password",
+    "submitButton": "Reset Password",
+    "resettingButton": "Resetting Password...",
+    "rememberPassword": "Remember your password?",
+    "signInLink": "Sign in to your account",
+    "errors": {
+      "emailRequired": "Email is required",
+      "invalidEmail": "Please enter a valid email address",
+      "passwordRequired": "Password is required",
+      "passwordLength": "Password must be at least 8 characters long",
+      "confirmRequired": "Password confirmation is required",
+      "passwordMismatch": "Passwords do not match",
+      "generalError": "Failed to reset password. Please try again."
+    }
+  },
+
   "course":{
   "relatedVideos": "Related Videos",
    "subscriptions": "Subscriptions",
@@ -81,8 +215,6 @@
 
 }, 
 "class":{
-  
- 
     "title": "How Our Classes Work",
     "description": "Share your work to collaborate with our vibrant design element.",
     "steps": [
@@ -125,63 +257,78 @@
      "submitted": "SUBMITTED!",
      "successMessage": "Thank you for subscribing!"
    },
-  "about": {
-      "title": "About Me",
-      "name": "Michael Chen",
-      "description": "Professional, reliable, and innovative. This collaboration has been instrumental in achieving our project goals and milestones.",
-      "imageAlt": "Profile photo",
-      "testimonials": [
-        {
-          "text": "Trent from punchy rollie grab us a waggin school. Flat out like a bludger where he hasn't got a damper. As stands out like brass razoo heaps it'll be relo. As busy as a paddock.",
-          "author": "Nethor",
-          "position": "Developer",
-          "company": "Nethor Doct"
-        },
-        {
-          "text": "Amazing experience working with this team. They delivered exactly what we needed and exceeded our expectations in every way possible.",
-          "author": "Sarah Johnson",
-          "position": "Product Manager",
-          "company": "Tech Corp"
-        },
-        {
-          "text": "Professional, reliable, and innovative. This collaboration has been instrumental in achieving our project goals and milestones.",
-          "author": "Michael Chen",
-          "position": "CTO",
-          "company": "StartupXYZ"
-        }
-      ]
-    },
-    "slider": {
-      "buttons": {
-        "register": "Register Now",
-        "signin": "Sign In"
+
+
+  "slider": {
+    "slides": [
+      {
+        "title": "Education & Training",
+        "subtitle": "Organization",
+        "description": "We offer the most complete course package in the country, for the research, design and development of Education."
       },
-      "slides": [
-        {
-          "title": "Education & Training",
-          "subtitle": "Organization",
-          "description": "We offer the most complete course package in the country, for the research, design and development of Education."
-        },
-        {
-          "title": "Advanced Learning",
-          "subtitle": "Platform",
-          "description": "Discover innovative teaching methods and comprehensive educational resources designed for modern learning experiences."
-        },
-        {
-          "title": "Future Ready",
-          "subtitle": "Education",
-          "description": "Prepare students for tomorrow's challenges with our cutting-edge curriculum and expert-led training programs."
-        }
-      ],
-      "courses": [
-        "First Preparatory",
-        "Second Preparatory",
-        "Third Preparatory",
-        "First Secondary",
-        "Second Secondary",
-        "Third Secondary"
-      ]
+      {
+        "title": "Advanced Learning",
+        "subtitle": "Platform",
+        "description": "Discover innovative teaching methods and comprehensive educational resources designed for modern learning experiences."
+      },
+      {
+        "title": "Future Ready",
+        "subtitle": "Education",
+        "description": "Prepare students for tomorrow's challenges with our cutting-edge curriculum and expert-led training programs."
+      }
+    ],
+    "courses": [
+      "First Preparatory",
+      "Second Preparatory",
+      "Third Preparatory",
+      "First Secondary",
+      "Second Secondary",
+      "Third Secondary"
+    ],
+    "buttons": {
+      "register": "Register Now",
+      "signIn": "Sign In"
     }
+  },
+  
+  "topbar": {
+    "call": "Call",
+    "email": "Email",
+    "login": "Login",
+    "register": "Register",
+    "logout":"log out"
+  },
+
+  
+  "Terms": {
+    "title": "Terms and Conditions",
+    "welcome": "Welcome to our website. By accessing or using our services, you agree to comply with and be bound by the following terms and conditions:",
+    "termsList": {
+      "risk": "Use of the site is at your own risk.",
+      "modify": "We reserve the right to modify these terms at any time.",
+      "content": "All content provided on this site is for informational purposes only."
+    },
+    "details": "For more details, please read our full Terms and Conditions document."
+  },
+  
+  "Privacy": {
+    "title": "Privacy Policy",
+    "intro": "Your privacy is important to us. This policy outlines how we collect, use, and protect your information:",
+    "points": {
+      "consent": "We collect personal information only with your consent.",
+      "sharing": "Your data will not be shared with third parties without your permission.",
+      "security": "We implement security measures to protect your information."
+    },
+    "details": "For more details, please read our full Privacy Policy document."
+  }
+  
+ 
+
+
+ 
+
+
+
  
 
 

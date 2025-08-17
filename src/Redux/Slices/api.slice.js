@@ -5,7 +5,21 @@ import { apiRequest } from "../Apis/apiRequest";
 const apiSlice = createSlice({
   name: "api",
   initialState: {
-   
+  countries:{ data: null, loading: false, error: null },
+  register:{ data: null, loading: false, error: null },
+  profile:{ data: null, loading: false, error: null },
+  login:{ data: null, loading: false, error: null },
+  sendOTP:{data: null, loading: false, error: null},
+  resendotpforgetpassword:{data: null , loading: false, error: null},
+  verifycodeforgetpassword:{data: null , loading: false, error: null},
+  resetPassword:{data: null , loading: false, error: null},
+  verify:{data: null, loading: false, error: null},
+  about:{data: null, loading: false, error: null},
+  contactus:{data: null, loading: false, error: null},
+  terms:{data: null, loading: false, error: null},
+  privacy:{data: null, loading: false, error: null},
+  logout:{data: null, loading: false, error: null},
+  categories:{data: null, loading: false, error: null}
   },
   reducers: {
     clearApiError: (state, action) => {
