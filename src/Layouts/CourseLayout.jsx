@@ -8,6 +8,9 @@ import SubscriptionModal from "../Components/Ui/SubscriptionModal";
 import CourseCard from "../Components/Ui/CourseCard";
 import { useDispatch, useSelector } from "react-redux";
 import { apiRequest } from "../Redux/Apis/apiRequest";
+import { useTranslation } from "react-i18next";
+import FallingIconsBackground from "../Components/Ui/FallingIconsBackground";
+// import FallingIconsBackground from "../Components/Ui/FallingIconsBackground";
 
 export default function CourseLayout({
   courses, 
@@ -24,7 +27,7 @@ export default function CourseLayout({
 }) {
   let dispatch = useDispatch();
   let { categories } = useSelector((state) => state.api);
-  
+  const [t, i18n] = useTranslation();
   // Local state for selected category ID and pagination
   const [selectedCategoryId, setSelectedCategoryId] = useState(null);
   const [currentCategoryPage, setCurrentCategoryPage] = useState(1);
@@ -99,14 +102,28 @@ export default function CourseLayout({
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <DynamicBreadcrumb 
+      {/* <DynamicBreadcrumb 
         MainTitle={MainTitle}
         BreadCrumbs={[
           { label: `${Breadcrumb1}`, href: `/${Breadcrumb1}` },
           { label: `${Breadcrumb2}` },
         ]} 
-      />
+      /> */}
+      <DynamicBreadcrumb 
+  MainTitle={t('pageTitles.courses')}
+  BreadCrumbs={[
+    {label: t('breadcrumbs.home'), href: "/"},
+    {label: t('breadcrumbs.courses')}
+  ]}
+/>
 
+  {/* <FallingIconsBackground zIndex={0} opacity={0.28} /> */}
+
+   <FallingIconsBackground 
+        opacity={0.2}
+        count={35}
+        zIndex={0}
+      />
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-6 py-8">
         <div className="flex flex-col lg:flex-row gap-8">
@@ -116,7 +133,7 @@ export default function CourseLayout({
             <div className="relative my-4">
               <input
                 type="text"
-                placeholder="Search courses..."
+                placeholder={i18n.language=="ar"?   "  ابحث عن الدروس" : "Search for lessons..."}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full pl-4 pr-10 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
@@ -127,14 +144,19 @@ export default function CourseLayout({
             {/* Category Tabs */}
             <div className="mb-8">
               <div className="border-b border-gray-200">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-medium text-gray-900">Categories</h3>
-                  {categoriesMeta && (
-                    <span className="text-sm text-gray-500">
-                      Showing {categoriesData.length} of {categoriesMeta.total} categories
-                    </span>
-                  )}
-                </div>
+              <div className="flex items-center justify-between mb-4">
+  <h3 className="text-lg font-medium text-gray-900">
+    {t('categories.title')}
+  </h3>
+  {categoriesMeta && (
+    <span className="text-sm text-gray-500">
+      {t('categories.showingResults', { 
+        showing: categoriesData.length, 
+        total: categoriesMeta.total 
+      })}
+    </span>
+  )}
+</div>
                 
                 <nav className="-mb-px flex flex-wrap gap-2">
                   {/* All Courses Tab */}
@@ -146,21 +168,22 @@ export default function CourseLayout({
                         : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'
                     }`}
                   >
-                    All Courses
+                    {/* All Courses */}
+                    {t('categories.allCategories')}
                     <span className="ml-2 px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded-full">
                       {courses.length}
                     </span>
                   </button>
 
                   {/* Category Tabs */}
-                  {categoriesData.map((category) => {
+                  {categoriesData.map((category,index) => {
                     const categoryCoursesCount = courses.filter(course => 
                       course.category_id === category.id
                     ).length;
 
                     return (
                       <button
-                        key={category.id}
+                        key={category.id + category.name +index}
                         onClick={() => handleCategoryClick(category.id)}
                         className={`px-6 py-3 text-sm font-medium rounded-t-lg transition-colors duration-200 ${
                           selectedCategoryId === category.id
@@ -182,7 +205,9 @@ export default function CourseLayout({
                       onClick={loadMoreCategories}
                       className="px-6 py-3 text-sm font-medium text-yellow-600 hover:text-yellow-700 hover:bg-yellow-50 rounded-t-lg transition-colors duration-200 border border-yellow-200 border-dashed"
                     >
-                      Load More Categories
+                      {/* Load More Categories */}
+                      {t('categories.showingResults')}
+                      <ChevronDown className="inline-block ml-2 w-4 h-4"/>
                       <span className="ml-2 text-xs">
                         ({categoriesMeta.total - categoriesData.length} more)
                       </span>
@@ -195,7 +220,7 @@ export default function CourseLayout({
             {/* Results Header */}
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
               <div className="text-gray-600">
-                <p>
+                {/* <p>
                   Showing {searchFilteredCourses.length} of {filteredCourses.length} courses
                   {selectedCategoryId && (
                     <span className="ml-2 text-sm">
@@ -207,7 +232,28 @@ export default function CourseLayout({
                       for "{searchTerm}"
                     </span>
                   )}
-                </p>
+                </p> */}
+
+                <p>
+  {t('courses.showingResults', {
+    showing: searchFilteredCourses.length,
+    total: filteredCourses.length
+  })}
+  {selectedCategoryId && (
+    <span className="ml-2 text-sm">
+      {t('courses.inCategory', {
+        category: categoriesData.find(cat => cat.id === selectedCategoryId)?.name
+      })}
+    </span>
+  )}
+  {searchTerm && (
+    <span className="ml-2 text-sm">
+      {t('courses.forSearchTerm', {
+        term: searchTerm
+      })}
+    </span>
+  )}
+</p>
               </div>
             </div>
 

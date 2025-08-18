@@ -302,6 +302,8 @@
 
 import React, { useEffect, useRef } from 'react';
 
+import { useTranslation } from 'react-i18next';
+
 export default function MapComponent() {
   const mapRef = useRef(null);
   const mapInstanceRef = useRef(null);
@@ -364,6 +366,59 @@ export default function MapComponent() {
         ref={mapRef} 
         className="w-full z-5 h-96 rounded-lg shadow-lg border border-gray-300"
       />
+    </div>
+  );
+}
+
+
+
+
+
+export  function ClickableMapText() {
+  let { t, i18n } = useTranslation();
+  // Location data
+  const location = {
+    name: "London",
+    lat: 51.505,
+    lng: -0.09
+  };
+
+  // Function to open Google Maps
+  const openGoogleMaps = () => {
+    const url = `https://www.google.com/maps?q=${location.lat},${location.lng}`;
+    window.open(url, '_blank');
+  };
+
+  return (
+    <div className=" max-w-md mx-auto">
+      {/* Simple clickable text */}
+   
+
+
+      {/* Simple link style */}
+      <div className="">
+        <a 
+          href={`https://www.google.com/maps?q=${location.lat},${location.lng}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-yellow-600 hover:text-yellow-800 underline hover:no-underline transition-all duration-200"
+        >
+          {i18n.language=="ar"? "شاهد موقعنا" :"view location"} 
+        </a>
+      </div>
+
+      {/* Address-style clickable text
+      <div className="mt-6 p-3 bg-gray-50 rounded-lg">
+        <p className="text-sm text-gray-600 mb-1">Address:</p>
+        <div 
+          onClick={openGoogleMaps}
+          className="text-gray-800 hover:text-blue-600 cursor-pointer transition-colors duration-200 font-medium"
+        >
+          Central London, UK
+          <br />
+          <span className="text-sm text-gray-500">Click to view on map</span>
+        </div>
+      </div> */}
     </div>
   );
 }

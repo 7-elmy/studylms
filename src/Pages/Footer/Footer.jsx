@@ -154,7 +154,7 @@
 // }
 
 import React, { useEffect } from 'react';
-import logo from '../../assets/logo.png';
+import logo from '../../assets/logo.jpg';
 import { useDispatch, useSelector } from 'react-redux';
 import { apiRequest } from '../../Redux/Apis/apiRequest';
 import { Link } from 'react-router-dom';
@@ -206,15 +206,22 @@ export default function Footer() {
               {/* Company Info */}
               <div className="w-full sm:w-1/2 md:w-1/3 px-4 mb-8">
                 <div className="logo mb-4">
-                  <Link to="/">
-                    <img src={logo} alt="studyLMS" className="h-10" />
+
+                  <div className='flex items-center  gap-3'>
+                  <Link to="/login" className='bg-amber-200 rounded-full shadow-2xl w-16 h-16 gap-6 flex items-center justify-center overflow-hidden'>
+                    <img src={logo} alt="studyLMS" className="h-16 w-16 " />
                   </Link>
+
+                  <h1 className='text-white font-bold'>{i18n.language=="ar"? "ا / مصطفي النبوي" :"MR / MOSTAFA ELNABAWY"}</h1>
+
+
+                  </div>
                 </div>
                 <p className="mb-4 p-2">
                   {about?.data?.data?.description || t('footer.default_description')}
                 </p>
                 <Link 
-                  to="/" 
+                  to="/login" 
                   className="inline-block border border-gray-600 hover:bg-gray-500 hover:text-white text-gray-500 py-2 px-4 rounded text-[14px] font-bold"
                 >
                   {i18n.language === 'ar' ? 'الآن ابدأ التعلم' : 'Start Learning Now'}
@@ -280,7 +287,7 @@ export default function Footer() {
               <div className="flex flex-col sm:flex-row justify-between items-center">
                 <div className="order-2 sm:order-1 mt-4 sm:mt-0">
                   <p className='text-[10px]'>
-                    <Link to="/" className="hover:text-white text-sm">Studylms</Link> | 
+                    <Link to="/login" className="hover:text-white text-sm">Studylms</Link> | 
                     &copy; {new Date().getFullYear()} <Link to="/" className="hover:text-white">DesignFalls</Link>, {t('footer.all_rights_reserved')}
                   </p>
                 </div>

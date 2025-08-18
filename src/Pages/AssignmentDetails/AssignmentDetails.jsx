@@ -1573,7 +1573,7 @@ export default function AssignmentDetails() {
         <DynamicBreadcrumb
           MainTitle={assignmentInfo.course}
           BreadCrumbs={[
-            {label:"Home" , href:"/home"},
+            {label:"Home" , href:"/"},
             {label:"course Name" , href:"/courseId"},
             {label:"Assignment Results" , href:"/assignmentDetails"},
           ]}

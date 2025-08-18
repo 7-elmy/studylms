@@ -1,4 +1,5 @@
 {
+  "most":"Related videos",
   "navbar": {
     "home": "Home",
     "courses": "Courses", 
@@ -43,8 +44,8 @@
     "back":"Back To Selection",
     "login":{
         "loginForm":"Login Form",
-        "email":"Phone Or Email Address *",
-        "password":"Password",
+        "email":"Email Address Or Phone *",
+        "password":"Password *",
         "rememberme":"Remember Me",
         "forget":"Lost your password ?",
         "login":"Login",
@@ -341,16 +342,138 @@
       "security": "We implement security measures to protect your information."
     },
     "details": "For more details, please read our full Privacy Policy document."
-  }
+  },
+
+  
+  "contact": {
+    "title": "Contact Us",
+    "messageSent": "Message sent successfully!",
+    "contactDetails": "Contact Details",
+    "welcomeMessage": "Welcome to our Website. We are glad to have you around.",
+    "callUs": "GIVE US A CALL",
+    "emailUs": "SEND US A MESSAGE",
+    "visitUs": "VISIT OUR LOCATION",
+    "sendMessage": "Drop Us a Message",
+    "namePlaceholder": "Your Name",
+    "emailPlaceholder": "Email",
+    "messagePlaceholder": "Message",
+    "sendButton": "Send Message"
+  },
+  "breadcrumbs": {
+    "home": "Home",
+    "contact": "contact",
+    "courses": "Courses",
+     "subscriptions": "Subscriptions"
+  
+  },
+  "breadcrumbssub": {
+    "home": "Home",
+    "subscriptions": "subscriptions"
+  },
+  "pageTitles": {
+    "subscriptions": "Subscriptions",
+    "courses": "Courses"
+},
+"categories": {
+    "title": "Categories",
+    "showingResults": "Showing  More",
+    "allCategories": "All Categories"
+  },
+  "courses": {
+    "showingResults": "عرض {{showing}} من {{total}} كورس",
+    "inCategory": "في فئة \"{{category}}\"",
+    "forSearchTerm": "للبحث عن \"{{term}}\""
+  },
+
+
+  "subscriptions": {
+    "title": "Subscriptions",
+    "description": "Choose your learning plan"
+  },
   
  
+  "packages": {
+    "title": "Learning Packages",
+    "subtitle": "Discover our specialized learning programs",
+    "session": "Session",
+    "monthly": "Monthly",
+    "yearly": "Yearly",
+    "mostPopular": "Most Popular",
+    "bestValue": "Best Value",
+    "selected": "Selected ✓",
+    "startLearning": "Start Learning Journey",
+    "selectedPackage": "You selected the {name} package",
+    "packageType": "Subscription type: {type}",
+    "currency": "EGP",
+    "completePayment": "Complete Payment",
+    "changeSelection": "Change Selection",
+    "features": {
+      "interactive": "Interactive lessons",
+      "exercises": "Practice exercises",
+      "spelling": "Spelling review",
+      "texts": "Selected texts",
+      "session": {
+        "one": "One hour session",
+        "two": "Quick concept review",
+        "three": "Direct practical application"
+      },
+      "monthly": {
+        "one": "Weekly solved assignments",
+        "two": "Evaluation tests",
+        "three": "Continuous progress tracking",
+        "four": "Additional review sessions"
+      },
+      "yearly": {
+        "one": "Comprehensive curriculum",
+        "two": "Research project",
+        "three": "Creative writing workshops",
+        "four": "Digital reference library",
+        "five": "Certified completion certificate",
+        "six": "Year-round support"
+      }
+    }
+  },
 
+  
+  "profile": {
+    "student": "Student",
+    "parentOf": "Parent of",
+    "edit": "Edit Profile",
+    "cancel": "Cancel",
+    "save": "Save Changes",
+    "saving": "Saving...",
+    "updateSuccess": "Profile updated successfully!",
+    "updateError": "Error updating profile",
+    "profileInformation": "Profile Information",
+    "academicReports": "Academic Reports",
+    "personalInformation": "Personal Information",
+    "fullName": "Full Name",
+    "email": "Email Address",
+    "phone": "Phone Number",
+    "country": "Country",
+    "governorate": "Governorate",
+    "class": "Class",
+    "studentCode": "Student Code",
+    "childStudentCode": "Child's Student Code",
+    "selectCountry": "Select Country",
+    "selectGovernorate": "Select Governorate",
+    "selectClass": "Select Class",
+    "searchCountries": "Search countries...",
+    "searchGovernorates": "Search governorates...",
+    "searchClass": "Search class...",
+    "selectCountryFirst": "Please select a country first",
+    "noGovernorates": "No governorates found",
+    "noClass": "No classes found"
+  },
+  "validation": {
+    "nameRequired": "Name is required (minimum 2 characters)",
+    "emailInvalid": "Please enter a valid email address",
+    "phoneInvalid": "Please enter a valid phone number",
+    "countryRequired": "Please select a country",
+    "governorateRequired": "Please select a governorate",
+    "classRequired": "Please select a class"
+  }
 
- 
-
-
-
- 
 
 
 }

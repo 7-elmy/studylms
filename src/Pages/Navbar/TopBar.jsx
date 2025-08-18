@@ -116,7 +116,7 @@ let dispatch = useDispatch();
   </div>
 </div>
           {/* Authentication Links */}
-          {sessionStorage.getItem("token")? 
+          {sessionStorage.getItem("token") || localStorage.getItem("token")? 
           <div className="flex items-center">
             <div className="bg-yellow-500 hover:bg-yellow-400 transition-colors duration-200 px-4 py-1">
               <div className={`flex items-center ${i18n.language === 'ar' ? 'space-x-reverse' : ''} space-x-1 text-gray-500 font-medium`}>
@@ -136,7 +136,7 @@ let dispatch = useDispatch();
             <div className="bg-yellow-500 hover:bg-yellow-400 transition-colors duration-200 px-4 py-1">
               <div className={`flex items-center ${i18n.language === 'ar' ? 'space-x-reverse' : ''} space-x-1 text-gray-500 font-medium`}>
                 <Link
-                  to="/" 
+                  to="/login" 
                   className="hover:text-gray-700 cursor-pointer  transition-colors text-[12px] duration-200"
                 >
                   {t('topbar.login')}

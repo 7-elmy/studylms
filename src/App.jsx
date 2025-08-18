@@ -28,6 +28,8 @@ import ResetPassword from './Pages/Auth/ForgetPassword/resetPassword'
 import Terms from './Pages/Terms&Privacy/Terms'
 import Privacy from './Pages/Terms&Privacy/Privacy'
 import { ChevronUp } from 'lucide-react'
+import FallingIconsBackground from './Components/Ui/FallingIconsBackground'
+import ProtectedRoute from './Utils/ProtectedRoute'
 
 
 
@@ -63,13 +65,14 @@ function App() {
 
 
   return (
-    <div dir={i18n.language === "ar" ? "rtl" : "ltr"}>
+    <div dir={i18n.language === "ar" ? "rtl" : "ltr"} className='bg-gradient-to-br from-blue-50 via-yellow-50 to-purple-50'>
+     
     <BrowserRouter >
         <Routes>
           <Route element={<AuthLayout />}>
       {/* Child routes */}
      
-      <Route path="/" element={<LoginPage />} />
+      <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
       {/* forget password */}
       <Route path="/lost-password" element={< ForgetPassword/>} />
@@ -81,18 +84,44 @@ function App() {
 
     </Route>
           <Route  element={<MainLayout />}>
-      <Route path="/home" element={<Home />} />
+      <Route path="/" element={<Home />} />
       <Route path="/courses" element={<CoursesPage />} />
-      <Route path="/courses/:id" element={<CourseDetailPage />} />
+
+      {/* protected route  */}
+     
+      <Route path="/courses/:id" element={
+         <ProtectedRoute>
+           <CourseDetailPage />
+      </ProtectedRoute>
+        } />
+
+
+
+      <Route path="/assignmentDetails/:id" element={
+        <ProtectedRoute>
+           <AssignmentDetails />
+        
+      </ProtectedRoute>
+        
+        } />
+      <Route path="/QuizDetails/:id" element={
+        <ProtectedRoute>
+           <QuizComponent />
+      </ProtectedRoute>
+        
+        } />
+      <Route path="/profile" element={
+          // <ProtectedRoute>
+        
+           <ProfilePage />
+    // </ProtectedRoute> 
+        } />
       
       
       <Route path="/contact" element={<ContactUs />} />
       <Route path="/subscriptions" element={<Subscriptions />} />
-      <Route path="/assignmentDetails/:id" element={<AssignmentDetails />} />
-      <Route path="/QuizDetails/:id" element={<QuizComponent />} />
-      <Route path="/profile" element={<ProfilePage />} />
-      <Route path="/terms&conditions" element={<Terms />} />
-      <Route path="/privacy&policy" element={<Privacy />} />
+      <Route path="/terms" element={<Terms />} />
+      <Route path="/privacy" element={<Privacy />} />
 
     </Route>
        

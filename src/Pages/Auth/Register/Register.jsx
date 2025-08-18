@@ -872,6 +872,8 @@
 
 // export default RegisterPage;
 
+
+
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -882,6 +884,9 @@ import { Link, useNavigate } from 'react-router-dom';
 // Validation functions
 const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 const validatePhone = (phone) => /^[0-9]{11}$/.test(phone);
+
+
+
 
 // Initial form state
 const initialFormState = {
@@ -979,6 +984,27 @@ const RegisterPage = () => {
     return errorMessages[name] || '';
   };
 
+  // Add this function to check if the form is valid
+const isFormValid = () => {
+  // Check all required fields are filled
+  const requiredFields = ['name', 'phone', 'password', 'password_confirmation', 'terms'];
+  if (activeTab === 'student') {
+    requiredFields.push('email', 'country_id', 'governorate_id', 'class');
+  } else if (activeTab === 'parent') {
+    requiredFields.push('child_code');
+  }
+
+  const allFieldsFilled = requiredFields.every(field => {
+    const value = formData[field];
+    return value !== '' && value !== false && value !== undefined;
+  });
+
+  // Check there are no errors
+  const noErrors = Object.values(errors).every(error => error === '');
+
+  return allFieldsFilled && noErrors;
+};
+
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
     const fieldValue = type === 'checkbox' ? checked : value;
@@ -989,6 +1015,7 @@ const RegisterPage = () => {
       setErrors(prev => ({ ...prev, [name]: validateField(name, fieldValue) }));
     }
   };
+
 
   const handleBlur = (e) => {
     const { name } = e.target;
@@ -1105,10 +1132,50 @@ const RegisterPage = () => {
               />
               {touched.governorate_id && errors.governorate_id && <div className="text-red-500 text-sm mt-1">{errors.governorate_id}</div>}
 
-              <input type="text" name="class" placeholder={t('auth.Register.form.class')}
-                className={`border ${touched.class && errors.class ? 'border-red-500' : 'border-gray-200'} w-full p-3 rounded focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all duration-200`}
-                onChange={handleInputChange} onBlur={handleBlur} value={formData.class} />
-              {touched.class && errors.class && <div className="text-red-500 text-sm mt-1">{errors.class}</div>}
+           
+
+              {/* <Autocomplete
+  name="class"
+  placeholder={t('auth.Register.form.class')}
+  className={`${touched.class && errors.class ? 'border-red-500' : ''}`}
+  items={
+    t('slider.courses', { returnObjects: true }) 
+  //   [
+  //   { label: 'First Preparatory', value: 1 },
+  //   { label: 'Second Preparatory', value: 2 },
+  //   { label: 'Third Preparatory', value: 3 },
+  //   { label: 'First Secondary', value: 4 },
+  //   { label: 'Second Secondary', value: 5 },
+  //   { label: 'Third Secondary', value: 6 }
+  // ]
+
+}
+  value={formData.class}
+  onChange={handleInputChange}
+  onBlur={handleBlur}
+  searchPlaceholder={t('auth.Register.form.searchClass')}
+  noResultsText={t('auth.Register.form.noClass')}
+/> */}
+
+<Autocomplete
+  name="class"
+  placeholder={t('auth.Register.form.class')}
+  className={`${touched.class && errors.class ? 'border-red-500' : ''}`}
+  items={t('slider.courses', { returnObjects: true }).map((course, index) => ({
+    label: course,
+    value: index + 1, // assign numeric IDs
+  }))}
+  value={formData.class}
+  onChange={handleInputChange}
+  onBlur={handleBlur}
+  searchPlaceholder={t('auth.Register.form.searchClass')}
+  noResultsText={t('auth.Register.form.noClass')}
+/>
+
+{touched.class && errors.class && (
+  <div className="text-red-500 text-sm mt-1">{errors.class}</div>
+)}
+
             </>
           )}
 
@@ -1133,31 +1200,7 @@ const RegisterPage = () => {
             onChange={handleInputChange} onBlur={handleBlur} value={formData.password_confirmation} />
           {touched.password_confirmation && errors.password_confirmation && <div className="text-red-500 text-sm mt-1">{errors.password_confirmation}</div>}
 
-          {/* Terms and Conditions */}
-         {/* <div className='flex items-start justify-center space-x-3 pt-4 border-t border-gray-100'>
-  <input
-    type="checkbox"
-    id="terms"
-    name="terms"
-    className={`w-4 h-4 mt-1 text-yellow-500 ${touched.terms && errors.terms ? 'border-red-500' : 'border-gray-300'} rounded focus:ring-yellow-500 flex-shrink-0`}
-    onChange={handleInputChange}
-    checked={formData.terms}
-  />
-  <label htmlFor="terms" className='text-sm text-gray-600 cursor-pointer leading-relaxed'>
-    {t('auth.Register.form.terms', {
-      terms: (
-        <Link to="/terms" className="text-yellow-500 underline hover:text-yellow-600">
-          {t('auth.Register.form.termsLink')}
-        </Link>
-      ),
-      privacy: (
-        <Link to="/privacy" className="text-yellow-500 underline hover:text-yellow-600">
-          {t('auth.Register.form.privacyLink')}
-        </Link>
-      )
-    })}
-  </label>
-</div> */}
+          
          <div className='flex items-start justify-center space-x-3 pt-4 border-t border-gray-100'>
   <input
     type="checkbox"
@@ -1180,9 +1223,9 @@ const RegisterPage = () => {
           {touched.terms && errors.terms && <div className="text-red-500 text-sm -mt-3 text-center">{errors.terms}</div>}
 
           {/* Submit Button */}
-          <button type="submit"
+          {/* <button type="submit"
             className={`w-full p-3 px-8 text-white rounded font-medium transition-all duration-200 shadow-sm hover:shadow-md ${
-              !isSubmitting ? 'bg-yellow-500 hover:bg-yellow-600 cursor-pointer transform hover:scale-[1.02]' : 'bg-gray-400 cursor-not-allowed'
+              !isSubmitting || !terms ? 'bg-yellow-500 hover:bg-yellow-600 cursor-pointer transform hover:scale-[1.02]' : 'bg-gray-400 cursor-not-allowed'
             }`}
             disabled={isSubmitting}>
             {isSubmitting ? (
@@ -1196,12 +1239,32 @@ const RegisterPage = () => {
             ) : (
               t('auth.Register.form.submit') + t(activeTab=="student" ? 'auth.Register.form.student': 'auth.Register.form.parent')
             )}
-          </button>
+          </button> */}
+
+          <button 
+  type="submit"
+  className={`w-full p-3 px-8 text-white rounded font-medium transition-all duration-200 shadow-sm hover:shadow-md ${
+    isFormValid() && !isSubmitting ? 'bg-yellow-500 hover:bg-yellow-600 cursor-pointer transform hover:scale-[1.02]' : 'bg-gray-400 cursor-not-allowed'
+  }`}
+  disabled={!isFormValid() || isSubmitting}
+>
+  {isSubmitting ? (
+    <span className="flex items-center justify-center">
+      <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+      </svg>
+      {t('auth.Register.form.processing')}
+    </span>
+  ) : (
+    t('auth.Register.form.submit') + t(activeTab === 'student' ? 'auth.Register.form.student' : 'auth.Register.form.parent')
+  )}
+</button>
 
           {/* Login Link */}
           <p className='text-sm text-gray-600 text-center'>
            {  t('auth.Register.form.haveAccount')  }
-              <Link to="/" className="text-yellow-500 hover:text-yellow-600 font-medium">{t('auth.Register.form.login')}</Link>
+              <Link to="/lo" className="text-yellow-500 hover:text-yellow-600 font-medium">{t('auth.Register.form.login')}</Link>
           </p>
         </form>
       </div>

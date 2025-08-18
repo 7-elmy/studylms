@@ -3,7 +3,7 @@ import { Search, Menu, X, ChevronDown, Check, CheckCircle } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
 import TopBar from "./TopBar";
-import logo from "../../assets/logo-dark.png";
+import logo from "../../assets/logo.jpg";
 import arabic from "../../assets/eg.jpeg";
 import english from "../../assets/usa.png";
 import { getInitials } from "../../Utils/getInitials";
@@ -62,7 +62,7 @@ const Header = () => {
   const menuItems = [
     {
       name: t("navbar.home"),
-      href: "/home",
+      href: "/",
     },
     {
       name: t("navbar.courses"),
@@ -131,11 +131,11 @@ const Header = () => {
         {/* Main header */}
         <div className="bg-white z-50 shadow-sm">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex items-center justify-between h-16 lg:h-20">
+            <div className="flex items-center justify-between h-16 lg:h-20 py-2">
               {/* Logo */}
-              <div className="flex-shrink-0">
-                <a href="home.html" className="flex items-center">
-                  <img src={logo} alt="" />
+              <div className="flex-shrink-0 ">
+                <a href="home.html" className="flex items-center w-14 h-14 md:w-16 md:h-16 bg-amber-100 rounded-full overflow-hidden">
+                  <img src={logo} alt="" className="w-14 h-14 md:w-16 md:h-16 " />
                 </a>
               </div>
 
@@ -252,10 +252,10 @@ const Header = () => {
                       </div>
                     )}
                   </div>
-{sessionStorage.getItem("token")? 
+{sessionStorage.getItem("token") || localStorage.getItem("token")? 
                   <Link to={"/profile"}>
                     <div className=" w-10 h-10  cursor-pointer rounded-full flex justify-center items-center bg-yellow-100 text-yellow-400">
-                      {getInitials("Ahmed", "helmy")}
+                      {getInitials(sessionStorage.getItem("name"))}
                     </div>
                   </Link>
 
@@ -351,7 +351,7 @@ const Header = () => {
                     <div key={index}>
                       <div className="flex items-center justify-between">
                         <Link
-                          to={item.submenu ? "#" : item.href}
+                          to={item.submenu ? "/" : item.href}
                           className="block px-4 py-3 text-gray-700 hover:text-yellow-600 hover:bg-gray-50 uppercase text-sm font-medium flex-1 transition-colors"
                           onClick={
                             item.submenu
@@ -393,13 +393,23 @@ const Header = () => {
                       )}
                     </div>
                   ))}
+                  {sessionStorage.getItem("token") || localStorage.getItem("token")?
+                  <Link to={"/profile"} className="flex gap-4 items-center px-4 py-3 text-gray-700 hover:text-yellow-600 hover:bg-gray-50 uppercase text-sm font-medium transition-colors">
+                    <div className=" w-10 h-10  rounded-full flex justify-center items-center bg-yellow-100 text-yellow-400">
+                      {getInitials(sessionStorage.getItem("name"))}   
+                    </div>
+                    <span className="text-gray-700">Profile</span>
+                  </Link>
+                  : ""}
+                
 
-                       <Link to={"/profile"} className="flex gap-4 items-center">
-                  <div className=" w-10 h-10  rounded-full flex justify-center items-center bg-yellow-100 text-yellow-400">
-                    {getInitials("Ahmed", "helmy")}
-                  </div>
-                  <span className="text-gray-700">Profile</span>
-                </Link>
+{/* 
+                        <Link to={"/profile"} className="flex gap-4 items-center">
+                //   <div className=" w-10 h-10  rounded-full flex justify-center items-center bg-yellow-100 text-yellow-400">
+                //     {getInitials("Ahmed", "helmy")}
+                //   </div>
+                //   <span className="text-gray-700">Profile</span>
+                 </Link> */}
                 </div>
               </div>
             )}

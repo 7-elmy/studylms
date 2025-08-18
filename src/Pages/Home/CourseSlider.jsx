@@ -391,7 +391,7 @@ const CourseSlider = () => {
         :
         <>
         
-        <h2 className="text-3xl font-bold text-gray-900">Most Popular Courses</h2>
+        <h2 className="text-3xl font-bold text-gray-900">{t("most")}</h2>
         <div dir='ltr' className="flex space-x-2">
           <button
             onClick={prevSlide}

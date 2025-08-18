@@ -1,4 +1,5 @@
 {
+  "most":"فيديوهات ذات صلة",
   "navbar": {
     "home": "الرئيسية",
     "courses": "الدورات",
@@ -352,9 +353,98 @@
       "security": "نقوم بتنفيذ إجراءات أمنية لحماية معلوماتك."
     },
     "details": "لمزيد من التفاصيل، يرجى قراءة وثيقة سياسة الخصوصية الكاملة."
+  },
+
+  "contact": {
+    "title": "اتصل بنا",
+    "messageSent": "تم إرسال الرسالة بنجاح!",
+    "contactDetails": "تفاصيل الاتصال",
+    "welcomeMessage": "مرحبًا بكم في موقعنا. يسعدنا وجودكم هنا.",
+    "callUs": "اتصل بنا",
+    "emailUs": "أرسل لنا رسالة",
+    "visitUs": "قم بزيارتنا",
+    "sendMessage": "أرسل لنا رسالة",
+    "namePlaceholder": "اسمك",
+    "emailPlaceholder": "البريد الإلكتروني",
+    "messagePlaceholder": "الرسالة",
+    "sendButton": "إرسال الرسالة"
+  },
+  "breadcrumbs": {
+    "home": "الرئيسية",
+    "contact": "اتصل بنا",
+    "courses": "الكورسات",
+     "subscriptions": "الاشتراكات"
+
+  },
+  "breadcrumbssub": {
+    "home": "الرئيسية",
+    "subscriptions": "الاشتراكات"
+  },
+  "pageTitles": {
+    "subscriptions": "الاشتراكات",
+     "courses": "الكورسات"
+  },
+   "categories": {
+    "title": "الفئات",
+    "showingResults": " عرض المزيد ",
+    "allCategories": "جميع الفئات"
+  },
+  "courses": {
+    "showingResults": "عرض {{showing}} من {{total}} كورس",
+    "inCategory": "في فئة \"{{category}}\"",
+    "forSearchTerm": "للبحث عن \"{{term}}\""
+  },
+
+  "subscriptions": {
+    "title": "الاشتراكات",
+    "description": "اختر خطة التعلم الخاصة بك"
+  },
+
+  "packages": {
+    "title": "الباقات التعليمية",
+    "subtitle": "اكتشف برامجنا التعليمية المتخصصة",
+    "session": "الحصة",
+    "monthly": "شهري",
+    "yearly": "سنوي",
+    "mostPopular": "الأكثر اختياراً",
+    "bestValue": "أفضل قيمة",
+    "selected": "تم الاختيار ✓",
+    "startLearning": "ابدأ رحلة التعلم",
+    "selectedPackage": "لقد اخترت باقة {name}",
+    "packageType": "نوع الاشتراك: {type}",
+    "currency": "جنيه",
+    "completePayment": "إتمام عملية الدفع",
+    "changeSelection": "تغيير الاختيار",
+    "features": {
+      "interactive": "دروس تفاعلية",
+      "exercises": "تمارين تطبيقية",
+      "spelling": "مراجعة الإملاء",
+      "texts": "نصوص مختارة",
+      "session": {
+        "one": "حصة واحدة مدتها ساعة",
+        "two": "مراجعة سريعة للمفاهيم",
+        "three": "تطبيق عملي مباشر"
+      },
+      "monthly": {
+        "one": "واجبات أسبوعية محلولة",
+        "two": "اختبارات تقييمية",
+        "three": "متابعة مستمرة للتقدم",
+        "four": "جلسات مراجعة إضافية"
+      },
+      "yearly": {
+        "one": "منهج شامل لجميع المستويات",
+        "two": "مشروع بحثي",
+        "three": "ورش كتابة إبداعية",
+        "four": "مكتبة رقمية للمراجع",
+        "five": "شهادة إتمام معتمدة",
+        "six": "دعم مستمر طوال العام"
+      }
+    }
   }
+
+
+}
 
 
    
 
-}

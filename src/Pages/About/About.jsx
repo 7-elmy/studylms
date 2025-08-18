@@ -24,7 +24,12 @@ export default function About() {
   useEffect(()=>{
     dispatch(apiRequest({
       entity: "about",
-      url:"api/about_us"
+      url:"api/about_us",
+      method: "GET",
+       headers: {
+             "Accept-Language": localStorage.getItem('language') || 'en',
+              
+            }
     }))
   },[dispatch , localStorage.getItem('language') ]);
 

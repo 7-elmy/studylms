@@ -21,6 +21,7 @@ const apiSlice = createSlice({
   logout:{data: null, loading: false, error: null},
   categories:{data: null, loading: false, error: null},
   Packages:{data: null, loading: false, error: null},
+  updateProfile:{data: null, loading: false, error: null},
   },
   reducers: {
     clearApiError: (state, action) => {
