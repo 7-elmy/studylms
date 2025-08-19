@@ -32,6 +32,23 @@ export default function CourseDetailPage() {
     }
   ]);
 
+   const videos = [
+    {
+      id: "xfgWXWyWWKc",
+      title: "Advanced Analytics & Data Visualization",
+      description: "Learn cutting-edge techniques for transforming raw data into actionable business insights using modern visualization tools.",
+      duration: "24:15",
+      category: "Analytics"
+    },
+    {
+      id: "dQw4w9WgXcQ", 
+      title: "Enterprise Security Architecture",
+      description: "Comprehensive guide to implementing robust security frameworks in large-scale enterprise environments.",
+      duration: "18:42",
+      category: "Security"
+    }
+  ];
+
   const handleRatingSubmit = async () => {
     if (userRating === 0) {
       alert("Please select a rating");
@@ -120,6 +137,74 @@ export default function CourseDetailPage() {
             <p className="text-gray-600 leading-relaxed">
               Capitalize on low hanging fruit to identify a ballpark value added activity beta test Override the digital divide with additional clickthroughs from DevOps. Nanotechnology immersion along the information highway will close the loop on focusing solely on the bottom line. Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment bring to the table win-win survival strategies to ensure proactive domination. At the end of the day, going forward, a new normal that has evolved from generation X is on the runway heading towards a streamlined cloud solution generated content in real-time will have multiple touchpoints for offshoring. Capitalize on low hanging fruit to identify a ballpark value added activity beta test Override the digital divide with additional astronomers. Trillion and billions upon billions upon billions upon billions upon billions. upon billions upon billions!
             </p>
+          </div>
+        );
+      case "videos":
+        return (
+          <div className="prose  prose-gray max-w-none">
+             <div className="max-w-7xl mx-auto p-6">
+      {/* Header Section */}
+      <div className="text-center mb-12">
+        {/* <h1 className="text-4xl font-bold text-gray-900 mb-4">Professional Video Library</h1>
+        <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          Explore our curated collection of expert-led training videos designed to elevate your professional skills and drive business success.
+        </p> */}
+      </div>
+
+      {/* Videos Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {videos.map((video, index) => (
+          <div key={video.id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+            {/* Video Container */}
+            <div className="relative w-full h-0 pb-[56.25%] bg-gray-100">
+              <iframe
+                className="absolute top-0 left-0 w-full h-full"
+                src={`https://www.youtube.com/embed/${video.id}?modestbranding=1&showinfo=0&rel=0&controls=1&disablekb=1&fs=1&iv_load_policy=3&cc_load_policy=0&loop=0&autoplay=0&mute=0`}
+                title={video.title}
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
+            
+            {/* Video Info */}
+            <div className="p-6">
+              <div className="flex items-center justify-between mb-3">
+                <span className="inline-block bg-blue-100 text-blue-800 text-xs font-semibold px-3 py-1 rounded-full">
+                  {video.category}
+                </span>
+                <span className="text-sm text-gray-500 font-medium">
+                  {video.duration}
+                </span>
+              </div>
+              
+              <h3 className="text-xl font-bold text-gray-900 mb-3 leading-tight">
+                {video.title}
+              </h3>
+              
+              {/* <p className="text-gray-600 leading-relaxed mb-4">
+                {video.description}
+              </p> */}
+              
+              {/* <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-2">
+                  <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+                    <span className="text-white text-sm font-bold">P</span>
+                  </div>
+                  <span className="text-sm text-gray-700 font-medium">Professional Series</span>
+                </div>
+                
+                <button className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors duration-200">
+                  Watch Now
+                </button>
+              </div> */}
+            </div>
+          </div>
+        ))}
+      </div>
+
+     
+    </div>
           </div>
         );
       case "files":
@@ -283,14 +368,27 @@ export default function CourseDetailPage() {
                 </div>
               </div>
               
-              <div className="w-full h-64 bg-gradient-to-br from-blue-100 to-purple-100 rounded-lg mb-8"></div>
+              <div className="w-full h-[600px] bg-gradient-to-br from-blue-100 to-purple-100 rounded-lg mb-8">
+                <iframe
+                className="w-full h-full rounded-lg"
+        
+        src="https://www.youtube.com/embed/xfgWXWyWWKc"
+        title="YouTube video player"
+        frameBorder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+      ></iframe>
+       
+
+     
+              </div>
             </div>
 
-            <div className="flex justify-end items-center">
+            {/* <div className="flex justify-end items-center">
               <div className="md:w-1/4">
                 <SubscriptionModal/>
               </div>
-            </div>
+            </div> */}
 
             <div className="mb-8 border-b border-gray-200">
               <nav className="-mb-px flex space-x-8">
@@ -303,6 +401,16 @@ export default function CourseDetailPage() {
                   }`}
                 >
                   Description
+                </button>
+                <button
+                  onClick={() => setActiveTab("videos")}
+                  className={`whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm ${
+                    activeTab === "videos"
+                      ? "border-yellow-400 text-yellow-500"
+                      : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                  }`}
+                >
+                 Videos
                 </button>
                 <button
                   onClick={() => setActiveTab("files")}
@@ -368,3 +476,8 @@ export default function CourseDetailPage() {
     </div>
   );
 }
+
+
+
+
+

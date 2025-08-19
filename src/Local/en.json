@@ -13,7 +13,7 @@
       "home_1": "Home 1",
       "home_2": "Home 2", 
       "home_3": "Home 3",
-      "course_list": "Course List",
+      "course_list": "Subscription Courses",
       "course_single": "Course Single",
       "event_list": "Event List",
       "event_single": "Event Single",
@@ -227,7 +227,7 @@
   "course":{
   "relatedVideos": "Related Videos",
    "subscriptions": "Subscriptions",
-   "viewDetails":"view Details",
+   "viewDetails":"View Details",
    "confirm":"Confirm Subscription",
    "cancel":"Cancel",
     "free": "FREE",
@@ -303,9 +303,7 @@
       "First Preparatory",
       "Second Preparatory",
       "Third Preparatory",
-      "First Secondary",
-      "Second Secondary",
-      "Third Secondary"
+      "First Secondary"
     ],
     "buttons": {
       "register": "Register Now",
@@ -377,13 +375,15 @@
 "categories": {
     "title": "Categories",
     "showingResults": "Showing  More",
-    "allCategories": "All Categories"
+    "allCategories": "All Categories",
+    "loadMore": "Load More"
   },
   "courses": {
-    "showingResults": "عرض {{showing}} من {{total}} كورس",
-    "inCategory": "في فئة \"{{category}}\"",
-    "forSearchTerm": "للبحث عن \"{{term}}\""
-  },
+  "showingResults": "Showing {{showing}} of {{total}} courses",
+  "inCategory": "in category \"{{category}}\"",
+  "forSearchTerm": "for search term \"{{term}}\""
+},
+
 
 
   "subscriptions": {

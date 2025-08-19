@@ -577,6 +577,256 @@
 
 
 
+// import { useRef, useEffect, useState } from 'react';
+// import { useTranslation } from 'react-i18next';
+// import { Link } from 'react-router-dom';
+
+// export default function MainSlider() {
+//   const { t, i18n } = useTranslation();
+//   const [currentSlide, setCurrentSlide] = useState(0);
+//   const intervalRef = useRef(null);
+//   const totalSlides = 3;
+
+//   const slides = t('slider.slides', { returnObjects: true });
+//   const courses = t('slider.courses', { returnObjects: true });
+
+//   const goToSlide = (index) => {
+//     setCurrentSlide(index);
+//     resetAnimations();
+//   };
+
+//   const nextSlide = () => {
+//     setCurrentSlide((prev) => (prev + 1) % totalSlides);
+//   };
+
+//   const prevSlide = () => {
+//     setCurrentSlide((prev) => (prev - 1 + totalSlides) % totalSlides);
+//   };
+
+//   const resetAnimations = () => {
+//     const animatedElements = document.querySelectorAll('.animate-element');
+//     animatedElements.forEach(el => {
+//       el.classList.remove('animate-active');
+//       setTimeout(() => {
+//         el.classList.add('animate-active');
+//       }, 50);
+//     });
+//   };
+
+//   useEffect(() => {
+//     resetAnimations();
+    
+//     if (intervalRef.current) {
+//       clearInterval(intervalRef.current);
+//     }
+    
+//     intervalRef.current = setInterval(() => {
+//       nextSlide();
+//     }, 5000);
+
+//     return () => {
+//       if (intervalRef.current) {
+//         clearInterval(intervalRef.current);
+//       }
+//     };
+//   }, [currentSlide, i18n.language]);
+
+//   useEffect(() => {
+//     resetAnimations();
+//   }, [currentSlide, i18n.language]);
+
+//   const currentSlideData = slides[currentSlide];
+
+//   return (
+//     <>
+//       <style dangerouslySetInnerHTML={{
+//         __html: `
+//           @keyframes fadeInUp {
+//             from {
+//               opacity: 0;
+//               transform: translateY(40px);
+//             }
+//             to {
+//               opacity: 1;
+//               transform: translateY(0);
+//             }
+//           }
+
+//           @keyframes fadeInLeft {
+//             from {
+//               opacity: 0;
+//               transform: translateX(${i18n.language === 'ar' ? '40px' : '-40px'});
+//             }
+//             to {
+//               opacity: 1;
+//               transform: translateX(0);
+//             }
+//           }
+
+//           @keyframes fadeInScale {
+//             from {
+//               opacity: 0;
+//               transform: scale(0.9);
+//             }
+//             to {
+//               opacity: 1;
+//               transform: scale(1);
+//             }
+//           }
+
+//           .animate-element {
+//             opacity: 0;
+//             transition: all 0.3s ease;
+//           }
+
+//           .animate-title.animate-active {
+//             animation: fadeInUp 1s ease-out forwards;
+//             animation-delay: 0.2s;
+//           }
+
+//           .animate-subtitle.animate-active {
+//             animation: fadeInLeft 0.8s ease-out forwards;
+//             animation-delay: 0.5s;
+//           }
+
+//           .animate-description.animate-active {
+//             animation: fadeInUp 0.8s ease-out forwards;
+//             animation-delay: 0.8s;
+//           }
+
+//           .animate-buttons.animate-active {
+//             animation: fadeInUp 0.8s ease-out forwards;
+//             animation-delay: 1.1s;
+//           }
+
+//           .animate-course.animate-active {
+//             animation: fadeInScale 0.6s ease-out forwards;
+//           }
+
+//           .button-glow:hover {
+//             box-shadow: 0 0 20px rgba(234, 179, 8, 0.5);
+//           }
+
+//           .glassmorphism {
+//             background: rgba(255, 255, 255, 0.1);
+//             backdrop-filter: blur(10px);
+//             border: 1px solid rgba(255, 255, 255, 0.1);
+//           }
+//         `
+//       }} />
+
+//       <div 
+//         className={`relative min-h-screen pt-12 md:pt-8 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 overflow-hidden ${i18n.language === 'ar' ? 'rtl' : 'ltr'}`}
+//         dir={i18n.language === 'ar' ? 'rtl' : 'ltr'}
+//       >
+//         {/* Background Pattern */}
+//         <div className="absolute inset-0 opacity-5">
+//           <div className="absolute inset-0 bg-gradient-radial from-white to-transparent"></div>
+//         </div>
+
+//         {/* Animated Background Elements */}
+//         <div className="absolute inset-0 overflow-hidden pointer-events-none">
+//           <div className="absolute top-20 left-10 w-32 h-32 bg-yellow-500 rounded-full opacity-10 animate-pulse"></div>
+//           <div className="absolute bottom-20 right-10 w-24 h-24 bg-blue-500 rounded-full opacity-10 animate-bounce"></div>
+//           <div className="absolute top-1/2 left-1/4 w-16 h-16 bg-green-500 rounded-full opacity-10 animate-ping"></div>
+//         </div>
+
+//         {/* Main Content */}
+//         <div className="relative z-10 min-h-screen flex flex-col ">
+//           {/* Header Content */}
+
+//           <div className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8">
+//             <div className="max-w-7xl flex w-full">
+//               <div className={`text-center ${i18n.language === 'ar' ? 'text-right' : 'text-left'}`}>
+//                 {/* Title */}
+//                 <div className="mb-6 sm:mb-8">
+//                   <h1 className="animate-element animate-title text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white mb-2 sm:mb-4 leading-tight">
+//                     {currentSlideData.title}
+//                   </h1>
+//                   <h2 className="animate-element animate-subtitle text-2xl sm:text-2xl md:text-3xl lg:text-5xl xl:text-5xl font-light text-yellow-400 mb-4 sm:mb-6">
+//                     {currentSlideData.subtitle}
+//                   </h2>
+//                 </div>
+
+//                 {/* Description */}
+//                 <p className={`animate-element animate-description text-base sm:text-lg md:text-xl text-gray-300 max-w-3xl mx-auto lg:mx-0 mb-6 sm:mb-8 leading-relaxed px-4 lg:px-0 ${i18n.language === 'ar' ? 'text-right' : 'text-left'}`}>
+//                   {currentSlideData.description}
+//                 </p>
+
+//                 {/* Buttons */}
+//                 <div className={`animate-element animate-buttons flex flex-col sm:flex-row gap-3 sm:gap-4 ${i18n.language === 'ar' ? 'sm:flex-row-reverse' : ''} justify-center lg:justify-start mb-8 sm:mb-12 px-4 lg:px-0`}>
+//                   <Link 
+//                     to="/register" 
+//                     className="bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-semibold text-base sm:text-lg transition-all duration-300 transform hover:scale-105 button-glow shadow-lg text-center"
+//                   >
+//                     {t('slider.buttons.register')}
+//                   </Link>
+//                   <Link 
+//                     to="/login" 
+//                     className="glassmorphism text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-semibold text-base sm:text-lg hover:bg-white hover:bg-opacity-20 transition-all duration-300 transform hover:scale-105 text-center"
+//                   >
+//                     {t('slider.buttons.signIn')}
+//                   </Link>
+//                 </div>
+//               </div>
+//             </div>
+//           </div>
+
+//           {/* Course Grid */}
+//           <div className="px-4 sm:px-6 lg:px-8 mb-12 sm:pb-8">
+//             <div className="max-w-7xl mx-auto">
+//               <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4 lg:gap-6">
+//                 {courses.map((course, index) => (
+//                   <div
+//                     key={index}
+//                     className="animate-element animate-course"
+//                     style={{ 
+//                       animationDelay: `${1.4 + (index * 0.1)}s`,
+//                       opacity: 0
+//                     }}
+//                   >
+//                     <div className="glassmorphism rounded-lg p-3 sm:p-4 hover:bg-opacity-20 transition-all duration-300 transform hover:-translate-y-1 border-l-4 border-yellow-500 group cursor-pointer min-h-[60px] flex items-center">
+//                       <p className="text-white group-hover:text-yellow-400 transition-colors duration-300 font-medium text-sm sm:text-base text-center w-full">
+//                         {course}
+//                       </p>
+//                     </div>
+//                   </div>
+//                 ))}
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+
+//         {/* Pagination Dots */}
+//         <div className="absolute bottom-6 sm:bottom-8 left-1/2 transform -translate-x-1/2">
+//           <div className="flex space-x-2 sm:space-x-3">
+//             {slides.map((_, index) => (
+//               <button
+//                 key={index}
+//                 onClick={() => goToSlide(index)}
+//                 className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all duration-300 ${
+//                   index === currentSlide
+//                     ? 'bg-yellow-500 w-6 sm:w-8'
+//                     : 'bg-white bg-opacity-40 hover:bg-opacity-60'
+//                 }`}
+//               />
+//             ))}
+//           </div>
+//         </div>
+
+//         {/* Progress Bar */}
+//         <div className="absolute top-0 left-0 w-full h-1 bg-gray-800 bg-opacity-20">
+//           <div 
+//             className="h-full bg-gradient-to-r from-yellow-500 to-yellow-400 transition-all duration-500 ease-linear"
+//             style={{ width: `${((currentSlide + 1) / totalSlides) * 100}%` }}
+//           />
+//         </div>
+//       </div>
+//     </>
+//   );
+// }
+
+
 import { useRef, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
@@ -716,7 +966,8 @@ export default function MainSlider() {
       }} />
 
       <div 
-        className={`relative min-h-screen pt-12 md:pt-8 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 overflow-hidden ${i18n.language === 'ar' ? 'rtl' : 'ltr'}`}
+        // className={`relative min-h-screen pt-12 md:pt-8 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 overflow-hidden ${i18n.language === 'ar' ? 'rtl' : 'ltr'}`}
+        className={`relative min-h-screen pt-12 md:pt-8  bg-[#222222]  overflow-hidden ${i18n.language === 'ar' ? 'rtl' : 'ltr'}`}
         dir={i18n.language === 'ar' ? 'rtl' : 'ltr'}
       >
         {/* Background Pattern */}
@@ -732,9 +983,12 @@ export default function MainSlider() {
         </div>
 
         {/* Main Content */}
-        <div className="relative z-10 min-h-screen flex flex-col">
+        <div className="relative z-10 min-h-screen  ">
           {/* Header Content */}
-          <div className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8">
+<div className="grid grid-cols-12 gap-2  p-8" >
+
+  <div className="col-span-12 md:col-span-8">
+      <div className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8">
             <div className="max-w-7xl flex w-full">
               <div className={`text-center ${i18n.language === 'ar' ? 'text-right' : 'text-left'}`}>
                 {/* Title */}
@@ -770,11 +1024,12 @@ export default function MainSlider() {
               </div>
             </div>
           </div>
-
-          {/* Course Grid */}
+  </div>
+  <div className="col-span-12 md:col-span-4 ">
+  {/* Course Grid */}
           <div className="px-4 sm:px-6 lg:px-8 mb-12 sm:pb-8">
-            <div className="max-w-7xl mx-auto">
-              <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4 lg:gap-6">
+            <div className="max-w-7xl mx-auto pt-3">
+              <div className="grid grid-cols-1  gap-6 sm:gap-4 lg:gap-6">
                 {courses.map((course, index) => (
                   <div
                     key={index}
@@ -794,6 +1049,11 @@ export default function MainSlider() {
               </div>
             </div>
           </div>
+  </div>
+</div>
+        
+
+        
         </div>
 
         {/* Pagination Dots */}

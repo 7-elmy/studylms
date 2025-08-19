@@ -67,10 +67,10 @@ const Header = () => {
     {
       name: t("navbar.courses"),
       href: "/courses",
-      // submenu: [
-      //     { name: t("navbar.submenu.course_list"), href: '/courses' },
-      //     { name: t("navbar.submenu.course_single"), href: '/' }
-      // ]
+      submenu: [
+          { name: t("navbar.submenu.course_list"), href: '/courses/subscriptions' },
+          // { name: t("navbar.submenu.course_single"), href: '/' }
+      ]
     },
     // {
     //     name: t("navbar.events"),

@@ -204,18 +204,18 @@ export default function Footer() {
           <aside className="container mx-auto px-4 py-12">
             <div className="flex flex-wrap -mx-4">
               {/* Company Info */}
-              <div className="w-full sm:w-1/2 md:w-1/3 px-4 mb-8">
-                <div className="logo mb-4">
+              <div className="w-full  sm:w-1/2 md:w-1/3 px-4 mb-8">
+                <div className="logo mb-4 ">
 
-                  <div className='flex items-center  gap-3'>
                   <Link to="/login" className='bg-amber-200 rounded-full shadow-2xl w-16 h-16 gap-6 flex items-center justify-center overflow-hidden'>
                     <img src={logo} alt="studyLMS" className="h-16 w-16 " />
                   </Link>
+                  {/* <div className='flex items-center  gap-3'>
 
                   <h1 className='text-white font-bold'>{i18n.language=="ar"? "ا / مصطفي النبوي" :"MR / MOSTAFA ELNABAWY"}</h1>
 
 
-                  </div>
+                  </div> */}
                 </div>
                 <p className="mb-4 p-2">
                   {about?.data?.data?.description || t('footer.default_description')}
@@ -229,7 +229,7 @@ export default function Footer() {
               </div>
               
               {/* Quick Links */}
-              <nav className="w-full sm:w-1/2 md:w-1/3 px-4 mb-8">
+              <nav className="w-full sm:w-1/2 md:w-1/3 px-4 pt-6 mb-8">
                 <h3 className="text-lg font-bold mb-4">{t('footer.quick_links')}</h3>
                 <ul className="space-y-2">
                   <li><Link to="/courses" className="hover:text-white block text-sm">{t('footer.all_courses')}</Link></li>
@@ -243,7 +243,7 @@ export default function Footer() {
               </nav>
               
               {/* Contact Info */}
-              <div className="w-full sm:w-1/2 md:w-1/3 px-4 mb-8">
+              <div className="w-full sm:w-1/2 md:w-1/3 pt-6 px-4 mb-8">
                 <h3 className="text-lg font-bold mb-4">{t('footer.contact_us')}</h3>
                 <p className="mb-4 text-sm">{t('footer.contact_description')}</p>
                 <address className="space-y-3">

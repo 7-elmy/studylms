@@ -20,9 +20,8 @@ let dispatch = useDispatch();
       url: "api/logout",
       method: "POST",
          headers: {
-              language: localStorage.getItem('language'),
-              "Content-Type": "multipart/form-data",
-              "Authorization": `${sessionStorage.getItem("token")}`
+              language: localStorage.getItem('language') || 'en',
+              "Authorization": `${sessionStorage.getItem("token") || localStorage.getItem("token")}`,
             },
     }));
     if(response.payload.success){

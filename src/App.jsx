@@ -1,9 +1,11 @@
+
+
 import { useEffect, useState } from 'react'
 
 import './App.css'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import AuthLayout from './Layouts/AuthLayout'
- import LoginPage from './Pages/Auth/Login/Login'
+//  import LoginPage from './Pages/Auth/Login/Login'
 
 import RegisterPage from './Pages/Auth/Register/Register'
 import { useTranslation } from 'react-i18next'
@@ -28,8 +30,10 @@ import ResetPassword from './Pages/Auth/ForgetPassword/resetPassword'
 import Terms from './Pages/Terms&Privacy/Terms'
 import Privacy from './Pages/Terms&Privacy/Privacy'
 import { ChevronUp } from 'lucide-react'
-import FallingIconsBackground from './Components/Ui/FallingIconsBackground'
+
 import ProtectedRoute from './Utils/ProtectedRoute'
+import LoginPage from './Pages/Auth/Login/login'
+import SubscriptionCourses from './Pages/Courses/SubscriptionCourses'
 
 
 
@@ -89,10 +93,15 @@ function App() {
 
       {/* protected route  */}
      
+      <Route path="/courses/subscriptions" element={
+        //  <ProtectedRoute>
+           <SubscriptionCourses />
+      //  </ProtectedRoute>
+        } />
       <Route path="/courses/:id" element={
-         <ProtectedRoute>
+        //  <ProtectedRoute>
            <CourseDetailPage />
-      </ProtectedRoute>
+      // </ProtectedRoute>
         } />
 
 
@@ -110,11 +119,13 @@ function App() {
       </ProtectedRoute>
         
         } />
+
+
       <Route path="/profile" element={
           // <ProtectedRoute>
         
            <ProfilePage />
-    // </ProtectedRoute> 
+    //  </ProtectedRoute> 
         } />
       
       

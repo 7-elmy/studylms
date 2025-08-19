@@ -1,331 +1,4 @@
-// import React, { useEffect, useState } from 'react'
-// import DynamicBreadcrumb from '../../Components/Ui/DynamicBreadcrumb';
-// import { useTranslation } from 'react-i18next';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { apiRequest } from '../../Redux/Apis/apiRequest';
-// import FallingIconsBackground from '../../Components/Ui/FallingIconsBackground';
 
- 
-
-// // export default function Subscriptions() {
-// // let { t, i18n } = useTranslation();
-
-// //   return (
-// //     <div>
-         
-// // <DynamicBreadcrumb 
-// //   MainTitle={t('pageTitles.subscriptions')} 
-// //   BreadCrumbs={[
-// //     {label: t('breadcrumbssub.home'), href:"/home"},
-// //     {label: t('breadcrumbssub.subscriptions')}
-// //   ]}
-// // />
-// //     <div className="max-w-7xl mx-auto p-6">
-// //       <div className="space-y-8">
-// //       <PricingPackages/>
-// //       </div>
-// //     </div>
-// //     </div>
-// //   );
-// // }
-
-
-
-
-// export  function PricingPackages() {
-//   const [selectedPackage, setSelectedPackage] = useState(null);
-// let {Packages } = useSelector((state) => state.api);
-
-// console.log({packages: Packages});
-
-//   let dispatch = useDispatch();
-
-//   useEffect(()=>{
-//     dispatch(apiRequest({
-//       entity: "Packages",
-//       url: "api/packages",
-//       method: "GET",
-//       headers: {
-//         "Accept-Language": localStorage.getItem('language') || 'en',
-//       }
-//     }))
-//   },[dispatch , localStorage.getItem('language')]);
-  
-
-
-//   const handleSelectPackage = (pkg) => {
-//     setSelectedPackage(pkg);
-//   };
-
-//   const getDurationIcon = (duration) => {
-//     switch (duration) {
-//       case 'الحصة':
-//         return (
-//           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-//             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-//           </svg>
-//         );
-//       case 'شهري':
-//         return (
-//           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-//             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-//           </svg>
-//         );
-//       case 'سنوي':
-//         return (
-//           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-//             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-//           </svg>
-//         );
-//       default:
-//         return null;
-//     }
-//   };
-
-//   const getPackageGradient = (index) => {
-//     const gradients = [
-//       'from-amber-400 to-orange-600',
-//       'from-emerald-400 to-teal-600', 
-//       'from-purple-400 to-indigo-600'
-//     ];
-//     return gradients[index % gradients.length];
-//   };
-
-//   const getBadgeColor = (duration) => {
-//     switch (duration) {
-//       case 'الحصة':
-//         return 'bg-amber-100 text-amber-800 border-amber-200';
-//       case 'شهري':
-//         return 'bg-emerald-100 text-emerald-800 border-emerald-200';
-//       case 'سنوي':
-//         return 'bg-purple-100 text-purple-800 border-purple-200';
-//       default:
-//         return 'bg-gray-100 text-gray-800 border-gray-200';
-//     }
-//   };
-
-//   const getArabicFeatures = (duration) => {
-//     const baseFeatures = [
-//       'دروس تفاعلية في النحو والصرف',
-//       'تدريبات على الإعراب والبلاغة',
-//       'مراجعة قواعد الإملاء والخط',
-//       'نصوص أدبية مختارة'
-//     ];
-
-//     const additionalFeatures = {
-//       'الحصة': [
-//         'حصة واحدة مدتها ساعة',
-//         'مراجعة سريعة للمفاهيم',
-//         'تطبيق عملي مباشر'
-//       ],
-//       'شهري': [
-//         ...baseFeatures,
-//         'واجبات أسبوعية محلولة',
-//         'اختبارات تقييمية',
-//         'متابعة مستمرة للتقدم',
-//         'جلسات مراجعة إضافية'
-//       ],
-//       'سنوي': [
-//         ...baseFeatures,
-//         'منهج شامل لجميع المستويات',
-//         'مشروع بحثي في الأدب العربي',
-//         'ورش كتابة إبداعية',
-//         'مكتبة رقمية للمراجع',
-//         'شهادة إتمام معتمدة',
-//         'دعم مستمر طوال العام'
-//       ]
-//     };
-
-//     return duration === 'الحصة' ? additionalFeatures[duration] : additionalFeatures[duration] || baseFeatures;
-//   };
-
-//   const isRecommended = (duration) => duration === 'شهري';
-//   const isBestValue = (duration) => duration === 'سنوي';
-
-//   return (
-//     <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-red-50 py-12 px-4" dir="rtl">
-//        <FallingIconsBackground 
-//         opacity={0.2}
-//         count={35}
-//         zIndex={0}
-//       />
-//       <div className="max-w-6xl mx-auto">
-//         {/* Header */}
-//         <div className="text-center mb-16">
-//           <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-amber-400 to-orange-500 rounded-full mb-6">
-//             <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-//               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-//             </svg>
-//           </div>
-//           <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
-//             باقات تعلم اللغة العربية
-//           </h1>
-//           <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-//             اكتشف جمال اللغة العربية وتعمق في قواعدها وآدابها مع برامجنا التعليمية المتخصصة
-//           </p>
-//         </div>
-
-//         {/* Packages Grid */}
-//         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-//           {Packages?.data?.data?.map((pkg, index) => (
-//             <div
-//               key={pkg.id}
-//               className={`relative group transition-all duration-500 hover:scale-105 ${
-//                 selectedPackage?.id === pkg.id ? 'scale-105' : ''
-//               }`}
-//             >
-//               {/* Recommended Badge */}
-//               {isRecommended(pkg.duration_label) && (
-//                 <div className="absolute -top-4 right-1/2 transform translate-x-1/2 z-10">
-//                   <span className="bg-gradient-to-r from-emerald-400 to-teal-500 text-white px-4 py-2 rounded-full text-sm font-semibold shadow-lg flex items-center">
-//                     <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-//                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
-//                     </svg>
-//                     الأكثر اختياراً
-//                   </span>
-//                 </div>
-//               )}
-
-//               {/* Best Value Badge */}
-//               {isBestValue(pkg.duration_label) && (
-//                 <div className="absolute -top-4 right-1/2 transform translate-x-1/2 z-10">
-//                   <span className="bg-gradient-to-r from-purple-400 to-indigo-500 text-white px-4 py-2 rounded-full text-sm font-semibold shadow-lg flex items-center">
-//                     <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-//                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
-//                     </svg>
-//                     أفضل قيمة
-//                   </span>
-//                 </div>
-//               )}
-
-//               <div className={`relative h-full bg-white rounded-2xl shadow-xl overflow-hidden border-2 transition-all duration-300 ${
-//                 selectedPackage?.id === pkg.id 
-//                   ? 'border-amber-500 shadow-2xl' 
-//                   : 'border-transparent hover:shadow-2xl'
-//               }`}>
-//                 {/* Header with Arabic calligraphy style */}
-//                 <div className={`bg-gradient-to-r ${getPackageGradient(index)} p-6 text-white relative overflow-hidden`}>
-//                   <div className="absolute top-0 left-0 w-full h-full opacity-10">
-//                     <div className="absolute -top-4 -left-4 w-24 h-24 bg-white rounded-full"></div>
-//                     <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-white rounded-full"></div>
-//                     <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-6xl opacity-20">
-//                       ع
-//                     </div>
-//                   </div>
-                  
-//                   <div className="relative z-10">
-//                     <div className="flex items-center justify-between mb-4">
-//                       <h3 className="text-2xl font-bold">{pkg.name}</h3>
-//                       {getDurationIcon(pkg.duration_label)}
-//                     </div>
-                    
-//                     <div className={`inline-flex items-center px-4 py-2 rounded-full text-sm font-medium border ${getBadgeColor(pkg.duration_label)} bg-white/20 border-white/30`}>
-//                       {pkg.duration_label}
-//                     </div>
-//                   </div>
-//                 </div>
-
-//                 {/* Price Section */}
-//                 <div className="p-6">
-//                   <div className="text-center mb-6">
-//                     <div className="flex items-baseline justify-center">
-//                       <span className="text-4xl md:text-5xl font-bold text-gray-800">
-//                         {pkg.price}
-//                       </span>
-//                       <span className="text-lg text-gray-600 mr-2">جنيه مصري</span>
-//                     </div>
-//                     <p className="text-gray-500 mt-2">/{pkg.duration_label}</p>
-//                   </div>
-
-//                   {/* Arabic Subject Features */}
-//                   <div className="space-y-3 mb-8">
-//                     {getArabicFeatures(pkg.duration_label).map((feature, featureIndex) => (
-//                       <div key={featureIndex} className="flex items-start text-gray-700">
-//                         <svg className="w-5 h-5 text-green-500 ml-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-//                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
-//                         </svg>
-//                         <span className="text-sm leading-relaxed">{feature}</span>
-//                       </div>
-//                     ))}
-//                   </div>
-
-//                   {/* CTA Button */}
-//                   <button
-//                     onClick={() => handleSelectPackage(pkg)}
-//                     className={`w-full py-3 px-6 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 ${
-//                       selectedPackage?.id === pkg.id
-//                         ? 'bg-amber-600 text-white shadow-lg'
-//                         : `bg-gradient-to-r ${getPackageGradient(index)} text-white hover:shadow-lg`
-//                     }`}
-//                   >
-//                     {selectedPackage?.id === pkg.id ? 'تم الاختيار ✓' : 'ابدأ رحلة التعلم'}
-//                   </button>
-//                 </div>
-
-//                 {/* Selection indicator */}
-//                 {selectedPackage?.id === pkg.id && (
-//                   <div className="absolute top-4 left-4">
-//                     <div className="w-8 h-8 bg-amber-600 rounded-full flex items-center justify-center shadow-lg">
-//                       <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-//                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
-//                       </svg>
-//                     </div>
-//                   </div>
-//                 )}
-//               </div>
-//             </div>
-//           ))}
-//         </div>
-
-//         {/* Selected Package Confirmation */}
-//         {selectedPackage && (
-//           <div className="bg-white rounded-2xl shadow-xl p-8 border-2 border-amber-500 bg-gradient-to-r from-amber-50 to-orange-50">
-//             <div className="text-center">
-//               <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-amber-400 to-orange-500 rounded-full mb-4">
-//                 <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-//                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
-//                 </svg>
-//               </div>
-              
-//               <h3 className="text-2xl font-bold text-gray-800 mb-2">
-//                 تم اختيار باقة {selectedPackage.name}
-//               </h3>
-//               <p className="text-gray-600 mb-6">
-//                 نوع الاشتراك: {selectedPackage.duration_label}
-//               </p>
-              
-//               <div className="bg-white rounded-xl p-6 mb-6 shadow-md">
-//                 <div className="flex items-center justify-center">
-//                   <div className="text-center">
-//                     <p className="text-4xl font-bold text-amber-600 mb-2">
-//                       {selectedPackage.price} ريال
-//                     </p>
-//                     <p className="text-gray-600">/{selectedPackage.duration_label}</p>
-//                   </div>
-//                 </div>
-//               </div>
-              
-//               <div className="flex flex-col sm:flex-row justify-center gap-4">
-//                 <button className="bg-gradient-to-r from-amber-500 to-orange-600 text-white px-8 py-3 rounded-lg font-semibold hover:shadow-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center">
-//                   <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-//                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
-//                   </svg>
-//                   إتمام عملية الدفع
-//                 </button>
-//                 <button 
-//                   onClick={() => setSelectedPackage(null)}
-//                   className="bg-gray-100 text-gray-700 px-8 py-3 rounded-lg font-semibold hover:bg-gray-200 transition-all duration-300"
-//                 >
-//                   تغيير الاختيار
-//                 </button>
-//               </div>
-//             </div>
-//           </div>
-//         )}
-//       </div>
-//     </div>
-//   );
-// }
 
 
 
@@ -898,3 +571,120 @@ export function PricingPackages() {
     </div>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import DynamicBreadcrumb from '../../Components/Ui/DynamicBreadcrumb';
+// import FallingIconsBackground from '../../Components/Ui/FallingIconsBackground';
+// import { useSubscription } from '../../hooks/useSubscription';
+// import { PackageCard } from './PackageCard';
+
+// // import PackageCard from './PackageCard';
+// import SelectedPackageConfirmation from './SelectedPackageConfirmation';
+
+// export default function Subscriptions() {
+//   const {
+//     packages,
+//     selectedPackage,
+//     isLoading,
+//     language,
+//     t,
+//     handleSelectPackage,
+//     getDurationIcon,
+//     getPackageGradient,
+//     getBadgeColor,
+//     isRecommended,
+//     isBestValue,
+//     getFeatures
+//   } = useSubscription();
+
+//   return (
+//     <div dir={language === 'ar' ? 'rtl' : 'ltr'}>
+//       <DynamicBreadcrumb 
+//         MainTitle={t('subscriptions.title')} 
+//         BreadCrumbs={[
+//           {label: t('breadcrumbssub.home'), href:"/"},
+//           {label: t('breadcrumbssub.subscriptions')}
+//         ]}
+//       />
+      
+//       <div className="max-w-7xl mx-auto p-6">
+//         <div className="space-y-8">
+//           <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-red-50 py-12 px-4">
+//             <FallingIconsBackground opacity={0.2} count={35} zIndex={0} />
+            
+//             {isLoading ? (
+//               <div>Loading packages...</div>
+//             ) : (
+//               <div className="max-w-6xl mx-auto">
+//                 {/* Header */}
+//                 <div className="text-center mb-16">
+//                   <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-amber-400 to-orange-500 rounded-full mb-6">
+//                     <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+//                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+//                     </svg>
+//                   </div>
+//                   <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
+//                     {t('packages.title')}
+//                   </h1>
+//                   <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+//                     {t('packages.subtitle')}
+//                   </p>
+//                 </div>
+
+//                 {/* Packages Grid */}
+//                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+//                   {packages.map((pkg, index) => (
+//                     <PackageCard
+//                       key={pkg.id}
+//                       pkg={pkg}
+//                       index={index}
+//                       isSelected={selectedPackage?.id === pkg.id}
+//                       onSelect={handleSelectPackage}
+//                       getDurationIcon={getDurationIcon}
+//                       getPackageGradient={getPackageGradient}
+//                       getBadgeColor={getBadgeColor}
+//                       isRecommended={isRecommended}
+//                       isBestValue={isBestValue}
+//                       getFeatures={getFeatures}
+//                     />
+//                   ))}
+//                 </div>
+
+//                 {/* Selected Package Confirmation */}
+//                 {selectedPackage && (
+//                   <SelectedPackageConfirmation 
+//                     selectedPackage={selectedPackage}
+//                     onDeselect={() => handleSelectPackage(null)}
+//                   />
+//                 )}
+//               </div>
+//             )}
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }

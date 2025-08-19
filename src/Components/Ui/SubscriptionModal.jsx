@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { apiRequest } from '../../Redux/Apis/apiRequest';
 
-export default function SubscriptionModal() {
+export default function SubscriptionModal({course}) {
   const {t, i18n}=useTranslation()
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState({
@@ -16,7 +16,37 @@ export default function SubscriptionModal() {
   });
 let dispatch = useDispatch();
   let {Packages}= useSelector((state) => state.api);
-  //console.log({Packages});
+  
+    const [packageId, setPackageId] = useState(null);
+  
+    console.log({packageId});
+    
+    let {subscription} = useSelector((state) => state.api);
+  
+    const handleSubscriptionApi = async () => {
+      if (!packageId) {
+        console.error("Package ID is required");
+        return;
+      }
+      
+      // Create form data
+      const formData = new FormData();
+      formData.append('package_id', packageId);
+      formData.append('sessions', course.id); // Using course.id as sessions value
+      
+      let response = await dispatch(apiRequest({
+        entity: "subscription",
+        url: `api/sub_scriptions/subscriptions`,
+        method: "POST",
+        data: formData,
+        headers: {
+          "Accept-Language": localStorage.getItem('language') || 'en',
+          "Authorization": `${sessionStorage.getItem("token") || localStorage.getItem("token")}`,
+        },
+      }));
+      console.log({reeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:response});
+      
+    }
 
   useEffect(()=>{
     dispatch(apiRequest({
@@ -31,6 +61,7 @@ let dispatch = useDispatch();
 
 
   const handleOptionChange = (value) => {
+    setPackageId(value);
     setSelectedOption(prev => ({
       ...prev,
       term: value // Simplified since we only have one group now
@@ -80,8 +111,10 @@ let dispatch = useDispatch();
                 <div>
                   <h3 className="text-sm font-medium text-gray-700 mb-3">Select your subscription plan</h3>
                   <div className="space-y-3">
-                    {Packages?.data?.data?.map(option => (
-                      <label 
+                    {Packages?.data?.data?.map(option => (<div key={option.id} >
+                    
+                    
+                      {option.duration_label=="الحصة"  || option.duration_label=="Section"? <label 
                         key={option.id}
                         className={`flex items-center justify-between p-3 rounded-lg border ${
                           selectedOption.term === option.id 
@@ -98,10 +131,11 @@ let dispatch = useDispatch();
                             onChange={() => handleOptionChange(option?.id)}
                             className="h-4 w-4 text-amber-500 focus:!ring-amber-500  border-yellow-300"
                           />
-                          <span className="ml-3 text-gray-700 font-medium">{option?.duration_label}</span>
+                          <span className="mx-3 text-gray-700 font-medium">{option?.duration_label}</span>
                         </div>
                         <span className="text-gray-600 font-medium">{option?.price}</span>
-                      </label>
+                      </label>:""}
+                    </div>
                     ))}
                   </div>
                 </div>
@@ -119,6 +153,7 @@ let dispatch = useDispatch();
                 </button>
                 <button
                   type="submit"
+                  onClick={handleSubscriptionApi}
                   disabled={!selectedOption.term}
                   className={`px-4 py-2 text-sm font-medium text-white rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500 ${
                     selectedOption.term 

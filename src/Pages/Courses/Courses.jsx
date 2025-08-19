@@ -612,106 +612,125 @@
 
 
 import { Search, Users, MessageSquare, Star, ChevronDown } from "lucide-react";
-import { useState } from "react";
+import { use, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import CourseLayout from "../../Layouts/CourseLayout";
+import { useDispatch, useSelector } from "react-redux";
+import { apiRequest } from "../../Redux/Apis/apiRequest";
 
 export default function CoursesPage() {
   const [selectedCategory, setSelectedCategory] = useState("All Courses");
   const [searchTerm, setSearchTerm] = useState("");
 
-  const courses = [
-    {
-      id: 1,
-      title: "French for Beginners to Advanced Training",
-      instructor: "Keny White",
-      price: "$99.00",
-      students: 98,
-      comments: 10,
-      rating: 5,
-      image: "/api/placeholder/300/200"
-    },
-    {
-      id: 2,
-      title: "Introduction to Mobile Apps Development",
-      instructor: "Sarah Johnson",
-      price: "FREE",
-      students: 200,
-      comments: 3,
-      rating: 4,
-      image: "/api/placeholder/300/200"
-    },
-    {
-      id: 3,
-      title: "How to Become a Startup Founder",
-      instructor: "Jhon Milton",
-      price: "$85.60",
-      students: 200,
-      comments: 3,
-      rating: 4.5,
-      image: "/api/placeholder/300/200"
-    },
-    {
-      id: 4,
-      title: "Your Complete Guide to Self Development",
-      instructor: "Sarah Johnson",
-      price: "FREE",
-      students: 48,
-      comments: 5,
-      rating: 5,
-      image: "/api/placeholder/300/200"
-    },
-    {
-      id: 5,
-      title: "Adobe InDesign CS6 Tutorial Beginners",
-      instructor: "Ans Niversity",
-      price: "$68.00",
-      students: 48,
-      comments: 5,
-      rating: 5,
-      image: "/api/placeholder/300/200"
-    },
-    {
-      id: 6,
-      title: "Swift Programming for Beginners",
-      instructor: "Don Cooper",
-      price: "$75.00",
-      students: 48,
-      comments: 5,
-      rating: 5,
-      image: "/api/placeholder/300/200"
-    },
-    {
-      id: 7,
-      title: "Become a Professional Film Maker",
-      instructor: "Don Cooper",
-      price: "$89.00",
-      students: 48,
-      comments: 5,
-      rating: 5,
-      image: "/api/placeholder/300/200"
-    },
-    {
-      id: 8,
-      title: "Branding like a professional in 10 days",
-      instructor: "Logancee Wok",
-      price: "$55.00",
-      students: 48,
-      comments: 5,
-      rating: 5,
-      image: "/api/placeholder/300/200"
-    },
-    {
-      id: 9,
-      title: "Anatomy for Figure Drawing Mastering Figure",
-      instructor: "Keny White",
-      price: "FREE",
-      students: 48,
-      comments: 5,
-      rating: 5,
-      image: "/api/placeholder/300/200"
+   let {courses} = useSelector((state) => state.api);
+let dispatch = useDispatch();
+ console.log({courses});
+ 
+
+useEffect(() => {
+  dispatch(apiRequest({
+    url:"api/courses",
+    entity:"courses",
+    method:"get",
+    headers:{
+      "Authorization": `${sessionStorage.getItem("token") || localStorage.getItem("token") }`,
+     'Accept-Language': localStorage.getItem('language') || 'en'
     }
-  ];
+  }));
+}, [dispatch , localStorage.getItem("language")]);
+
+  // const courses = [
+  //   {
+  //     id: 1,
+  //     title: "French for Beginners to Advanced Training",
+  //     instructor: "Keny White",
+  //     price: "$99.00",
+  //     students: 98,
+  //     comments: 10,
+  //     rating: 5,
+  //     image: "/api/placeholder/300/200"
+  //   },
+  //   {
+  //     id: 2,
+  //     title: "Introduction to Mobile Apps Development",
+  //     instructor: "Sarah Johnson",
+  //     price: "FREE",
+  //     students: 200,
+  //     comments: 3,
+  //     rating: 4,
+  //     image: "/api/placeholder/300/200"
+  //   },
+  //   {
+  //     id: 3,
+  //     title: "How to Become a Startup Founder",
+  //     instructor: "Jhon Milton",
+  //     price: "$85.60",
+  //     students: 200,
+  //     comments: 3,
+  //     rating: 4.5,
+  //     image: "/api/placeholder/300/200"
+  //   },
+  //   {
+  //     id: 4,
+  //     title: "Your Complete Guide to Self Development",
+  //     instructor: "Sarah Johnson",
+  //     price: "FREE",
+  //     students: 48,
+  //     comments: 5,
+  //     rating: 5,
+  //     image: "/api/placeholder/300/200"
+  //   },
+  //   {
+  //     id: 5,
+  //     title: "Adobe InDesign CS6 Tutorial Beginners",
+  //     instructor: "Ans Niversity",
+  //     price: "$68.00",
+  //     students: 48,
+  //     comments: 5,
+  //     rating: 5,
+  //     image: "/api/placeholder/300/200"
+  //   },
+  //   {
+  //     id: 6,
+  //     title: "Swift Programming for Beginners",
+  //     instructor: "Don Cooper",
+  //     price: "$75.00",
+  //     students: 48,
+  //     comments: 5,
+  //     rating: 5,
+  //     image: "/api/placeholder/300/200"
+  //   },
+  //   {
+  //     id: 7,
+  //     title: "Become a Professional Film Maker",
+  //     instructor: "Don Cooper",
+  //     price: "$89.00",
+  //     students: 48,
+  //     comments: 5,
+  //     rating: 5,
+  //     image: "/api/placeholder/300/200"
+  //   },
+  //   {
+  //     id: 8,
+  //     title: "Branding like a professional in 10 days",
+  //     instructor: "Logancee Wok",
+  //     price: "$55.00",
+  //     students: 48,
+  //     comments: 5,
+  //     rating: 5,
+  //     image: "/api/placeholder/300/200"
+  //   },
+  //   {
+  //     id: 9,
+  //     title: "Anatomy for Figure Drawing Mastering Figure",
+  //     instructor: "Keny White",
+  //     price: "FREE",
+  //     students: 48,
+  //     comments: 5,
+  //     rating: 5,
+  //     image: "/api/placeholder/300/200"
+  //   }
+  // ];
 
   const popularCourses = [
     {
@@ -768,8 +787,8 @@ export default function CoursesPage() {
   return (
     <div className="">
      <CourseLayout 
-     categories={categories}
-     courses={courses}
+   
+     courses={courses?.data}
      popularCourses={popularCourses}
      renderStars={renderStars}
      Breadcrumb1={"Home"}
@@ -784,6 +803,8 @@ export default function CoursesPage() {
       
 
      />
+
+     
     </div>
   );
 }

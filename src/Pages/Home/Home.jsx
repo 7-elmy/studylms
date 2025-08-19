@@ -57,16 +57,16 @@ export default function Home() {
 
         {/* <div className="md:absolute bottom-[0.5px] left-[8px] md:left-[80px] lg:left-[180px] z-10 md:w-[80%] w-full">
           <FutureSection />
-        </div> */}
+          </div> */}
       </div>
 
       <div className="mt-16">
         <CourseSlider />
       </div>
+          <About />
 
       <HowClassesWork />
 
-      <About />
 
       <LearningPlatformHero />
       <NewsletterSignup />
