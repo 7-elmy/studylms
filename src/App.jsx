@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 import './App.css'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import AuthLayout from './Layouts/AuthLayout'
-//  import LoginPage from './Pages/Auth/Login/Login'
+ import LoginPage from './Pages/Auth/Login/Login'
 
 import RegisterPage from './Pages/Auth/Register/Register'
 import { useTranslation } from 'react-i18next'
@@ -32,7 +32,7 @@ import Privacy from './Pages/Terms&Privacy/Privacy'
 import { ChevronUp } from 'lucide-react'
 
 import ProtectedRoute from './Utils/ProtectedRoute'
-import LoginPage from './Pages/Auth/Login/login'
+// import LoginPage from './Pages/Auth/Login/login'
 import SubscriptionCourses from './Pages/Courses/SubscriptionCourses'
 
 
