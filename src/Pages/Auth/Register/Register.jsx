@@ -1,577 +1,3 @@
-// import { useState, useEffect } from 'react';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { apiRequest } from '../../../Redux/Apis/apiRequest';
-// import Autocomplete from '../../../Components/Ui/Autocomplete';
-// import { Link, useNavigate } from 'react-router-dom';
-
-// // Validation functions
-// const validateEmail = (email) => {
-//   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-// };
-
-// const validatePhone = (phone) => {
-//   return /^[0-9]{11}$/.test(phone);
-// };
-
-// const RegisterPage = () => {
-//   const [activeTab, setActiveTab] = useState(null);
-//   const [serverError, setServerError] = useState('');
-//   const [successMessage, setSuccessMessage] = useState('');
-//   const [isSubmitting, setIsSubmitting] = useState(false);
-//   const dispatch = useDispatch();
-//   let navigate = useNavigate()
-//   const { countries , register } = useSelector(state => state.api);
-//   const [governorates, setGovernorates] = useState([]);
-//   const [loading, setLoading] = useState(false);
-//   const [countrySearchLoading, setCountrySearchLoading] = useState(false);
-//   const [governorateSearchLoading, setGovernorateSearchLoading] = useState(false);
-// //console.log({register});
-
-//   // Form data
-//   const [formData, setFormData] = useState({
-//     name: '',
-//     email: '',
-//     phone: '',
-//     country_id: '',
-//     governorate_id: '',
-//     class: '',
-//     child_code: '',
-//     password: '',
-//     password_confirmation: '',
-//     terms: false
-//   });
-
-//   // Form errors
-//   const [errors, setErrors] = useState({});
-//   const [touched, setTouched] = useState({});
-
-//   // Load countries on component mount
-//   useEffect(() => {
-//     loadCountries();
-//   }, []);
-
-//   // Reset form when tab changes
-//   useEffect(() => {
-//     if (activeTab) {
-//       setFormData({
-//         name: '',
-//         email: '',
-//         phone: '',
-//         country_id: '',
-//         governorate_id: '',
-//         class: '',
-//         child_code: '',
-//         password: '',
-//         password_confirmation: '',
-//         terms: false
-//       });
-//       setErrors({});
-//       setTouched({});
-//       setServerError('');
-//       setSuccessMessage('');
-//     }
-//   }, [activeTab]);
-
-//   // Update governorates when country changes
-//   useEffect(() => {
-//     if (formData.country_id) {
-//       loadGovernorates(formData.country_id);
-//     } else {
-//       setGovernorates([]);
-//       setFormData(prev => ({ ...prev, governorate_id: '' }));
-//     }
-//   }, [formData.country_id]);
-
-//   const loadCountries = async () => {
-//     setLoading(true);
-//     try {
-//       await dispatch(apiRequest({
-//         url: "api/countries",
-//         entity: "countries"
-//       }));
-//     } catch (error) {
-//       console.error('Error loading countries:', error);
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
-
-//   const loadGovernorates = async (countryId) => {
-//     const selectedCountry = countries?.data?.data?.find(country => 
-//       country.id.toString() === countryId
-//     );
-    
-//     if (selectedCountry && selectedCountry.governorates) {
-//       setGovernorates(
-//         selectedCountry.governorates.map(gov => ({
-//           value: gov.id.toString(),
-//           label: gov.name
-//         }))
-//       );
-      
-//       // Clear governorate selection if it's not valid for new country
-//       if (formData.governorate_id) {
-//         const isValidGovernorate = selectedCountry.governorates.some(
-//           gov => gov.id.toString() === formData.governorate_id
-//         );
-//         if (!isValidGovernorate) {
-//           setFormData(prev => ({ ...prev, governorate_id: '' }));
-//         }
-//       }
-//     } 
-//   };
-
-//   // Search function for countries (if you want to implement server-side search)
-//   const searchCountries = async (searchTerm) => {
-//     if (!searchTerm || searchTerm.length < 2) {
-//       return countries?.data?.data?.map(country => ({
-//         value: country.id.toString(),
-//         label: country.name
-//       })) || [];
-//     }
-
-//     setCountrySearchLoading(true);
-//     try {
-//       const response = await dispatch(apiRequest({
-//         url: `api/countries/search?q=${encodeURIComponent(searchTerm)}`,
-//         method: "GET"
-//       }));
-      
-//       return response?.data?.data?.map(country => ({
-//         value: country.id.toString(),
-//         label: country.name
-//       })) || [];
-//     } catch (error) {
-//       console.error('Error searching countries:', error);
-//       // Fallback to local search
-//       return countries?.data?.data?.filter(country =>
-//         country.name.toLowerCase().includes(searchTerm.toLowerCase())
-//       ).map(country => ({
-//         value: country.id.toString(),
-//         label: country.name
-//       })) || [];
-//     } finally {
-//       setCountrySearchLoading(false);
-//     }
-//   };
-
-//   const validateField = (name, value) => {
-//     switch (name) {
-//       case 'name':
-//         return !value ? 'Name is required' : value.length > 100 ? 'Name is too long' : '';
-//       case 'email':
-//         return !value ? 'Email is required' : !validateEmail(value) ? 'Invalid email' : '';
-//       case 'phone':
-//         return !value ? 'Phone is required' : !validatePhone(value) ? 'Phone must be 11 digits' : '';
-//       case 'country_id':
-//         return !value ? 'Country is required' : '';
-//       case 'governorate_id':
-//         return !value ? 'Governorate is required' : '';
-//       case 'class':
-//         return !value ? 'Class is required' : '';
-//       case 'child_code':
-//         return !value ? 'Child code is required' : '';
-//       case 'password':
-//         return !value ? 'Password is required' : value.length < 8 ? 'Password must be at least 8 characters' : '';
-//       case 'password_confirmation':
-//         return !value ? 'Please confirm your password' : value !== formData.password ? 'Passwords must match' : '';
-//       case 'terms':
-//         return !value ? 'You must accept the terms and conditions' : '';
-//       default:
-//         return '';
-//     }
-//   };
-
-//   const handleInputChange = (e) => {
-//     const { name, value, type, checked } = e.target;
-//     const fieldValue = type === 'checkbox' ? checked : value;
-    
-//     setFormData(prev => ({
-//       ...prev,
-//       [name]: fieldValue
-//     }));
-
-//     // Validate field on change
-//     if (touched[name]) {
-//       const error = validateField(name, fieldValue);
-//       setErrors(prev => ({
-//         ...prev,
-//         [name]: error
-//       }));
-//     }
-//   };
-
-//   const handleBlur = (e) => {
-//     const { name } = e.target;
-//     const value = formData[name];
-    
-//     setTouched(prev => ({
-//       ...prev,
-//       [name]: true
-//     }));
-
-//     const error = validateField(name, value);
-//     setErrors(prev => ({
-//       ...prev,
-//       [name]: error
-//     }));
-//   };
-
-//   const validateForm = () => {
-//     const requiredFields = activeTab === 'student' 
-//       ? ['name', 'email', 'phone', 'country_id', 'governorate_id', 'class', 'password', 'password_confirmation', 'terms']
-//       : ['name', 'phone', 'child_code', 'password', 'password_confirmation', 'terms'];
-
-//     const newErrors = {};
-//     requiredFields.forEach(field => {
-//       const error = validateField(field, formData[field]);
-//       if (error) newErrors[field] = error;
-//     });
-
-//     setErrors(newErrors);
-//     return Object.keys(newErrors).length === 0;
-//   };
-
-//   const isFormValid = () => {
-//     const requiredFields = activeTab === 'student' 
-//       ? ['name', 'email', 'phone', 'country_id', 'governorate_id', 'class', 'password', 'password_confirmation', 'terms']
-//       : ['name', 'phone', 'child_code', 'password', 'password_confirmation', 'terms'];
-
-//     return requiredFields.every(field => {
-//       const hasValue = formData[field];
-//       const hasError = errors[field];
-//       return hasValue && !hasError;
-//     });
-//   };
-
-//   const handleSubmit =async  (e) => {
-//     e.preventDefault();
-    
-//     if (!validateForm()) return;
-
-//     setIsSubmitting(true);
-//     setServerError('');
-//     setSuccessMessage('');
-
-//     try {
-//       const endpoint = activeTab === 'student' ? 'api/register/student' : 'api/register/guardian';
-      
-//    ;
-
-//     const response = await dispatch(
-//        apiRequest({
-//         url: endpoint,
-//         method: "POST",
-//         data: formData,
-//         entity:"register"
-//     })
-//         ).unwrap();
-//         navigate(`/verify-email/${formData.email}`)
-//         //console.log('✅ API Response:', response);
-
-      
-//     } catch (error) {
-//       console.error('Registration error:', error);
-    
-//       setIsSubmitting(false);
-//     }
-//   };
-
-//   // Show only banners initially
-//   if (activeTab === null) {
-//     return (
-//       <div className='min-h-[calc(100vh-230px)] flex items-center justify-center px-4 py-8'>
-//         <div className='w-full max-w-xl space-y-4'>
-//           <h2 className='text-xl sm:text-2xl mb-6 text-center font-medium'>Choose Registration Type</h2>
-//           <div className='grid grid-cols-12 gap-8'>
-//             <div 
-//               onClick={() => setActiveTab('student')}
-//               className='p-6 col-span-6 rounded-lg border-2 border-gray-200 cursor-pointer transition-all duration-200 hover:border-yellow-300 hover:bg-yellow-50'
-//             >
-//               <div className='w-16 h-16 rounded-full mx-auto bg-blue-100 flex items-center justify-center mb-4'>
-//                 <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-//                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-//                 </svg>
-//               </div>
-//               <h3 className='font-medium text-lg text-center'>Student Registration</h3>
-//               <p className='text-sm text-gray-600 text-center mt-2'>Register as a student to access learning materials</p>
-//             </div>
-            
-//             <div 
-//               onClick={() => setActiveTab('parent')}
-//               className='p-6 col-span-6 rounded-lg border-2 border-gray-200 cursor-pointer transition-all duration-200 hover:border-yellow-300 hover:bg-yellow-50'
-//             >
-//               <div className='w-16 h-16 rounded-full mx-auto bg-green-100 flex items-center justify-center mb-4'>
-//                 <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-//                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-//                 </svg>
-//               </div>
-//               <h3 className='font-medium text-lg text-center'>Parent Registration</h3>
-//               <p className='text-sm text-gray-600 text-center mt-2'>Register as a parent to monitor your child's progress</p>
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-//     );
-//   }
-
-//   return (
-//     <div className='min-h-[calc(100vh-230px)] flex items-center justify-center px-4 py-8'>
-//       <div className='border border-gray-300 px-4 sm:px-6 lg:px-8 rounded-lg py-6 sm:py-8 bg-white w-full max-w-sm sm:max-w-md lg:max-w-lg shadow-sm'>
-//         <button 
-//           onClick={() => setActiveTab(null)}
-//           className='text-yellow-500 cursor-pointer hover:text-yellow-600 mb-4 flex items-center transition-colors duration-200'
-//         >
-//           <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
-//             <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clipRule="evenodd" />
-//           </svg>
-//           Back to selection
-//         </button>
-        
-//         <h2 className='text-xl sm:text-2xl mb-4 sm:mb-6 text-center sm:text-left font-medium'>
-//           {activeTab === 'student' ? 'Student Registration' : 'Parent Registration'}
-//         </h2>
-        
-//         {serverError && (
-//           <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-md">
-//             {serverError}
-//           </div>
-//         )}
-        
-//         {successMessage && (
-//           <div className="mb-4 p-3 bg-green-100 text-green-700 rounded-md">
-//             {successMessage}
-//           </div>
-//         )}
-        
-//         <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
-//           {/* Name Field */}
-//           <div>
-//             <input
-//               type="text"
-//               name="name"
-//               placeholder='Full Name *'
-//               className={`border ${touched.name && errors.name ? 'border-red-500' : 'border-gray-200'} w-full p-3 rounded focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all duration-200`}
-//               onChange={handleInputChange}
-//               onBlur={handleBlur}
-//               value={formData.name}
-//             />
-//             {touched.name && errors.name && (
-//               <div className="text-red-500 text-sm mt-1">{errors.name}</div>
-//             )}
-//           </div>
-          
-//           {/* Email Field (Student only) */}
-//           {activeTab === 'student' && (
-//             <div>
-//               <input
-//                 type="email"
-//                 name="email"
-//                 placeholder='Email Address *'
-//                 className={`border ${touched.email && errors.email ? 'border-red-500' : 'border-gray-200'} w-full p-3 rounded focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all duration-200`}
-//                 onChange={handleInputChange}
-//                 onBlur={handleBlur}
-//                 value={formData.email}
-//               />
-//               {touched.email && errors.email && (
-//                 <div className="text-red-500 text-sm mt-1">{errors.email}</div>
-//               )}
-//             </div>
-//           )}
-          
-//           {/* Phone Field */}
-//           <div>
-//             <input
-//               type="tel"
-//               name="phone"
-//               placeholder='Phone Number *'
-//               className={`border ${touched.phone && errors.phone ? 'border-red-500' : 'border-gray-200'} w-full p-3 rounded focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all duration-200`}
-//               onChange={handleInputChange}
-//               onBlur={handleBlur}
-//               value={formData.phone}
-//             />
-//             {touched.phone && errors.phone && (
-//               <div className="text-red-500 text-sm mt-1">{errors.phone}</div>
-//             )}
-//           </div>
-          
-//           {/* Student-specific fields */}
-//           {activeTab === 'student' && (
-//             <>
-//               <div>
-//                 <Autocomplete 
-//                   name="country_id"
-//                   placeholder="Select Country *"
-//                   className={`${touched.country_id && errors.country_id ? 'border-red-500' : ''}`}
-//                   items={countries?.data?.data?.map(country => ({
-//                     value: country.id.toString(),
-//                     label: country.name
-//                   })) || []}
-//                   value={formData.country_id}
-//                   onChange={handleInputChange}
-//                   onBlur={handleBlur}
-//                   disabled={loading}
-//                   loading={countrySearchLoading}
-//                   onSearch={searchCountries}
-//                   searchPlaceholder="Search countries..."
-//                   debounceMs={300}
-//                   minSearchLength={2}
-//                 />
-//                 {touched.country_id && errors.country_id && (
-//                   <div className="text-red-500 text-sm mt-1">{errors.country_id}</div>
-//                 )}
-//               </div>
-              
-//               <div>
-//                 <Autocomplete
-//                   name="governorate_id"
-//                   placeholder="Select Governorate *"
-//                   className={`${touched.governorate_id && errors.governorate_id ? 'border-red-500' : ''}`}
-//                   items={governorates}
-//                   value={formData.governorate_id}
-//                   onChange={handleInputChange}
-//                   onBlur={handleBlur}
-//                   disabled={!formData.country_id || governorates.length === 0}
-//                   loading={governorateSearchLoading}
-//                   searchPlaceholder="Search governorates..."
-//                   noResultsText={!formData.country_id ? "Please select a country first" : "No governorates found"}
-//                 />
-//                 {touched.governorate_id && errors.governorate_id && (
-//                   <div className="text-red-500 text-sm mt-1">{errors.governorate_id}</div>
-//                 )}
-//               </div>
-              
-//               <div>
-//                 <input
-//                   type="text"
-//                   name="class"
-//                   placeholder='Class *'
-//                   className={`border ${touched.class && errors.class ? 'border-red-500' : 'border-gray-200'} w-full p-3 rounded focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all duration-200`}
-//                   onChange={handleInputChange}
-//                   onBlur={handleBlur}
-//                   value={formData.class}
-//                 />
-//                 {touched.class && errors.class && (
-//                   <div className="text-red-500 text-sm mt-1">{errors.class}</div>
-//                 )}
-//               </div>
-//             </>
-//           )}
-          
-//           {/* Parent-specific fields */}
-//           {activeTab === 'parent' && (
-//             <div>
-//               <input
-//                 type="text"
-//                 name="child_code"
-//                 placeholder='Child Code *'
-//                 className={`border ${touched.child_code && errors.child_code ? 'border-red-500' : 'border-gray-200'} w-full p-3 rounded focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all duration-200`}
-//                 onChange={handleInputChange}
-//                 onBlur={handleBlur}
-//                 value={formData.child_code}
-//               />
-//               {touched.child_code && errors.child_code && (
-//                 <div className="text-red-500 text-sm mt-1">{errors.child_code}</div>
-//               )}
-//             </div>
-//           )}
-          
-//           {/* Password Fields */}
-//           <div>
-//             <input
-//               type="password"
-//               name="password"
-//               placeholder='Password *'
-//               className={`border ${touched.password && errors.password ? 'border-red-500' : 'border-gray-200'} w-full p-3 rounded focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all duration-200`}
-//               onChange={handleInputChange}
-//               onBlur={handleBlur}
-//               value={formData.password}
-//             />
-//             {touched.password && errors.password && (
-//               <div className="text-red-500 text-sm mt-1">{errors.password}</div>
-//             )}
-//           </div>
-          
-//           <div>
-//             <input
-//               type="password"
-//               name="password_confirmation"
-//               placeholder='Confirm Password *'
-//               className={`border ${touched.password_confirmation && errors.password_confirmation ? 'border-red-500' : 'border-gray-200'} w-full p-3 rounded focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all duration-200`}
-//               onChange={handleInputChange}
-//               onBlur={handleBlur}
-//               value={formData.password_confirmation}
-//             />
-//             {touched.password_confirmation && errors.password_confirmation && (
-//               <div className="text-red-500 text-sm mt-1">{errors.password_confirmation}</div>
-//             )}
-//           </div>
-          
-//           {/* Terms and Conditions */}
-//           <div className='flex items-start justify-center space-x-3 pt-4 border-t border-gray-100'>
-//             <input
-//               type="checkbox"
-//               id="terms"
-//               name="terms"
-//               className={`w-4 h-4 mt-1 text-yellow-500 ${touched.terms && errors.terms ? 'border-red-500' : 'border-gray-300'} rounded focus:ring-yellow-500 flex-shrink-0`}
-//               onChange={handleInputChange}
-//               checked={formData.terms}
-//             />
-//             <label htmlFor="terms" className='text-sm text-gray-600 cursor-pointer leading-relaxed'>
-//               I agree to the{' '}
-//               <Link to="/terms&conditions" className='text-yellow-500 underline hover:text-yellow-600 transition-colors duration-200'>
-//                 Terms of Service
-//               </Link>
-//               {' '}and{' '}
-//               <Link to="/privacy&policy" className='text-yellow-500 underline hover:text-yellow-600 transition-colors duration-200'>
-//                 Privacy Policy
-//               </Link>
-//             </label>
-//           </div>
-//           {touched.terms && errors.terms && (
-//             <div className="text-red-500 text-sm -mt-3 text-center">{errors.terms}</div>
-//           )}
-          
-//           {/* Submit Button */}
-//           <div className='flex items-center justify-center gap-4 pt-2'>
-//             <button
-//               type="submit"
-//               className={`w-full p-3 px-8 text-white rounded font-medium transition-all duration-200 shadow-sm hover:shadow-md ${
-//                 isFormValid() && !isSubmitting
-//                   ? 'bg-yellow-500 hover:bg-yellow-600 cursor-pointer transform hover:scale-[1.02]'
-//                   : 'bg-gray-400 cursor-not-allowed'
-//               }`}
-//               disabled={!isFormValid() || isSubmitting}
-//             >
-//               {isSubmitting ? (
-//                 <span className="flex items-center justify-center">
-//                   <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-//                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-//                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-//                   </svg>
-//                   Processing...
-//                 </span>
-//               ) : (
-//                 `Register as ${activeTab === 'student' ? 'Student' : 'Parent'}`
-//               )}
-//             </button>
-//           </div>
-          
-//           {/* Login Link */}
-//           <div className='text-center'>
-//             <p className='text-sm text-gray-600'>
-//               Already have an account?{' '}
-//               <a href="#login" className='text-yellow-500 hover:text-yellow-600 font-medium transition-colors duration-200'>
-//                 Sign In
-//               </a>
-//             </p>
-//           </div>
-//         </form>
-//       </div>
-//     </div>
-//   );
-// };
-// export default RegisterPage;
 
 
 // import { useState, useEffect } from 'react';
@@ -584,6 +10,23 @@
 // // Validation functions
 // const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 // const validatePhone = (phone) => /^[0-9]{11}$/.test(phone);
+
+
+
+
+// // Initial form state
+// const initialFormState = {
+//   name: '',
+//   email: '',
+//   phone: '',
+//   country_id: '',
+//   governorate_id: '',
+//   class: '',
+//   child_code: '',
+//   password: '',
+//   password_confirmation: '',
+//   terms: false
+// };
 
 // const RegisterPage = () => {
 //   const { t, i18n } = useTranslation();
@@ -598,30 +41,20 @@
 //   const [countrySearchLoading, setCountrySearchLoading] = useState(false);
 //   const [governorateSearchLoading, setGovernorateSearchLoading] = useState(false);
 
-//   const [formData, setFormData] = useState({
-//     name: '',
-//     email: '',
-//     phone: '',
-//     country_id: '',
-//     governorate_id: '',
-//     class: '',
-//     child_code: '',
-//     password: '',
-//     password_confirmation: '',
-//     terms: false
-//   });
-
+//   const [formData, setFormData] = useState(initialFormState);
 //   const [errors, setErrors] = useState({});
 //   const [touched, setTouched] = useState({});
 
-//   useEffect(() => { loadCountries(); }, []);
+//   useEffect(() => { loadCountries(); }, [dispatch , localStorage.getItem('language') ]);
 //   useEffect(() => resetForm(), [activeTab]);
 //   useEffect(() => { updateGovernorates(); }, [formData.country_id]);
 
 //   const loadCountries = async () => {
 //     setLoading(true);
 //     try {
-//       await dispatch(apiRequest({ url: "api/countries", entity: "countries" }));
+//       await dispatch(apiRequest({ url: "api/countries", entity: "countries" , headers:{
+//         "Accept-Language": localStorage.getItem('language') || 'en'
+//       } }));
 //     } finally { setLoading(false); }
 //   };
 
@@ -677,6 +110,27 @@
 //     return errorMessages[name] || '';
 //   };
 
+//   // Add this function to check if the form is valid
+// const isFormValid = () => {
+//   // Check all required fields are filled
+//   const requiredFields = ['name', 'phone', 'password', 'password_confirmation', 'terms'];
+//   if (activeTab === 'student') {
+//     requiredFields.push('email', 'country_id', 'governorate_id', 'class');
+//   } else if (activeTab === 'parent') {
+//     requiredFields.push('child_code');
+//   }
+
+//   const allFieldsFilled = requiredFields.every(field => {
+//     const value = formData[field];
+//     return value !== '' && value !== false && value !== undefined;
+//   });
+
+//   // Check there are no errors
+//   const noErrors = Object.values(errors).every(error => error === '');
+
+//   return allFieldsFilled && noErrors;
+// };
+
 //   const handleInputChange = (e) => {
 //     const { name, value, type, checked } = e.target;
 //     const fieldValue = type === 'checkbox' ? checked : value;
@@ -687,6 +141,7 @@
 //       setErrors(prev => ({ ...prev, [name]: validateField(name, fieldValue) }));
 //     }
 //   };
+
 
 //   const handleBlur = (e) => {
 //     const { name } = e.target;
@@ -720,12 +175,15 @@
 //               <div key={type} onClick={() => setActiveTab(type)}
 //                 className='p-6 col-span-6 rounded-lg border-2 border-gray-200 cursor-pointer transition-all duration-200 hover:border-yellow-300 hover:bg-yellow-50'>
 //                 <div className={`w-16 h-16 rounded-full mx-auto ${type === 'student' ? 'bg-blue-100' : 'bg-green-100'} flex items-center justify-center mb-4`}>
-                  
-//                    {type === 'student' ?   <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-//                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-//                  </svg> :  <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-//                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-//                  </svg>} 
+//                   {type === 'student' ? (
+//                     <svg className="w-8 h-8 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+//                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+//                     </svg>
+//                   ) : (
+//                     <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+//                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+//                     </svg>
+//                   )}
 //                 </div>
 //                 <h3 className='font-medium text-lg text-center'>{t(`auth.Register.${type}.title`)}</h3>
 //                 <p className='text-sm text-gray-600 text-center mt-2'>{t(`auth.Register.${type}.description`)}</p>
@@ -741,11 +199,13 @@
 //     <div dir={i18n.language === 'ar' ? 'rtl' : 'ltr'} className='min-h-[calc(100vh-230px)] flex items-center justify-center px-4 py-8'>
 //       <div className='border border-gray-300 px-4 sm:px-6 lg:px-8 rounded-lg py-6 sm:py-8 bg-white w-full max-w-sm sm:max-w-md lg:max-w-lg shadow-sm'>
 //         <button onClick={() => setActiveTab(null)} className='text-yellow-500 cursor-pointer hover:text-yellow-600 mb-4 flex items-center'>
-//           {/* Back icon */}
+//           <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
+//             <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clipRule="evenodd" />
+//           </svg>
 //           {t('auth.Register.back')}
 //         </button>
 
-//         <h2 className='text-xl sm:text-2xl mb-4 sm:mb-6 text-center sm:text-left font-medium'>
+//         <h2  className={`text-xl sm:text-2xl mb-4 sm:mb-6 text-center  font-medium`}>
 //           {t(`auth.Register.${activeTab}.title`)}
 //         </h2>
 
@@ -769,7 +229,7 @@
 //           )}
 
 //           {/* Phone Field */}
-//           <input type="tel" name="phone" placeholder={t('auth.Register.form.phone')}
+//           <input dir={i18n.language=="ar"?"rtl":"ltr"} type="tel" name="phone" placeholder={t('auth.Register.form.phone')}
 //             className={`border ${touched.phone && errors.phone ? 'border-red-500' : 'border-gray-200'} w-full p-3 rounded focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all duration-200`}
 //             onChange={handleInputChange} onBlur={handleBlur} value={formData.phone} />
 //           {touched.phone && errors.phone && <div className="text-red-500 text-sm mt-1">{errors.phone}</div>}
@@ -798,10 +258,50 @@
 //               />
 //               {touched.governorate_id && errors.governorate_id && <div className="text-red-500 text-sm mt-1">{errors.governorate_id}</div>}
 
-//               <input type="text" name="class" placeholder={t('auth.Register.form.class')}
-//                 className={`border ${touched.class && errors.class ? 'border-red-500' : 'border-gray-200'} w-full p-3 rounded focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all duration-200`}
-//                 onChange={handleInputChange} onBlur={handleBlur} value={formData.class} />
-//               {touched.class && errors.class && <div className="text-red-500 text-sm mt-1">{errors.class}</div>}
+           
+
+//               {/* <Autocomplete
+//   name="class"
+//   placeholder={t('auth.Register.form.class')}
+//   className={`${touched.class && errors.class ? 'border-red-500' : ''}`}
+//   items={
+//     t('slider.courses', { returnObjects: true }) 
+//   //   [
+//   //   { label: 'First Preparatory', value: 1 },
+//   //   { label: 'Second Preparatory', value: 2 },
+//   //   { label: 'Third Preparatory', value: 3 },
+//   //   { label: 'First Secondary', value: 4 },
+//   //   { label: 'Second Secondary', value: 5 },
+//   //   { label: 'Third Secondary', value: 6 }
+//   // ]
+
+// }
+//   value={formData.class}
+//   onChange={handleInputChange}
+//   onBlur={handleBlur}
+//   searchPlaceholder={t('auth.Register.form.searchClass')}
+//   noResultsText={t('auth.Register.form.noClass')}
+// /> */}
+
+// <Autocomplete
+//   name="class"
+//   placeholder={t('auth.Register.form.class')}
+//   className={`${touched.class && errors.class ? 'border-red-500' : ''}`}
+//   items={t('slider.courses', { returnObjects: true }).map((course, index) => ({
+//     label: course,
+//     value: index + 1, // assign numeric IDs
+//   }))}
+//   value={formData.class}
+//   onChange={handleInputChange}
+//   onBlur={handleBlur}
+//   searchPlaceholder={t('auth.Register.form.searchClass')}
+//   noResultsText={t('auth.Register.form.noClass')}
+// />
+
+// {touched.class && errors.class && (
+//   <div className="text-red-500 text-sm mt-1">{errors.class}</div>
+// )}
+
 //             </>
 //           )}
 
@@ -826,44 +326,72 @@
 //             onChange={handleInputChange} onBlur={handleBlur} value={formData.password_confirmation} />
 //           {touched.password_confirmation && errors.password_confirmation && <div className="text-red-500 text-sm mt-1">{errors.password_confirmation}</div>}
 
-//           {/* Terms and Conditions */}
-//           <div className='flex items-start justify-center space-x-3 pt-4 border-t border-gray-100'>
-//             <input type="checkbox" id="terms" name="terms"
-//               className={`w-4 h-4 mt-1 text-yellow-500 ${touched.terms && errors.terms ? 'border-red-500' : 'border-gray-300'} rounded focus:ring-yellow-500 flex-shrink-0`}
-//               onChange={handleInputChange} checked={formData.terms} />
-//             <label htmlFor="terms" className='text-sm text-gray-600 cursor-pointer leading-relaxed'
-//               dangerouslySetInnerHTML={{
-//                 __html: t('auth.Register.form.terms', {
-//                   terms: `<a href="/terms" class="text-yellow-500 underline hover:text-yellow-600">${t('auth.Register.form.termsLink')}</a>`,
-//                   privacy: `<a href="/privacy" class="text-yellow-500 underline hover:text-yellow-600">${t('auth.Register.form.privacyLink')}</a>`
-//                 })
-//               }} />
-//           </div>
+          
+//          <div className='flex items-start justify-center space-x-3 pt-4 border-t border-gray-100'>
+//   <input
+//     type="checkbox"
+//     id="terms"
+//     name="terms"
+//     className={`w-4 h-4 mt-1 text-yellow-500 ${touched.terms && errors.terms ? 'border-red-500' : 'border-gray-300'} rounded focus:ring-yellow-500 flex-shrink-0`}
+//     onChange={handleInputChange}
+//     checked={formData.terms}
+//   />
+//   <label htmlFor="terms" className='text-sm text-gray-600 cursor-pointer leading-relaxed'>
+//     {t('auth.Register.form.terms')} <Link to="/terms" className="text-yellow-500 underline hover:text-yellow-600">
+//           {t('auth.Register.form.termsLink')}
+//         </Link> {i18n.language=="ar" ?"و" :"and"}  <Link to="/privacy" className="text-yellow-500 underline hover:text-yellow-600">
+//           {t('auth.Register.form.privacyLink')}
+//         </Link>
+//   </label>
+// </div>
+
+
 //           {touched.terms && errors.terms && <div className="text-red-500 text-sm -mt-3 text-center">{errors.terms}</div>}
 
 //           {/* Submit Button */}
-//           <button type="submit"
+//           {/* <button type="submit"
 //             className={`w-full p-3 px-8 text-white rounded font-medium transition-all duration-200 shadow-sm hover:shadow-md ${
-//               !isSubmitting ? 'bg-yellow-500 hover:bg-yellow-600 cursor-pointer transform hover:scale-[1.02]' : 'bg-gray-400 cursor-not-allowed'
+//               !isSubmitting || !terms ? 'bg-yellow-500 hover:bg-yellow-600 cursor-pointer transform hover:scale-[1.02]' : 'bg-gray-400 cursor-not-allowed'
 //             }`}
 //             disabled={isSubmitting}>
 //             {isSubmitting ? (
 //               <span className="flex items-center justify-center">
-//                 {/* Spinner icon */}
+//                 <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+//                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+//                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+//                 </svg>
 //                 {t('auth.Register.form.processing')}
 //               </span>
 //             ) : (
-//               t('auth.Register.form.submit', { type: t(`auth.Register.${activeTab}.title`) })
+//               t('auth.Register.form.submit') + t(activeTab=="student" ? 'auth.Register.form.student': 'auth.Register.form.parent')
 //             )}
-//           </button>
+//           </button> */}
+
+//           <button 
+//   type="submit"
+//   className={`w-full p-3 px-8 text-white rounded font-medium transition-all duration-200 shadow-sm hover:shadow-md ${
+//     isFormValid() && !isSubmitting ? 'bg-yellow-500 hover:bg-yellow-600 cursor-pointer transform hover:scale-[1.02]' : 'bg-gray-400 cursor-not-allowed'
+//   }`}
+//   disabled={!isFormValid() || isSubmitting}
+// >
+//   {isSubmitting ? (
+//     <span className="flex items-center justify-center">
+//       <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+//         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+//         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+//       </svg>
+//       {t('auth.Register.form.processing')}
+//     </span>
+//   ) : (
+//     t('auth.Register.form.submit') + t(activeTab === 'student' ? 'auth.Register.form.student' : 'auth.Register.form.parent')
+//   )}
+// </button>
 
 //           {/* Login Link */}
-//           <p className='text-sm text-gray-600 text-center'
-//             dangerouslySetInnerHTML={{
-//               __html: t('auth.Register.form.haveAccount', {
-//                 login: `<a href="#login" class="text-yellow-500 hover:text-yellow-600 font-medium">${t('auth.Register.form.login')}</a>`
-//               })
-//             }} />
+//           <p className='text-sm text-gray-600 text-center'>
+//            {  t('auth.Register.form.haveAccount')  }
+//               <Link to="/lo" className="text-yellow-500 hover:text-yellow-600 font-medium">{t('auth.Register.form.login')}</Link>
+//           </p>
 //         </form>
 //       </div>
 //     </div>
@@ -871,8 +399,6 @@
 // };
 
 // export default RegisterPage;
-
-
 
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -885,9 +411,6 @@ import { Link, useNavigate } from 'react-router-dom';
 const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 const validatePhone = (phone) => /^[0-9]{11}$/.test(phone);
 
-
-
-
 // Initial form state
 const initialFormState = {
   name: '',
@@ -895,7 +418,8 @@ const initialFormState = {
   phone: '',
   country_id: '',
   governorate_id: '',
-  class: '',
+  grade_id: '',
+  section_id: '',
   child_code: '',
   password: '',
   password_confirmation: '',
@@ -909,27 +433,78 @@ const RegisterPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { countries, register } = useSelector(state => state.api);
+  const { countries, register, grades, sections } = useSelector(state => state.api);
   const [governorates, setGovernorates] = useState([]);
   const [loading, setLoading] = useState(false);
   const [countrySearchLoading, setCountrySearchLoading] = useState(false);
   const [governorateSearchLoading, setGovernorateSearchLoading] = useState(false);
+  const [gradesLoading, setGradesLoading] = useState(false);
+  const [sectionsLoading, setSectionsLoading] = useState(false);
 
   const [formData, setFormData] = useState(initialFormState);
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
 
-  useEffect(() => { loadCountries(); }, [dispatch , localStorage.getItem('language') ]);
+  useEffect(() => { 
+    loadCountries(); 
+    loadGrades();
+  }, [dispatch, localStorage.getItem('language')]);
+  
   useEffect(() => resetForm(), [activeTab]);
   useEffect(() => { updateGovernorates(); }, [formData.country_id]);
+  useEffect(() => { loadSections(); }, [formData.grade_id]);
 
   const loadCountries = async () => {
     setLoading(true);
     try {
-      await dispatch(apiRequest({ url: "api/countries", entity: "countries" , headers:{
-        "Accept-Language": localStorage.getItem('language') || 'en'
-      } }));
+      await dispatch(apiRequest({ 
+        url: "api/countries", 
+        entity: "countries", 
+        headers: {
+          "Accept-Language": localStorage.getItem('language') || 'en'
+        } 
+      }));
     } finally { setLoading(false); }
+  };
+
+  const loadGrades = async () => {
+    setGradesLoading(true);
+    try {
+      await dispatch(apiRequest({ 
+        entity: "grades",
+        url: "api/grades", 
+        method: "GET",
+        headers: {
+          "Accept-Language": localStorage.getItem('language') || 'en'
+        }
+      }));
+    } catch (error) {
+      console.error("Failed to load grades:", error);
+    } finally { 
+      setGradesLoading(false); 
+    }
+  };
+
+  const loadSections = async () => {
+    if (!formData.grade_id) {
+      return;
+    }
+    
+    setSectionsLoading(true);
+    try {
+      await dispatch(apiRequest({ 
+        entity: "sections",
+        url: `api/sections/grade_id/${formData.grade_id}`, 
+        method: "GET",
+        headers: {
+          "Accept-Language": localStorage.getItem('language') || 'en'
+        }
+      }));
+    } catch (error) {
+      console.error("Failed to load sections:", error);
+    } finally { 
+      setSectionsLoading(false); 
+    }
   };
 
   const resetForm = () => {
@@ -979,31 +554,33 @@ const RegisterPage = () => {
                 : value.length < 8 ? t('auth.Register.errors.passwordLength') : '',
       password_confirmation: !value ? t('auth.Register.errors.required', { field: t('auth.Register.form.confirmPassword') }) 
                              : value !== formData.password ? t('auth.Register.errors.passwordMatch') : '',
-      terms: !value ? t('auth.Register.errors.acceptTerms') : ''
+      terms: !value ? t('auth.Register.errors.acceptTerms') : '',
+      grade_id: !value ? t('auth.Register.errors.required', { field: t('auth.Register.form.grade') }) : '',
+      section_id: !value ? t('auth.Register.errors.required', { field: t('auth.Register.form.section') }) : ''
     };
     return errorMessages[name] || '';
   };
 
   // Add this function to check if the form is valid
-const isFormValid = () => {
-  // Check all required fields are filled
-  const requiredFields = ['name', 'phone', 'password', 'password_confirmation', 'terms'];
-  if (activeTab === 'student') {
-    requiredFields.push('email', 'country_id', 'governorate_id', 'class');
-  } else if (activeTab === 'parent') {
-    requiredFields.push('child_code');
-  }
+  const isFormValid = () => {
+    // Check all required fields are filled
+    const requiredFields = ['name', 'phone', 'password', 'password_confirmation', 'terms'];
+    if (activeTab === 'student') {
+      requiredFields.push('email', 'country_id', 'governorate_id', 'grade_id', 'section_id');
+    } else if (activeTab === 'parent') {
+      requiredFields.push('child_code');
+    }
 
-  const allFieldsFilled = requiredFields.every(field => {
-    const value = formData[field];
-    return value !== '' && value !== false && value !== undefined;
-  });
+    const allFieldsFilled = requiredFields.every(field => {
+      const value = formData[field];
+      return value !== '' && value !== false && value !== undefined;
+    });
 
-  // Check there are no errors
-  const noErrors = Object.values(errors).every(error => error === '');
+    // Check there are no errors
+    const noErrors = Object.values(errors).every(error => error === '');
 
-  return allFieldsFilled && noErrors;
-};
+    return allFieldsFilled && noErrors;
+  };
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -1015,7 +592,6 @@ const isFormValid = () => {
       setErrors(prev => ({ ...prev, [name]: validateField(name, fieldValue) }));
     }
   };
-
 
   const handleBlur = (e) => {
     const { name } = e.target;
@@ -1030,7 +606,12 @@ const isFormValid = () => {
 
     try {
       const endpoint = activeTab === 'student' ? 'api/register/student' : 'api/register/guardian';
-      await dispatch(apiRequest({ url: endpoint, method: "POST", data: formData, entity: "register" })).unwrap();
+      await dispatch(apiRequest({ 
+        url: endpoint, 
+        method: "POST", 
+        data: formData, 
+        entity: "register" 
+      })).unwrap();
       navigate(`/verify-email/${formData.email}`);
     } catch (error) {
       setServerError(t('auth.Register.serverError'));
@@ -1038,6 +619,17 @@ const isFormValid = () => {
       setIsSubmitting(false);
     }
   };
+
+  // Prepare grades and sections for Autocomplete
+  const gradeOptions = grades?.data?.data?.map(grade => ({
+    value: grade.id.toString(),
+    label: grade.name
+  })) || [];
+
+  const sectionOptions = sections?.data?.data?.map(section => ({
+    value: section.id.toString(),
+    label: section.name
+  })) || [];
 
   if (!activeTab) {
     return (
@@ -1132,50 +724,37 @@ const isFormValid = () => {
               />
               {touched.governorate_id && errors.governorate_id && <div className="text-red-500 text-sm mt-1">{errors.governorate_id}</div>}
 
-           
+              {/* Grade Field */}
+              <Autocomplete
+                name="grade_id"
+                placeholder={t('auth.Register.form.grade')}
+                className={`${touched.grade_id && errors.grade_id ? 'border-red-500' : ''}`}
+                items={gradeOptions}
+                value={formData.grade_id}
+                onChange={handleInputChange}
+                onBlur={handleBlur}
+                disabled={gradesLoading}
+                loading={gradesLoading}
+                searchPlaceholder={t('auth.Register.form.searchGrade')}
+                noResultsText={t('auth.Register.form.noGrade')}
+              />
+              {touched.grade_id && errors.grade_id && <div className="text-red-500 text-sm mt-1">{errors.grade_id}</div>}
 
-              {/* <Autocomplete
-  name="class"
-  placeholder={t('auth.Register.form.class')}
-  className={`${touched.class && errors.class ? 'border-red-500' : ''}`}
-  items={
-    t('slider.courses', { returnObjects: true }) 
-  //   [
-  //   { label: 'First Preparatory', value: 1 },
-  //   { label: 'Second Preparatory', value: 2 },
-  //   { label: 'Third Preparatory', value: 3 },
-  //   { label: 'First Secondary', value: 4 },
-  //   { label: 'Second Secondary', value: 5 },
-  //   { label: 'Third Secondary', value: 6 }
-  // ]
-
-}
-  value={formData.class}
-  onChange={handleInputChange}
-  onBlur={handleBlur}
-  searchPlaceholder={t('auth.Register.form.searchClass')}
-  noResultsText={t('auth.Register.form.noClass')}
-/> */}
-
-<Autocomplete
-  name="class"
-  placeholder={t('auth.Register.form.class')}
-  className={`${touched.class && errors.class ? 'border-red-500' : ''}`}
-  items={t('slider.courses', { returnObjects: true }).map((course, index) => ({
-    label: course,
-    value: index + 1, // assign numeric IDs
-  }))}
-  value={formData.class}
-  onChange={handleInputChange}
-  onBlur={handleBlur}
-  searchPlaceholder={t('auth.Register.form.searchClass')}
-  noResultsText={t('auth.Register.form.noClass')}
-/>
-
-{touched.class && errors.class && (
-  <div className="text-red-500 text-sm mt-1">{errors.class}</div>
-)}
-
+              {/* Section Field */}
+              <Autocomplete
+                name="section_id"
+                placeholder={t('auth.Register.form.section')}
+                className={`${touched.section_id && errors.section_id ? 'border-red-500' : ''}`}
+                items={sectionOptions}
+                value={formData.section_id}
+                onChange={handleInputChange}
+                onBlur={handleBlur}
+                disabled={!formData.grade_id || sectionsLoading}
+                loading={sectionsLoading}
+                searchPlaceholder={t('auth.Register.form.searchSection')}
+                noResultsText={!formData.grade_id ? t('auth.Register.form.selectGradeFirst') : t('auth.Register.form.noSection')}
+              />
+              {touched.section_id && errors.section_id && <div className="text-red-500 text-sm mt-1">{errors.section_id}</div>}
             </>
           )}
 
@@ -1223,11 +802,13 @@ const isFormValid = () => {
           {touched.terms && errors.terms && <div className="text-red-500 text-sm -mt-3 text-center">{errors.terms}</div>}
 
           {/* Submit Button */}
-          {/* <button type="submit"
+          <button 
+            type="submit"
             className={`w-full p-3 px-8 text-white rounded font-medium transition-all duration-200 shadow-sm hover:shadow-md ${
-              !isSubmitting || !terms ? 'bg-yellow-500 hover:bg-yellow-600 cursor-pointer transform hover:scale-[1.02]' : 'bg-gray-400 cursor-not-allowed'
+              isFormValid() && !isSubmitting ? 'bg-yellow-500 hover:bg-yellow-600 cursor-pointer transform hover:scale-[1.02]' : 'bg-gray-400 cursor-not-allowed'
             }`}
-            disabled={isSubmitting}>
+            disabled={!isFormValid() || isSubmitting}
+          >
             {isSubmitting ? (
               <span className="flex items-center justify-center">
                 <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -1237,34 +818,14 @@ const isFormValid = () => {
                 {t('auth.Register.form.processing')}
               </span>
             ) : (
-              t('auth.Register.form.submit') + t(activeTab=="student" ? 'auth.Register.form.student': 'auth.Register.form.parent')
+              t('auth.Register.form.submit') + t(activeTab === 'student' ? 'auth.Register.form.student' : 'auth.Register.form.parent')
             )}
-          </button> */}
-
-          <button 
-  type="submit"
-  className={`w-full p-3 px-8 text-white rounded font-medium transition-all duration-200 shadow-sm hover:shadow-md ${
-    isFormValid() && !isSubmitting ? 'bg-yellow-500 hover:bg-yellow-600 cursor-pointer transform hover:scale-[1.02]' : 'bg-gray-400 cursor-not-allowed'
-  }`}
-  disabled={!isFormValid() || isSubmitting}
->
-  {isSubmitting ? (
-    <span className="flex items-center justify-center">
-      <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-      </svg>
-      {t('auth.Register.form.processing')}
-    </span>
-  ) : (
-    t('auth.Register.form.submit') + t(activeTab === 'student' ? 'auth.Register.form.student' : 'auth.Register.form.parent')
-  )}
-</button>
+          </button>
 
           {/* Login Link */}
           <p className='text-sm text-gray-600 text-center'>
            {  t('auth.Register.form.haveAccount')  }
-              <Link to="/lo" className="text-yellow-500 hover:text-yellow-600 font-medium">{t('auth.Register.form.login')}</Link>
+              <Link to="/login" className="text-yellow-500 hover:text-yellow-600 font-medium">{t('auth.Register.form.login')}</Link>
           </p>
         </form>
       </div>

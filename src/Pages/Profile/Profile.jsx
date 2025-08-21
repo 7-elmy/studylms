@@ -818,6 +818,9 @@ export default function ProfilePage({ userType = 'student' }) {
         loadCountries()
     }, [dispatch])
 
+    console.log('Profile data:', profile?.data?.data);
+    
+
     // Store all countries when loaded
     useEffect(() => {
         if (countries?.data?.data) {

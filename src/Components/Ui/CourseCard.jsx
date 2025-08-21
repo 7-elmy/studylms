@@ -200,25 +200,34 @@ export default function CourseCard({ course, renderStars }) {
         </div>
         {/* Price Badge */}
         <div className={`absolute top-4 ${i18n.language === 'ar' ? 'right-4' : 'left-4'}`}>
+          {course.subscriber==false ? 
           <span className={`px-3 py-1 rounded-full text-sm font-medium ${
             course.price === 'FREE' 
               ? 'bg-green-500 text-white' 
               : 'bg-cyan-500 text-white'
           }`}>
-            {course.price === 'FREE' ? t('course.free') : course.price}
-          </span>
+            {course.price === 'FREE' ? t('course.free') : course.price + (i18n.language =="ar"?  "  جنيه  " : " EGP ")}
+          </span>:""
+          
+        }
         </div>
         <div className={`absolute top-4 ${i18n.language === 'ar' ? 'left-4' : 'right-4'}`}>
-          <SubscriptionModal course={course} />
+          {course.subscriber==false ?<SubscriptionModal course={course} />  :        <div className="inline-block bg-green-700 text-white px-3 py-1 rounded-2xl my-3">
+  {i18n.language === 'ar' ? "مفتوح" : "Open"}
+</div>}   
         </div>
       </div>
 
       {/* Course Content */}
-      <div className="p-6">
+      <div className="p-6 ">
         {/* Rating */}
         <div className="flex items-center">
-          {renderStars(course.rating)}
+          {renderStars(course.average_rating)}
         </div>
+
+        <div className="inline-block bg-yellow-100 px-3 py-1 rounded-2xl my-3">
+  {course.grade}
+</div>
 
         <h3 className="text-lg font-semibold text-gray-900 my-3 line-clamp-2">
           {course.name}
@@ -250,12 +259,15 @@ export default function CourseCard({ course, renderStars }) {
           </div>
           
           {/* View Details Link */}
+                    {course.subscriber==false ?"" :        <>
+ 
           <Link 
             to={`/courses/${course.id}`} 
             className="text-custom-yellow underline"
           >
             {t("course.viewDetails")}
           </Link>
+</>} 
         </div>
       </div>
     </div>

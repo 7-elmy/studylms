@@ -3,6 +3,7 @@ import Navbar from '../Pages/Navbar/Navbar'
 import { Outlet, useNavigate } from 'react-router-dom'
 import Footer from '../Pages/Footer/Footer'
 import { ChevronRight, Home } from 'lucide-react'
+import ScrollToTop from '../Utils/ScrollTop'
 export default function AuthLayout() {
 
   let navigate = useNavigate();
@@ -19,7 +20,7 @@ export default function AuthLayout() {
   })
   return (
     <div>
-      
+      <ScrollToTop/>
       <Navbar/>
       {/* 
       <div className='bg-gradient-to-r from-gray-400 to-gray-300 py-12 md:py-16 lg:py-20 px-4'>

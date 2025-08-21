@@ -1,18 +1,54 @@
 import { Star, Users, Clock, Play, BookOpen, Award } from "lucide-react";
-import { useState } from "react";
+import { use, useEffect, useState } from "react";
 import SubscriptionModal from "../../Components/Ui/SubscriptionModal";
 import AssignmentSubmission from "../../Components/Ui/Assignment";
 import CourseSlider from "../Home/CourseSlider";
 import axios from "axios";
 import QuizSubmission from "../../Components/Ui/Quiz";
+import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
+import { apiRequest } from "../../Redux/Apis/apiRequest";
+import { useParams } from "react-router-dom";
+import toast from "react-hot-toast";
 
 export default function CourseDetailPage() {
+  let {id}=useParams();
+  console.log({id});
+  
   const [selectedCategory, setSelectedCategory] = useState("All Courses");
   const [activeTab, setActiveTab] = useState("description");
   const [userRating, setUserRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
   const [reviewText, setReviewText] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  let dispatch = useDispatch();
+  const { t, i18n } = useTranslation();
+  let { courseDetails } = useSelector((state) => state.api);
+console.log({courseDetails});
+let getDetails = async() => {
+
+let response =   await dispatch(apiRequest({
+      entity: "courseDetails",
+      url: `api/courses/${id}`,
+     headers:{
+      "Authorization": `${sessionStorage.getItem("token")}`,
+      "accept-language": `${localStorage.getItem("language")}`
+     }
+
+    }) );
+   if(response.payload.error ){
+    toast.error(response.payload.error);
+      console.log("Course details fetched successfully", response.payload.data);
+    }
+    
+
+    // Fetch courses or any initial data if needed
+
+  }
+  useEffect(()=>{
+    getDetails();
+    // Fetch courses or any initial data if needed
+  }, []);
   const [reviews, setReviews] = useState([
     {
       id: 1,
@@ -119,7 +155,10 @@ export default function CourseDetailPage() {
       case "description":
         return (
           <div className="prose prose-gray max-w-none">
-            <p className="text-gray-600 leading-relaxed mb-4">
+             <p className="text-gray-600 leading-relaxed mb-6">
+             {courseDetails?.data?.data?.description || "No description available for this course."}
+            </p>
+            {/* <p className="text-gray-600 leading-relaxed mb-4">
               Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative 
               approaches to corporate strategy foster collaborative thinking to further the overall value 
               proposition. Organically grow the holistic world view of disruptive innovation via workplace 
@@ -136,7 +175,7 @@ export default function CourseDetailPage() {
 
             <p className="text-gray-600 leading-relaxed">
               Capitalize on low hanging fruit to identify a ballpark value added activity beta test Override the digital divide with additional clickthroughs from DevOps. Nanotechnology immersion along the information highway will close the loop on focusing solely on the bottom line. Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment bring to the table win-win survival strategies to ensure proactive domination. At the end of the day, going forward, a new normal that has evolved from generation X is on the runway heading towards a streamlined cloud solution generated content in real-time will have multiple touchpoints for offshoring. Capitalize on low hanging fruit to identify a ballpark value added activity beta test Override the digital divide with additional astronomers. Trillion and billions upon billions upon billions upon billions upon billions. upon billions upon billions!
-            </p>
+            </p> */}
           </div>
         );
       case "videos":
@@ -153,9 +192,46 @@ export default function CourseDetailPage() {
 
       {/* Videos Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {videos.map((video, index) => (
+
+    {courseDetails?.data?.data?.lessons?.length > 0 &&
+    courseDetails?.data?.data?.lessons.videos.map((video) => (
+      <div
+        key={video.id}
+        className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
+      >
+        {/* Video Container */}
+        <div className="relative w-full h-0 pb-[56.25%] bg-gray-100">
+          <iframe
+            className="absolute top-0 left-0 w-full h-full"
+            src={""}
+            title={video.title}
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          />
+        </div>
+
+        {/* Video Info */}
+        <div className="p-6">
+          <div className="flex items-center justify-between mb-3">
+            <span className="inline-block bg-blue-100 text-blue-800 text-xs font-semibold px-3 py-1 rounded-full">
+              {video.category}
+            </span>
+            <span className="text-sm text-gray-500 font-medium">
+              {video.duration}
+            </span>
+          </div>
+
+          <h3 className="text-xl font-bold text-gray-900 mb-3 leading-tight">
+            {video.title}
+          </h3>
+        </div>
+      </div>
+    ))}
+
+        {/* {videos.map((video, index) => (
           <div key={video.id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
-            {/* Video Container */}
+           
             <div className="relative w-full h-0 pb-[56.25%] bg-gray-100">
               <iframe
                 className="absolute top-0 left-0 w-full h-full"
@@ -166,8 +242,7 @@ export default function CourseDetailPage() {
                 allowFullScreen
               />
             </div>
-            
-            {/* Video Info */}
+           
             <div className="p-6">
               <div className="flex items-center justify-between mb-3">
                 <span className="inline-block bg-blue-100 text-blue-800 text-xs font-semibold px-3 py-1 rounded-full">
@@ -182,25 +257,10 @@ export default function CourseDetailPage() {
                 {video.title}
               </h3>
               
-              {/* <p className="text-gray-600 leading-relaxed mb-4">
-                {video.description}
-              </p> */}
-              
-              {/* <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-2">
-                  <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
-                    <span className="text-white text-sm font-bold">P</span>
-                  </div>
-                  <span className="text-sm text-gray-700 font-medium">Professional Series</span>
-                </div>
-                
-                <button className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors duration-200">
-                  Watch Now
-                </button>
-              </div> */}
+            
             </div>
           </div>
-        ))}
+        ))} */}
       </div>
 
      
@@ -315,6 +375,19 @@ export default function CourseDetailPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
+     {courseDetails.error !=null ? <div className="bg-amber-100 flex justify-center items-center min-h-[100vh]">
+                        
+
+
+      <p className="p-8 text-center flex flex-col justify-center items-center shadow-2xl bg-white text-red-500 rounded-lg">
+  
+                        <svg className="w-16 h-16 text-red-500 mb-4 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+        {courseDetails.error}
+      </p>
+     </div>  :<>
+     
       <div className="bg-gray-400 px-6 py-16">
         <div className="max-w-7xl mx-auto">
           <h1 className="text-white text-5xl font-bold">Single Courses</h1>
@@ -328,7 +401,7 @@ export default function CourseDetailPage() {
             <span>›</span>
             <span className="hover:text-custom-yellow cursor-pointer">Course</span>
             <span>›</span>
-            <span className="text-gray-900">Swift Programming for Beginners</span>
+            <span className="text-gray-900">{courseDetails?.data?.data?.name }</span>
           </div>
         </div>
       </div>
@@ -338,15 +411,17 @@ export default function CourseDetailPage() {
           <div className="w-full">
             <div className="mb-8">
               <h1 className="text-4xl font-bold text-gray-900 mb-6">
-                Swift Programming For Beginners
+                {courseDetails?.data?.data?.name }
               </h1>
               
               <div className="flex flex-col sm:flex-row gap-6 mb-8">
                 <div className="flex items-center">
-                  <div className="w-8 h-8 bg-gray-300 rounded-full mr-3"></div>
+                  <div className="w-8 h-8 bg-gray-300 rounded-full mr-3">
+                    <img src={courseDetails?.data?.data?.teacher_image} alt={courseDetails?.data?.data?.name} />
+                  </div>
                   <div>
                     <p className="text-sm text-gray-500">Instructor</p>
-                    <p className="font-medium text-gray-900">LOSPHER COOKE</p>
+                    <p className="font-medium text-gray-900">{courseDetails?.data?.data?.teacher}</p>
                   </div>
                 </div>
                 
@@ -356,7 +431,7 @@ export default function CourseDetailPage() {
                   </div>
                   <div>
                     <p className="text-sm text-gray-500">Category</p>
-                    <p className="font-medium text-gray-900">PROGRAMMING LANGUAGE</p>
+                    <p className="font-medium text-gray-900">{courseDetails?.data?.data?.category}</p>
                   </div>
                 </div>
                 
@@ -364,12 +439,12 @@ export default function CourseDetailPage() {
                   <div className="flex mr-2">
                     {renderStars(5)}
                   </div>
-                  <span className="text-sm text-gray-500">(2 Reviews)</span>
+                  <span className="text-sm text-gray-500">{`(${courseDetails?.data?.data?.average_rating})` }</span>
                 </div>
               </div>
               
               <div className="w-full h-[600px] bg-gradient-to-br from-blue-100 to-purple-100 rounded-lg mb-8">
-                <iframe
+                {/* <iframe
                 className="w-full h-full rounded-lg"
         
         src="https://www.youtube.com/embed/xfgWXWyWWKc"
@@ -377,7 +452,9 @@ export default function CourseDetailPage() {
         frameBorder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen
-      ></iframe>
+      ></iframe> */}
+
+      <img src={courseDetails?.data?.data?.image} alt={courseDetails?.data?.data?.average_rating+12} />
        
 
      
@@ -473,6 +550,7 @@ export default function CourseDetailPage() {
       </div>
 
       <CourseSlider/>
+     </>}
     </div>
   );
 }

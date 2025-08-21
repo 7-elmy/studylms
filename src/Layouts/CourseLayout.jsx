@@ -874,6 +874,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { apiRequest } from "../Redux/Apis/apiRequest";
 import { useTranslation } from "react-i18next";
 import FallingIconsBackground from "../Components/Ui/FallingIconsBackground";
+import ScrollToTop from "../Utils/ScrollTop";
 
 export default function CourseLayout({
   courses = [], 
@@ -1098,6 +1099,7 @@ export default function CourseLayout({
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <ScrollToTop/>
       <DynamicBreadcrumb 
         MainTitle={t('pageTitles.courses')}
         BreadCrumbs={[

@@ -34,7 +34,16 @@
     }
   },
   "auth":{
-   
+     "authenticated": "✓ Authenticated",
+    "cancel": "Cancel",
+     "warning": {
+        "title": "Authentication Required",
+        "message": "You need to be logged in to subscribe to our packages. Please login or create a new account to continue with your subscription."
+      },
+    "banner": {
+        "title": "Sign In Required",
+        "message": "You must be logged in to purchase subscription packages. Please sign in or create an account to access our premium features."
+      },
     "validation": {
       "invalidEmail": "Please enter a valid email address",
       "required": "This field is required",
@@ -402,8 +411,8 @@
     "bestValue": "Best Value",
     "selected": "Selected ✓",
     "startLearning": "Start Learning Journey",
-    "selectedPackage": "You selected the {name} package",
-    "packageType": "Subscription type: {type}",
+    "selectedPackage": "You selected the {{name}} package",
+    "packageType": "Subscription type: {{type}}",
     "currency": "EGP",
     "completePayment": "Complete Payment",
     "changeSelection": "Change Selection",

@@ -315,7 +315,7 @@ const OTPVerify = () => {
       }))
       
       if(response.payload.success == true){
-        navigate("/")
+        navigate("/login")
       }
     } catch (error) {
       setOtpError(t('OTPVerify.errors.failed'));

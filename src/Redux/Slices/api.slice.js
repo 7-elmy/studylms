@@ -23,7 +23,11 @@ const apiSlice = createSlice({
   Packages:{data: null, loading: false, error: null},
   updateProfile:{data: null, loading: false, error: null},
   courses:{data: null, loading: false, error: null},
+  courseDetails:{data: null, loading: false, error: null},
   subscription:{data: null, loading: false, error: null},
+  sections:{data: null, loading: false, error: null},
+  grades:{data: null, loading: false, error: null},
+  subscriptionCourse:{data: null, loading: false, error: null},
   },
   reducers: {
     clearApiError: (state, action) => {
