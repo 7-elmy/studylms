@@ -45,6 +45,7 @@ import LearningPlatformHero from "./LearningPlatformHero";
 import NewsletterSignup from "../NewLetterSignup/NewLetterSignup";
 import MainSlider from "./SilderSwiper";
 import FutureSection from "./FeaturesSection";
+import IntroSection from "../IntroductionSection/IntroductionSection";
 
 export default function Home() {
   useEffect(()=>{
@@ -59,6 +60,8 @@ export default function Home() {
           <FutureSection />
           </div> */}
       </div>
+
+      <IntroSection/>
 
       <div className="mt-16">
         <CourseSlider />

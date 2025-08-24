@@ -1,4 +1,4 @@
-import { Star, Users, Clock, Play, BookOpen, Award } from "lucide-react";
+import { Star, Users, Clock, Play, BookOpen, Award, User } from "lucide-react";
 import { use, useEffect, useState } from "react";
 import SubscriptionModal from "../../Components/Ui/SubscriptionModal";
 import AssignmentSubmission from "../../Components/Ui/Assignment";
@@ -158,52 +158,32 @@ let response =   await dispatch(apiRequest({
              <p className="text-gray-600 leading-relaxed mb-6">
              {courseDetails?.data?.data?.description || "No description available for this course."}
             </p>
-            {/* <p className="text-gray-600 leading-relaxed mb-4">
-              Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative 
-              approaches to corporate strategy foster collaborative thinking to further the overall value 
-              proposition. Organically grow the holistic world view of disruptive innovation via workplace 
-              diversity and empowerment.
-            </p>
-            
-            <p className="text-gray-600 leading-relaxed mb-6">
-              Encyclopaedia galactica Orion's sword explorations vanquish the impossible, astonishment 
-              radio telescope with pretty stories for which there's little good evidence light years muse 
-              about, great turbulent clouds billions upon billions the sky calls to us realm of the galaxies 
-              laws of physics globular star cluster. Quasar the only home we've ever known extraordi claims 
-              require extraordinary evidence billions upon billions Drake Equation.
-            </p>
-
-            <p className="text-gray-600 leading-relaxed">
-              Capitalize on low hanging fruit to identify a ballpark value added activity beta test Override the digital divide with additional clickthroughs from DevOps. Nanotechnology immersion along the information highway will close the loop on focusing solely on the bottom line. Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment bring to the table win-win survival strategies to ensure proactive domination. At the end of the day, going forward, a new normal that has evolved from generation X is on the runway heading towards a streamlined cloud solution generated content in real-time will have multiple touchpoints for offshoring. Capitalize on low hanging fruit to identify a ballpark value added activity beta test Override the digital divide with additional astronomers. Trillion and billions upon billions upon billions upon billions upon billions. upon billions upon billions!
-            </p> */}
+           
           </div>
         );
       case "videos":
         return (
           <div className="prose  prose-gray max-w-none">
              <div className="max-w-7xl mx-auto p-6">
-      {/* Header Section */}
-      <div className="text-center mb-12">
-        {/* <h1 className="text-4xl font-bold text-gray-900 mb-4">Professional Video Library</h1>
-        <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-          Explore our curated collection of expert-led training videos designed to elevate your professional skills and drive business success.
-        </p> */}
-      </div>
+  
 
       {/* Videos Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
-    {courseDetails?.data?.data?.lessons?.length > 0 &&
-    courseDetails?.data?.data?.lessons.videos.map((video) => (
+    {courseDetails?.data?.data?.lessons?.length > 0 &&<>
+    
+    {courseDetails?.data?.data?.lessons.map((lesson, index) => (<div key={index} className="mb-8">
+      { lesson?.videos.map((video) => (
       <div
         key={video.id}
         className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
       >
-        {/* Video Container */}
-        <div className="relative w-full h-0 pb-[56.25%] bg-gray-100">
+        {console.log({video})
+        }
+        <div className="relative w-full h-full pb-[56.25%] bg-gray-100">
           <iframe
-            className="absolute top-0 left-0 w-full h-full"
-            src={""}
+             className="absolute top-0 left-0 w-full h-full"
+            src={video.video_path}
             title={video.title}
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -211,16 +191,16 @@ let response =   await dispatch(apiRequest({
           />
         </div>
 
-        {/* Video Info */}
+       
         <div className="p-6">
-          <div className="flex items-center justify-between mb-3">
-            <span className="inline-block bg-blue-100 text-blue-800 text-xs font-semibold px-3 py-1 rounded-full">
-              {video.category}
-            </span>
-            <span className="text-sm text-gray-500 font-medium">
-              {video.duration}
-            </span>
-          </div>
+            {/* <div className="flex items-center justify-between mb-3">
+              <span className="inline-block bg-blue-100 text-blue-800 text-xs font-semibold px-3 py-1 rounded-full">
+                {video.category}
+              </span>
+              <span className="text-sm text-gray-500 font-medium">
+                {video.duration}
+              </span>
+            </div> */}
 
           <h3 className="text-xl font-bold text-gray-900 mb-3 leading-tight">
             {video.title}
@@ -228,6 +208,13 @@ let response =   await dispatch(apiRequest({
         </div>
       </div>
     ))}
+      </div>))}
+    </>
+      
+        
+      
+    
+    }
 
         {/* {videos.map((video, index) => (
           <div key={video.id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
@@ -260,7 +247,7 @@ let response =   await dispatch(apiRequest({
             
             </div>
           </div>
-        ))} */}
+        ))}  */}
       </div>
 
      
@@ -273,23 +260,98 @@ let response =   await dispatch(apiRequest({
             <div className="p-4 border border-gray-200 rounded-lg">
               <h3 className="font-medium text-gray-900 mb-2">Course Materials</h3>
               <ul className="space-y-2">
-                <li className="flex items-center justify-between py-2 border-b border-gray-100">
-                  <span className="text-gray-600">Introduction PDF</span>
-                  <button className="text-blue-600 hover:underline">Download</button>
-                </li>
-                <li className="flex items-center justify-between py-2 border-b border-gray-100">
-                  <span className="text-gray-600">Exercise Files</span>
-                  <button className="text-blue-600 hover:underline">Download</button>
-                </li>
-                <li className="flex items-center justify-between py-2">
-                  <span className="text-gray-600">Bonus Resources</span>
-                  <button className="text-blue-600 hover:underline">Download</button>
-                </li>
+            {courseDetails?.data?.data?.lessons?.length > 0 ? (
+                    courseDetails.data.data.lessons.flatMap((lesson, lessonIndex) => 
+                        lesson.files.map((file, fileIndex) => (
+                            <li key={`${lessonIndex}-${fileIndex}`} className="flex items-center justify-between py-3 border-b border-gray-100">
+                                <span className="text-gray-600">{file.title }</span>
+                                {/* <a href={file.file_path}  target="_blank"  className="text-blue-600 hover:underline font-medium">Download</a> */}
+                                <a
+  href={file.file_path}
+  download
+  className="text-blue-600 hover:underline font-medium"
+>
+  Download
+</a>
+
+                            </li>
+                        ))
+                    )
+                ) : (
+                    <li className="py-3 text-gray-500 text-center">No lesson files available</li>
+                )}
               </ul>
             </div>
           </div>
         );
-      case "ratings":
+  //     case "ratings":
+  //       return (
+  //         <div className="space-y-8">
+            
+  // <div className="bg-white p-6  ">
+  //             <h3 className="text-lg font-semibold mb-4">Rate this course</h3>
+
+  //             <div className=" ">
+  //             <div className="flex flex-col  mb-4">
+  //               <div className="flex mr-2">
+  //                 {renderStars(0, true)}
+  //               </div>
+  //               <span className="text-sm text-gray-500">
+  //                 {userRating > 0 ? `You rated: ${userRating} star${userRating > 1 ? 's' : ''}` : "Select rating"}
+  //               </span>
+  //             </div>
+
+  //             {/* <textarea
+  //               className="w-full p-3 border border-gray-300 rounded-lg mb-4"
+  //               rows={4}
+  //               placeholder="Share your experience with this course..."
+  //               value={reviewText}
+  //               onChange={(e) => setReviewText(e.target.value)}
+  //             /> */}
+              
+  //             <button
+  //               onClick={handleRatingSubmit}
+  //               disabled={isSubmitting}
+  //               className="bg-yellow-600 hover:bg-yellow-700 text-white font-medium py-2 px-4 rounded-lg transition disabled:opacity-50"
+  //             >
+  //               {isSubmitting ? "Submitting..." : "Submit Review"}
+  //             </button>
+  //             </div>
+              
+  //           </div>
+  //           <div className="space-y-6">
+  //             <div className="flex items-center mb-4">
+  //               <div className="flex items-center mr-4">
+  //                 {renderStars(5)}
+  //                 <span className="ml-2 text-gray-600">
+  //                   {calculateAverageRating()} ({reviews.length} reviews)
+  //                 </span>
+  //               </div>
+  //             </div>
+              
+  //             {reviews.map((review) => (
+  //               <div key={review.id} className="border-b border-gray-200 pb-6 last:border-0">
+  //                 <div className="flex items-center mb-2">
+  //                   <div className="w-10 h-10 bg-gray-300 rounded-full mr-3 flex items-center justify-center text-white font-medium">
+  //                     {review.user.charAt(0)}
+  //                   </div>
+  //                   <div>
+  //                     <h4 className="font-medium">{review.user}</h4>
+  //                     <div className="flex items-center">
+  //                       {renderStars(review.rating)}
+  //                       <span className="text-sm text-gray-500 ml-2">{review.date}</span>
+  //                     </div>
+  //                   </div>
+  //                 </div>
+  //                 <p className="text-gray-600 mt-2 pl-13">{review.comment}</p>
+  //               </div>
+  //             ))}
+
+            
+  //           </div>
+  //         </div>
+  //       );
+  case "ratings":
         return (
           <div className="space-y-8">
             
@@ -306,13 +368,13 @@ let response =   await dispatch(apiRequest({
                 </span>
               </div>
 
-              {/* <textarea
-                className="w-full p-3 border border-gray-300 rounded-lg mb-4"
+              <textarea
+                className="w-full p-3 border border-yellow-300 rounded-lg mb-4 focus:ring-amber-500 focus:outline-none"
                 rows={4}
                 placeholder="Share your experience with this course..."
                 value={reviewText}
                 onChange={(e) => setReviewText(e.target.value)}
-              /> */}
+              />
               
               <button
                 onClick={handleRatingSubmit}
@@ -499,6 +561,16 @@ let response =   await dispatch(apiRequest({
                 >
                   Files
                 </button>
+                {/* <button
+                  onClick={() => setActiveTab("comment")}
+                  className={`whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm ${
+                    activeTab === "comment"
+                      ? "border-yellow-400 text-yellow-500"
+                      : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                  }`}
+                >
+                  Comment
+                </button> */}
                 <button
                   onClick={() => setActiveTab("ratings")}
                   className={`whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm ${
@@ -536,7 +608,7 @@ let response =   await dispatch(apiRequest({
               {renderTabContent()}
             </div>
 
-            {activeTab === "description" && (
+            {/* {activeTab === "description" && (
               <div>
                 <h2 className="text-2xl font-bold text-gray-900 mb-6">What You Will Learn</h2>
                 <p className="text-gray-600 leading-relaxed">
@@ -544,7 +616,7 @@ let response =   await dispatch(apiRequest({
                   approaches to corporate strategy foster
                 </p>
               </div>
-            )}
+            )} */}
           </div>
         </div>
       </div>
@@ -559,3 +631,204 @@ let response =   await dispatch(apiRequest({
 
 
 
+
+
+// const CommentSection = () => {
+//   const [comments, setComments] = useState([
+//     {
+//       id: 1,
+//       user: 'Sarah Johnson',
+//       rating: 5,
+//       text: 'This course was incredibly helpful! The explanations were clear and the examples were practical.',
+//       date: '2 days ago',
+//       avatar: null
+//     },
+//     {
+//       id: 2,
+//       user: 'Michael Chen',
+//       rating: 4,
+//       text: 'Good content overall, but I wish there were more practice exercises included.',
+//       date: '1 week ago',
+//       avatar: null
+//     }
+//   ]);
+
+//   const [newComment, setNewComment] = useState({
+//     text: '',
+//     rating: 0,
+//   });
+
+//   const [isSubmitting, setIsSubmitting] = useState(false);
+
+//   const handleInputChange = (e) => {
+//     setNewComment({
+//       ...newComment,
+//       text: e.target.value
+//     });
+//   };
+
+//   const handleRatingChange = (rating) => {
+//     setNewComment({
+//       ...newComment,
+//       rating
+//     });
+//   };
+
+//   const handleSubmit = (e) => {
+//     e.preventDefault();
+//     if (!newComment.text.trim() || newComment.rating === 0) return;
+    
+//     setIsSubmitting(true);
+    
+//     // Simulate API call
+//     setTimeout(() => {
+//       const comment = {
+//         id: comments.length + 1,
+//         user: 'You',
+//         rating: newComment.rating,
+//         text: newComment.text,
+//         date: 'Just now',
+//         avatar: null
+//       };
+      
+//       setComments([comment, ...comments]);
+//       setNewComment({ text: '', rating: 0 });
+//       setIsSubmitting(false);
+//     }, 500);
+//   };
+
+//   const RatingStars = ({ rating, onChange, interactive = false }) => {
+//     return (
+//       <div className="flex items-center">
+//         {[1, 2, 3, 4, 5].map((star) => (
+//           <button
+//             key={star}
+//             type="button"
+//             onClick={() => interactive && onChange(star)}
+//             className={`text-xl ${interactive ? 'cursor-pointer' : 'cursor-default'} ${
+//               star <= rating ? 'text-yellow-400' : 'text-gray-300'
+//             }`}
+//             disabled={!interactive}
+//           >
+//             {/* <FaStar /> */}
+//             <Star />
+//           </button>
+//         ))}
+//       </div>
+//     );
+//   };
+
+//   return (
+//     <div className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md">
+//       <div className="mb-8">
+//         <h2 className="text-2xl font-bold text-gray-800 mb-2">Course Description</h2>
+//         <p className="text-gray-600 leading-relaxed">
+//           This comprehensive course covers all the essential topics you need to master the subject. 
+//           Through practical examples and detailed explanations, you'll gain the skills and confidence 
+//           to apply what you've learned in real-world scenarios.
+//         </p>
+//       </div>
+
+//       <div className="border-t border-gray-200 pt-6">
+//         <div className="flex justify-between items-center mb-6">
+//           <h3 className="text-xl font-semibold text-gray-800">Student Reviews</h3>
+//           <span className="bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1 rounded-full">
+//             {comments.length} reviews
+//           </span>
+//         </div>
+
+//         {/* Add Comment Form */}
+//         <div className="bg-gray-50 p-5 rounded-lg mb-8">
+//           <h4 className="text-lg font-medium text-gray-800 mb-4">Add Your Review</h4>
+//           <form onSubmit={handleSubmit}>
+//             <div className="mb-4">
+//               <label className="block text-gray-700 text-sm font-medium mb-2">
+//                 Your Rating
+//               </label>
+//               <RatingStars 
+//                 rating={newComment.rating} 
+//                 onChange={handleRatingChange} 
+//                 interactive={true} 
+//               />
+//             </div>
+            
+//             <div className="mb-4">
+//               <label className="block text-gray-700 text-sm font-medium mb-2">
+//                 Your Review
+//               </label>
+//               <textarea
+//                 value={newComment.text}
+//                 onChange={handleInputChange}
+//                 placeholder="Share your experience with this course..."
+//                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+//                 rows="4"
+//               />
+//             </div>
+            
+//             <button
+//               type="submit"
+//               disabled={isSubmitting || !newComment.text.trim() || newComment.rating === 0}
+//               className="flex items-center justify-center px-5 py-2.5 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+//             >
+//               {isSubmitting ? (
+//                 'Submitting...'
+//               ) : (
+//                 <>
+//                   {/* <FaPaperPlane className="mr-2" /> */}
+//                   Submit Review
+//                 </>
+//               )}
+//             </button>
+//           </form>
+//         </div>
+
+//         {/* Comments List */}
+//         <div className="space-y-6">
+//           {comments.map((comment) => (
+//             <div key={comment.id} className="border-b border-gray-200 pb-6 last:border-0">
+//               <div className="flex items-start space-x-4">
+//                 <div className="flex-shrink-0">
+//                   {comment.avatar ? (
+//                     <img
+//                       src={comment.avatar}
+//                       alt={comment.user}
+//                       className="w-10 h-10 rounded-full object-cover"
+//                     />
+//                   ) : (
+//                     // <FaUserCircle  />
+//                     <User  className="w-10 h-10 text-gray-400"/>
+
+//                   )}
+//                 </div>
+                
+//                 <div className="flex-1">
+//                   <div className="flex justify-between items-start">
+//                     <h4 className="text-md font-semibold text-gray-800">{comment.user}</h4>
+//                     <span className="text-sm text-gray-500">{comment.date}</span>
+//                   </div>
+                  
+//                   <div className="mb-2">
+//                     <RatingStars rating={comment.rating} />
+//                   </div>
+                  
+//                   <p className="text-gray-600">{comment.text}</p>
+                  
+//                   <div className="mt-3 flex space-x-4">
+//                     <button className="text-sm text-gray-500 hover:text-blue-600 flex items-center">
+//                       <span>Helpful</span>
+//                     </button>
+//                     <button className="text-sm text-gray-500 hover:text-blue-600 flex items-center">
+//                       <span>Reply</span>
+//                     </button>
+//                   </div>
+//                 </div>
+//               </div>
+//             </div>
+//           ))}
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+ 
