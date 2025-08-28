@@ -85,42 +85,141 @@ let response =   await dispatch(apiRequest({
     }
   ];
 
-  const handleRatingSubmit = async () => {
-    if (userRating === 0) {
-      alert("Please select a rating");
-      return;
-    }
+  // const handleRatingSubmit = async () => {
+  //   if (userRating === 0) {
+  //     toast("Please select a rating");
+  //     return;
+  //   }
 
-    setIsSubmitting(true);
-    try {
-      const response = await axios.post("/api/courses/ratings", {
-        courseId: "swift-beginners",
-        rating: userRating,
-        comment: reviewText
-      });
+  //   console.log({course_id: id,
+  //        rating: userRating});
+  //       setIsSubmitting(true);
+  //   try {
+  //     const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/ratings`, {
+  //       course_id: id,
+  //       rating: userRating
+  //     });
+  //     console.log({response});
+  //     setUserRating(0);
+     
+  //     toast("Thank you for your review!");
+  //   } catch (error) {
+  //     console.error("Error submitting review:", error);
+  //     // alert("Failed to submit review. Please try again.");
+  //   } finally {
+  //     setIsSubmitting(false);
+  //   }
+  // };
 
-      setReviews([
-        {
-          id: Date.now(),
-          user: "You",
-          rating: userRating,
-          comment: reviewText,
-          date: "Just now",
-          avatar: ""
+
+
+  // const handleCommentSubmit = async () => {
+  //   if (reviewText === "") {
+  //     toast("Please write comment");
+  //     return;
+  //   }
+
+  //   const formdata = new FormData()
+  //   formdata.append("comment", reviewText);
+  //   formdata.append("course_id", id);
+  //   console.log({course_id: id,
+  //        comment: reviewText});
+    
+
+  //   setIsSubmitting(true);
+  //   try {
+  //     const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/comments/store`,formdata , {headers:{
+  //       'Authorization':`${sessionStorage.getItem("token") || localStorage.getItem("token")}`,
+  //         'Accept-Language': localStorage.getItem('language') || 'en' 
+  //     }});
+
+  //     console.log({response});
+      
+
+      
+  //     setReviewText("");
+  //     // toast("Thank you for your review!");
+  //   } catch (error) {
+  //     console.error("Error submitting review:", error);
+  //     // alert("Failed to submit review. Please try again.");
+  //   } finally {
+  //     setIsSubmitting(false);
+  //   }
+  // };
+
+
+
+// ✅ Rating submit (send JSON with headers)
+const handleRatingSubmit = async () => {
+  if (userRating === 0) {
+    toast("Please select a rating");
+    return;
+  }
+
+  const payload = { course_id: id, rating: userRating };
+  console.log("Submitting rating:", payload);
+
+  setIsSubmitting(true);
+  try {
+    const response = await axios.post(
+      `${import.meta.env.VITE_API_URL}/api/ratings`,
+      payload,
+      {
+        headers: {
+          Authorization: `${sessionStorage.getItem("token") || localStorage.getItem("token")}`,
+          "Accept-Language": localStorage.getItem("language") || "en",
         },
-        ...reviews
-      ]);
+      }
+    );
 
-      setUserRating(0);
-      setReviewText("");
-      alert("Thank you for your review!");
-    } catch (error) {
-      console.error("Error submitting review:", error);
-      alert("Failed to submit review. Please try again.");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+    console.log("Rating response:", response.data);
+    setUserRating(0);
+    toast(response.data.message);
+  } catch (error) {
+    console.error("Error submitting rating:", error);
+  } finally {
+    setIsSubmitting(false);
+  }
+};
+
+// ✅ Comment submit (FormData, correct logging + headers)
+const handleCommentSubmit = async () => {
+  if (reviewText.trim() === "") {
+    toast("Please write comment");
+    return;
+  }
+
+  const formdata = new FormData();
+  formdata.append("comment", reviewText);
+  formdata.append("course_id", id);
+
+  // Debugging log
+  for (let [key, value] of formdata.entries()) {
+    console.log(`${key}: ${value}`);
+  }
+
+  setIsSubmitting(true);
+  try {
+    const response = await axios.post(
+      `${import.meta.env.VITE_API_URL}/api/comments/store`,
+      formdata,
+      {
+        headers: {
+          Authorization: `${sessionStorage.getItem("token") || localStorage.getItem("token")}`,
+          "Accept-Language": localStorage.getItem("language") || "en",
+        },
+      }
+    );
+
+    console.log("Comment response:", response.data);
+    setReviewText("");
+    toast(response.data.message);
+  } catch (error) {
+    console.error("Error submitting review:", error);
+  } finally {
+    setIsSubmitting(false);
+  }
+};
 
   const renderStars = (rating, interactive = false) => {
     const stars = [];
@@ -269,7 +368,7 @@ let response =   await dispatch(apiRequest({
                                 <a
   href={file.file_path}
   download
-  className="text-blue-600 hover:underline font-medium"
+  className="text-yellow-600 hover:underline font-medium"
 >
   Download
 </a>
@@ -284,73 +383,7 @@ let response =   await dispatch(apiRequest({
             </div>
           </div>
         );
-  //     case "ratings":
-  //       return (
-  //         <div className="space-y-8">
-            
-  // <div className="bg-white p-6  ">
-  //             <h3 className="text-lg font-semibold mb-4">Rate this course</h3>
-
-  //             <div className=" ">
-  //             <div className="flex flex-col  mb-4">
-  //               <div className="flex mr-2">
-  //                 {renderStars(0, true)}
-  //               </div>
-  //               <span className="text-sm text-gray-500">
-  //                 {userRating > 0 ? `You rated: ${userRating} star${userRating > 1 ? 's' : ''}` : "Select rating"}
-  //               </span>
-  //             </div>
-
-  //             {/* <textarea
-  //               className="w-full p-3 border border-gray-300 rounded-lg mb-4"
-  //               rows={4}
-  //               placeholder="Share your experience with this course..."
-  //               value={reviewText}
-  //               onChange={(e) => setReviewText(e.target.value)}
-  //             /> */}
-              
-  //             <button
-  //               onClick={handleRatingSubmit}
-  //               disabled={isSubmitting}
-  //               className="bg-yellow-600 hover:bg-yellow-700 text-white font-medium py-2 px-4 rounded-lg transition disabled:opacity-50"
-  //             >
-  //               {isSubmitting ? "Submitting..." : "Submit Review"}
-  //             </button>
-  //             </div>
-              
-  //           </div>
-  //           <div className="space-y-6">
-  //             <div className="flex items-center mb-4">
-  //               <div className="flex items-center mr-4">
-  //                 {renderStars(5)}
-  //                 <span className="ml-2 text-gray-600">
-  //                   {calculateAverageRating()} ({reviews.length} reviews)
-  //                 </span>
-  //               </div>
-  //             </div>
-              
-  //             {reviews.map((review) => (
-  //               <div key={review.id} className="border-b border-gray-200 pb-6 last:border-0">
-  //                 <div className="flex items-center mb-2">
-  //                   <div className="w-10 h-10 bg-gray-300 rounded-full mr-3 flex items-center justify-center text-white font-medium">
-  //                     {review.user.charAt(0)}
-  //                   </div>
-  //                   <div>
-  //                     <h4 className="font-medium">{review.user}</h4>
-  //                     <div className="flex items-center">
-  //                       {renderStars(review.rating)}
-  //                       <span className="text-sm text-gray-500 ml-2">{review.date}</span>
-  //                     </div>
-  //                   </div>
-  //                 </div>
-  //                 <p className="text-gray-600 mt-2 pl-13">{review.comment}</p>
-  //               </div>
-  //             ))}
-
-            
-  //           </div>
-  //         </div>
-  //       );
+ 
   case "ratings":
         return (
           <div className="space-y-8">
@@ -359,6 +392,7 @@ let response =   await dispatch(apiRequest({
               <h3 className="text-lg font-semibold mb-4">Rate this course</h3>
 
               <div className=" ">
+                <div className="flex justify-between items-center">
               <div className="flex flex-col  mb-4">
                 <div className="flex mr-2">
                   {renderStars(0, true)}
@@ -367,6 +401,15 @@ let response =   await dispatch(apiRequest({
                   {userRating > 0 ? `You rated: ${userRating} star${userRating > 1 ? 's' : ''}` : "Select rating"}
                 </span>
               </div>
+<button
+                onClick={handleRatingSubmit}
+                disabled={isSubmitting}
+                className="bg-yellow-600 hover:bg-yellow-700 text-white font-medium py-2 px-4 rounded-lg transition disabled:opacity-50"
+              >
+                {isSubmitting ? "Submitting..." : "Submit Rating"}
+              </button>
+
+                </div>
 
               <textarea
                 className="w-full p-3 border border-yellow-300 rounded-lg mb-4 focus:ring-amber-500 focus:outline-none"
@@ -377,7 +420,7 @@ let response =   await dispatch(apiRequest({
               />
               
               <button
-                onClick={handleRatingSubmit}
+                onClick={handleCommentSubmit}
                 disabled={isSubmitting}
                 className="bg-yellow-600 hover:bg-yellow-700 text-white font-medium py-2 px-4 rounded-lg transition disabled:opacity-50"
               >
@@ -421,13 +464,13 @@ let response =   await dispatch(apiRequest({
       case "assignments":
         return (
           <div className="space-y-4">
-            <AssignmentSubmission/>
+            <AssignmentSubmission courseDetails={courseDetails}/>
           </div>
         );
       case "Quiz":
         return (
           <div className="space-y-4">
-            <QuizSubmission/>
+            <QuizSubmission courseDetails={courseDetails}/>
           </div>
         );
       default:
@@ -479,7 +522,7 @@ let response =   await dispatch(apiRequest({
               <div className="flex flex-col sm:flex-row gap-6 mb-8">
                 <div className="flex items-center">
                   <div className="w-8 h-8 bg-gray-300 rounded-full mr-3">
-                    <img src={courseDetails?.data?.data?.teacher_image} alt={courseDetails?.data?.data?.name} />
+                    <img src={courseDetails?.data?.data?.teacher_image} alt={courseDetails?.data?.data?.name || "tesds"} />
                   </div>
                   <div>
                     <p className="text-sm text-gray-500">Instructor</p>
@@ -516,7 +559,7 @@ let response =   await dispatch(apiRequest({
         allowFullScreen
       ></iframe> */}
 
-      <img src={courseDetails?.data?.data?.image} alt={courseDetails?.data?.data?.average_rating+12} />
+      <img src={courseDetails?.data?.data?.image} alt={courseDetails?.data?.data?.average_rating+"12"} />
        
 
      

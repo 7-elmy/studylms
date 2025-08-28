@@ -28,6 +28,7 @@ const apiSlice = createSlice({
   sections:{data: null, loading: false, error: null},
   grades:{data: null, loading: false, error: null},
   subscriptionCourse:{data: null, loading: false, error: null},
+  assignmentDetail:{data: null, loading: false, error: null},
   },
   reducers: {
     clearApiError: (state, action) => {

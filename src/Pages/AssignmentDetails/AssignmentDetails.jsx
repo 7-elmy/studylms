@@ -1,1351 +1,43 @@
-
-
-// import { useState } from 'react';
-// import { CheckCircle, XCircle, ArrowLeft, ArrowRight, Flag, AlertTriangle, FileText, Calendar, User, BookOpen } from 'lucide-react';
-// import DynamicBreadcrumb from '../../Components/Ui/DynamicBreadcrumb';
-
-// export default function AssignmentDetails() {
-//   // Enhanced questions data with more realistic content
-//   const questions = [
-//     {
-//       id: 1,
-//       text: "Why does the sky appear blue during the day but turns red at sunset?",
-//       answers: [
-//         "Blue light has shorter wavelengths and scatters more in the atmosphere",
-//         "The sun emits more blue light during the day",
-//         "Earth's magnetic field affects light colors",
-//         "Oxygen molecules absorb red light during the day"
-//       ],
-//       correctAnswer: 0,
-//       explanation: "Blue light has a shorter wavelength and gets scattered more by particles in the atmosphere, making the sky appear blue during the day."
-//     },
-//     {
-//       id: 6,
-//       text: "Why does the sky appear blue during the day but turns red at sunset?",
-//       answers: [
-//         "Blue light has shorter wavelengths and scatters more in the atmosphere",
-//         "The sun emits more blue light during the day",
-//         "Earth's magnetic field affects light colors",
-//         "Oxygen molecules absorb red light during the day"
-//       ],
-//       correctAnswer: 0,
-//       explanation: "Blue light has a shorter wavelength and gets scattered more by particles in the atmosphere, making the sky appear blue during the day."
-//     },
-//     {
-//       id: 7,
-//       text: "Why does the sky appear blue during the day but turns red at sunset?",
-//       answers: [
-//         "Blue light has shorter wavelengths and scatters more in the atmosphere",
-//         "The sun emits more blue light during the day",
-//         "Earth's magnetic field affects light colors",
-//         "Oxygen molecules absorb red light during the day"
-//       ],
-//       correctAnswer: 0,
-//       explanation: "Blue light has a shorter wavelength and gets scattered more by particles in the atmosphere, making the sky appear blue during the day."
-//     },
-//     {
-//       id: 2,
-//       text: "What is the phenomenon of light refraction?",
-//       answers: [
-//         "Light bouncing off surfaces",
-//         "Light bending when passing through different mediums",
-//         "Light being absorbed by materials",
-//         "Light splitting into different colors"
-//       ],
-//       correctAnswer: 1,
-//       explanation: "Refraction occurs when light passes from one medium to another with different optical densities, causing the light to bend."
-//     },
-//     {
-//       id: 3,
-//       text: "How is a rainbow formed?",
-//       answers: [
-//         "Sunlight reflecting off water surfaces",
-//         "Light refracting and reflecting inside water droplets",
-//         "Clouds filtering different colors of light",
-//         "Atmospheric pressure creating color bands"
-//       ],
-//       correctAnswer: 1,
-//       explanation: "Rainbows form when sunlight enters water droplets, refracts, reflects off the back of the droplet, and refracts again as it exits."
-//     },
-//     {
-//       id: 4,
-//       text: "What is the difference between reflection and refraction?",
-//       answers: [
-//         "Reflection changes light color, refraction doesn't",
-//         "Reflection bounces light back, refraction bends light through materials",
-//         "Reflection only works with mirrors, refraction with glass",
-//         "There is no difference between them"
-//       ],
-//       correctAnswer: 1,
-//       explanation: "Reflection occurs when light bounces off a surface, while refraction occurs when light bends as it passes through different materials."
-//     },
-//     {
-//       id: 5,
-//       text: "How do magnifying lenses work?",
-//       answers: [
-//         "They increase the amount of light entering the eye",
-//         "They use convex lenses to bend light rays and create enlarged images",
-//         "They filter out unwanted light frequencies",
-//         "They reflect light at different angles"
-//       ],
-//       correctAnswer: 1,
-//       explanation: "Magnifying lenses use convex (converging) lenses that bend light rays to create a virtual, enlarged image of the object."
-//     }
-//   ];
-
-//   // Assignment metadata
-//   const assignmentInfo = {
-//     title: "Arabic - Light and Optics Assignment",
-//     course: "Third Preparatory - Complete International Curriculum",
-//     dueDate: "2024-08-15",
-//     totalQuestions: questions.length,
-//     instructor: "Dr. Mostafa Ahmed",
-//     points: 50
-//   };
-
-//   // State management
-//   const [currentQuestion, setCurrentQuestion] = useState(0);
-//   const [selectedAnswers, setSelectedAnswers] = useState({});
-//   const [flaggedQuestions, setFlaggedQuestions] = useState(new Set());
-//   const [isSubmitted, setIsSubmitted] = useState(false);
-//   const [showResults, setShowResults] = useState(false);
-//   const [showConfirmSubmit, setShowConfirmSubmit] = useState(false);
-//   const [viewMode, setViewMode] = useState('single'); // 'single' or 'all'
-
-//   const handleAnswerSelect = (questionId, answerIndex) => {
-//     setSelectedAnswers(prev => ({
-//       ...prev,
-//       [questionId]: answerIndex
-//     }));
-//   };
-
-//   const handleFlagQuestion = () => {
-//     const newFlagged = new Set(flaggedQuestions);
-//     if (newFlagged.has(currentQuestion)) {
-//       newFlagged.delete(currentQuestion);
-//     } else {
-//       newFlagged.add(currentQuestion);
-//     }
-//     setFlaggedQuestions(newFlagged);
-//   };
-
-//   const goToQuestion = (questionIndex) => {
-//     setCurrentQuestion(questionIndex);
-//     setViewMode('single');
-//   };
-
-//   const nextQuestion = () => {
-//     if (currentQuestion < questions.length - 1) {
-//       setCurrentQuestion(currentQuestion + 1);
-//     }
-//   };
-
-//   const previousQuestion = () => {
-//     if (currentQuestion > 0) {
-//       setCurrentQuestion(currentQuestion - 1);
-//     }
-//   };
-
-//   const getAnsweredCount = () => {
-//     return Object.keys(selectedAnswers).length;
-//   };
-
-//   const calculateScore = () => {
-//     let correct = 0;
-//     questions.forEach((question, index) => {
-//       if (selectedAnswers[question.id] === question.correctAnswer) {
-//         correct++;
-//       }
-//     });
-//     return {
-//       correct,
-//       total: questions.length,
-//       percentage: Math.round((correct / questions.length) * 100),
-//       points: Math.round((correct / questions.length) * assignmentInfo.points)
-//     };
-//   };
-
-//   const handleSubmitAssignment = () => {
-//     setIsSubmitted(true);
-//     setShowResults(true);
-//     setShowConfirmSubmit(false);
-//   };
-
-//   const getQuestionStatus = (questionIndex) => {
-//     const questionId = questions[questionIndex].id;
-//     if (selectedAnswers.hasOwnProperty(questionId)) {
-//       if (isSubmitted) {
-//         return selectedAnswers[questionId] === questions[questionIndex].correctAnswer ? 'correct' : 'incorrect';
-//       }
-//       return 'answered';
-//     }
-//     return flaggedQuestions.has(questionIndex) ? 'flagged' : 'unanswered';
-//   };
-
-//   const getStatusColor = (status) => {
-//     switch (status) {
-//       case 'correct': return 'bg-green-500 text-white';
-//       case 'incorrect': return 'bg-red-500 text-white';
-//       case 'answered': return 'bg-yellow-500 text-white';
-//       case 'flagged': return 'bg-blue-500 text-white';
-//       default: return 'bg-gray-200 text-gray-700 hover:bg-gray-300';
-//     }
-//   };
-
-//   // Results View
-//   if (showResults) {
-//     const score = calculateScore();
-//     return (
-//       <div>
-//         <DynamicBreadcrumb
-//           MainTitle={assignmentInfo.course}
-//           BreadCrumbs={[
-//             {label:"Home" , href:"/home"},
-//             {label:"course Name" , href:"/courseId"},
-//             {label:"Assignment Results" , href:"/assignmentDetails"},
-//           ]}
-//         />
-        
-//         <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-sm">
-//           <div className="text-center mb-8">
-//             <div className="mb-4">
-//               {score.percentage >= 80 ? (
-//                 <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
-//               ) : score.percentage >= 60 ? (
-//                 <AlertTriangle className="w-16 h-16 text-yellow-500 mx-auto mb-4" />
-//               ) : (
-//                 <XCircle className="w-16 h-16 text-red-500 mx-auto mb-4" />
-//               )}
-//             </div>
-//             <h1 className="text-3xl font-bold text-gray-800 mb-2">Assignment Completed!</h1>
-//             <div className="w-20 h-1 bg-yellow-500 mx-auto mb-6"></div>
-            
-//             <div className="bg-gray-50 p-6 rounded-lg mb-6">
-//               <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-//                 <div className="text-center">
-//                   <div className="text-3xl font-bold text-gray-900">{score.correct}</div>
-//                   <div className="text-gray-600">Correct</div>
-//                 </div>
-//                 <div className="text-center">
-//                   <div className="text-3xl font-bold text-gray-900">{score.total - score.correct}</div>
-//                   <div className="text-gray-600">Incorrect</div>
-//                 </div>
-//                 <div className="text-center">
-//                   <div className={`text-3xl font-bold ${score.percentage >= 80 ? 'text-green-600' : score.percentage >= 60 ? 'text-yellow-600' : 'text-red-600'}`}>
-//                     {score.percentage}%
-//                   </div>
-//                   <div className="text-gray-600">Score</div>
-//                 </div>
-//                 <div className="text-center">
-//                   <div className="text-3xl font-bold text-yellow-600">{score.points}</div>
-//                   <div className="text-gray-600">Points</div>
-//                 </div>
-//               </div>
-//             </div>
-//           </div>
-
-//           {/* Review Answers */}
-//           <div className="space-y-6">
-//             <h2 className="text-xl font-semibold text-gray-800 mb-4">Review Your Answers</h2>
-//             {questions.map((question, index) => {
-//               const userAnswer = selectedAnswers[question.id];
-//               const isCorrect = userAnswer === question.correctAnswer;
-              
-//               return (
-//                 <div key={question.id} className="border border-gray-200 rounded-lg p-4">
-//                   <div className="flex items-start justify-between mb-3">
-//                     <h3 className="font-medium text-yellow-800">Question {index + 1}</h3>
-//                     {isCorrect ? (
-//                       <CheckCircle className="w-5 h-5 text-green-500" />
-//                     ) : (
-//                       <XCircle className="w-5 h-5 text-red-500" />
-//                     )}
-//                   </div>
-                  
-//                   <p className="text-gray-700 mb-4">{question.text}</p>
-                  
-//                   <div className="space-y-2 mb-4">
-//                     {question.answers.map((answer, optionIndex) => (
-//                       <div
-//                         key={optionIndex}
-//                         className={`p-3 rounded border ${
-//                           optionIndex === question.correctAnswer
-//                             ? 'bg-green-50 border-green-300 text-green-800'
-//                             : optionIndex === userAnswer && !isCorrect
-//                             ? 'bg-red-50 border-red-300 text-red-800'
-//                             : 'bg-gray-50 border-gray-200'
-//                         }`}
-//                       >
-//                         <div className="flex items-center">
-//                           <span className="w-6 h-6 flex items-center justify-center rounded-full bg-white border border-gray-300 mr-3 text-sm">
-//                             {optionIndex + 1}
-//                           </span>
-//                           {answer}
-//                           {optionIndex === question.correctAnswer && (
-//                             <span className="ml-auto text-green-600 font-medium">✓ Correct</span>
-//                           )}
-//                           {optionIndex === userAnswer && !isCorrect && (
-//                             <span className="ml-auto text-red-600 font-medium">✗ Your answer</span>
-//                           )}
-//                         </div>
-//                       </div>
-//                     ))}
-//                   </div>
-                  
-//                   {question.explanation && (
-//                     <div className="bg-blue-50 p-3 rounded border-l-4 border-blue-400">
-//                       <p className="text-blue-800 text-sm">
-//                         <strong>Explanation:</strong> {question.explanation}
-//                       </p>
-//                     </div>
-//                   )}
-//                 </div>
-//               );
-//             })}
-//           </div>
-          
-//           <div className="mt-8 text-center">
-//             <button
-//               onClick={() => window.location.reload()}
-//               className="bg-yellow-500 hover:bg-yellow-600 text-white font-medium py-3 px-8 rounded-lg transition duration-200"
-//             >
-//               Retake Assignment
-//             </button>
-//           </div>
-//         </div>
-//       </div>
-//     );
-//   }
-
-//   // Check if all questions are answered
-//   const allQuestionsAnswered = getAnsweredCount() === questions.length;
-
-//   return (
-//     <div>
-//       <DynamicBreadcrumb
-//         MainTitle={assignmentInfo.course}
-//         BreadCrumbs={[
-//           {label:"Home" , href:"/home"},
-//           {label:"course Name" , href:"/courseId"},
-//           {label:"Assignment" , href:"/assignmentDetails"},
-//         ]}
-//       />
-
-//       <div className="max-w-7xl mx-auto p-6">
-//         {/* Assignment Header */}
-//         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
-//           <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
-//             <div>
-//               <h1 className="text-2xl font-bold text-gray-800 mb-2">{assignmentInfo.title}</h1>
-//               <div className="w-16 h-1 bg-yellow-500 mb-4"></div>
-//               <div className="flex flex-wrap gap-4 text-sm text-gray-600">
-//                 <div className="flex items-center">
-//                   <User className="w-4 h-4 mr-1" />
-//                   {assignmentInfo.instructor}
-//                 </div>
-//                 <div className="flex items-center">
-//                   <FileText className="w-4 h-4 mr-1" />
-//                   {assignmentInfo.totalQuestions} Questions
-//                 </div>
-//                 <div className="flex items-center">
-//                   <BookOpen className="w-4 h-4 mr-1" />
-//                   {assignmentInfo.points} Points
-//                 </div>
-//               </div>
-//             </div>
-            
-//             <div className="flex items-center space-x-4">
-//               <div className="flex items-center bg-blue-50 px-3 py-2 rounded-lg">
-//                 <Calendar className="w-5 h-5 text-blue-600 mr-2" />
-//                 <span className="text-blue-700 text-sm">Due: {new Date(assignmentInfo.dueDate).toLocaleDateString()}</span>
-//               </div>
-//             </div>
-//           </div>
-//         </div>
-
-//         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-//           {/* Main Content Area */}
-//           <div className="lg:col-span-3">
-//             <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-//               {/* View Toggle */}
-//               <div className="flex justify-between items-center mb-6">
-//                 <div className="flex space-x-2">
-//                   <button
-//                     onClick={() => setViewMode('single')}
-//                     className={`px-4 py-2 rounded-lg transition duration-200 ${
-//                       viewMode === 'single' 
-//                         ? 'bg-yellow-500 text-white' 
-//                         : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-//                     }`}
-//                   >
-//                     Single Question
-//                   </button>
-//                   <button
-//                     onClick={() => setViewMode('all')}
-//                     className={`px-4 py-2 rounded-lg transition duration-200 ${
-//                       viewMode === 'all' 
-//                         ? 'bg-yellow-500 text-white' 
-//                         : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-//                     }`}
-//                   >
-//                     All Questions
-//                   </button>
-//                 </div>
-
-//                 {viewMode === 'single' && (
-//                   <div className="flex items-center space-x-2">
-//                     <button
-//                       onClick={handleFlagQuestion}
-//                       className={`p-2 rounded-lg transition duration-200 ${
-//                         flaggedQuestions.has(currentQuestion)
-//                           ? 'bg-blue-500 text-white'
-//                           : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
-//                       }`}
-//                     >
-//                       <Flag className="w-5 h-5" />
-//                     </button>
-//                   </div>
-//                 )}
-//               </div>
-
-//               {viewMode === 'single' ? (
-//                 // Single Question View
-//                 <div>
-//                   {/* Progress Bar */}
-//                   <div className="mb-6">
-//                     <div className="flex justify-between text-sm text-gray-600 mb-2">
-//                       <span>Question {currentQuestion + 1} of {questions.length}</span>
-//                       <span>{getAnsweredCount()} answered</span>
-//                     </div>
-//                     <div className="w-full bg-gray-200 rounded-full h-2">
-//                       <div
-//                         className="bg-yellow-500 h-2 rounded-full transition-all duration-300"
-//                         style={{ width: `${((currentQuestion + 1) / questions.length) * 100}%` }}
-//                       ></div>
-//                     </div>
-//                   </div>
-
-//                   {/* Question */}
-//                   <div className="mb-8">
-//                     <h3 className="text-lg font-medium text-yellow-800 mb-4">
-//                       Question {currentQuestion + 1}
-//                     </h3>
-//                     <p className="text-gray-700 mb-6">{questions[currentQuestion].text}</p>
-                    
-//                     <div className="space-y-3">
-//                       {questions[currentQuestion].answers.map((answer, index) => (
-//                         <div
-//                           key={index}
-//                           onClick={() => handleAnswerSelect(questions[currentQuestion].id, index)}
-//                           className={`p-4 border rounded-lg cursor-pointer transition-colors duration-200 ${
-//                             selectedAnswers[questions[currentQuestion].id] === index
-//                               ? 'bg-yellow-400 border-yellow-300'
-//                               : 'bg-gray-50 border-gray-200 hover:bg-gray-100'
-//                           }`}
-//                         >
-//                           <div className="flex items-center">
-//                             <span className="w-6 h-6 flex items-center justify-center rounded-full bg-white border border-gray-300 mr-3">
-//                               {index + 1}
-//                             </span>
-//                             <span>{answer}</span>
-//                           </div>
-//                         </div>
-//                       ))}
-//                     </div>
-//                   </div>
-
-//                   {/* Navigation */}
-//                   <div className="flex justify-between items-center">
-//                     <button
-//                       onClick={previousQuestion}
-//                       disabled={currentQuestion === 0}
-//                       className="flex items-center px-4 py-2 text-gray-600 hover:text-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition duration-200"
-//                     >
-//                       <ArrowLeft className="w-5 h-5 mr-2" />
-//                       Previous
-//                     </button>
-
-//                     <div className="flex space-x-3">
-//                       {currentQuestion === questions.length - 1 ? (
-//                         <button
-//                           onClick={() => setShowConfirmSubmit(true)}
-//                           className="bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-6 rounded-lg transition duration-200"
-//                         >
-//                           Submit Assignment
-//                         </button>
-//                       ) : (
-//                         <button
-//                           onClick={nextQuestion}
-//                           className="bg-yellow-500 hover:bg-yellow-600 text-white font-medium py-2 px-6 rounded-lg transition duration-200 flex items-center"
-//                         >
-//                           Next
-//                           <ArrowRight className="w-5 h-5 ml-2" />
-//                         </button>
-//                       )}
-//                     </div>
-//                   </div>
-//                 </div>
-//               ) : (
-//                 // All Questions View
-//                 <div>
-//                   {questions.map((question) => (
-//                     <div key={question.id} className="mb-8 pb-8 border-b border-gray-200 last:border-b-0">
-//                       <h3 className="text-lg font-medium text-yellow-800 mb-4">Question {question.id}</h3>
-//                       <p className="text-gray-700 mb-6">{question.text}</p>
-                      
-//                       <div className="space-y-3">
-//                         {question.answers.map((answer, index) => (
-//                           <div
-//                             key={index}
-//                             onClick={() => handleAnswerSelect(question.id, index)}
-//                             className={`p-4 border rounded-lg cursor-pointer transition-colors duration-200 ${
-//                               selectedAnswers[question.id] === index
-//                                 ? 'bg-yellow-400 border-yellow-300'
-//                                 : 'bg-gray-50 border-gray-200 hover:bg-gray-100'
-//                             }`}
-//                           >
-//                             <div className="flex items-center">
-//                               <span className="w-6 h-6 flex items-center justify-center rounded-full bg-white border border-gray-300 mr-3">
-//                                 {index + 1}
-//                               </span>
-//                               <span>{answer}</span>
-//                             </div>
-//                           </div>
-//                         ))}
-//                       </div>
-//                     </div>
-//                   ))}
-
-//                   {/* Submit Button for All Questions View */}
-//                   <div className='flex justify-center items-center mt-8'>
-//                     <button
-//                       onClick={() => setShowConfirmSubmit(true)}
-//                       className={`w-full max-w-3xl py-3 px-6 rounded-lg font-medium transition-colors duration-200 ${
-//                         allQuestionsAnswered
-//                           ? 'bg-yellow-600 hover:bg-yellow-800 text-white'
-//                           : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-//                       }`}
-//                       disabled={!allQuestionsAnswered}
-//                     >
-//                       Submit Assignment
-//                     </button>
-//                   </div>
-//                 </div>
-//               )}
-//             </div>
-//           </div>
-
-//           {/* Question Navigator Sidebar */}
-//           <div className="lg:col-span-1">
-//             <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sticky top-6">
-//               <h3 className="font-medium text-gray-800 mb-4">Questions Overview</h3>
-              
-//               {/* Progress Summary */}
-//               <div className="bg-gray-50 p-3 rounded-lg mb-4">
-//                 <div className="text-center">
-//                   <div className="text-2xl font-bold text-yellow-600">{getAnsweredCount()}/{questions.length}</div>
-//                   <div className="text-sm text-gray-600">Completed</div>
-//                 </div>
-//               </div>
-              
-//               <div className="grid grid-cols-4 lg:grid-cols-6 gap-2 mb-4">
-//                 {questions.map((question, index) => {
-//                   const status = getQuestionStatus(index);
-//                   return (
-//                     <button
-//                       key={question.id}
-//                       onClick={() => goToQuestion(index)}
-//                       className={`relative w-10 h-10 rounded text-sm font-medium transition duration-200 ${getStatusColor(status)} ${
-//                         currentQuestion === index && viewMode === 'single' ? 'ring-2 ring-blue-400' : ''
-//                       }`}
-//                     >
-//                       {index + 1}
-//                       {flaggedQuestions.has(index) && (
-//                         <Flag className="w-3 h-3 absolute -top-1 -right-1 text-blue-600" />
-//                       )}
-//                     </button>
-//                   );
-//                 })}
-//               </div>
-
-//               {/* Legend */}
-//               <div className="space-y-2 text-xs mb-4">
-//                 <div className="flex items-center">
-//                   <div className="w-4 h-4 bg-yellow-500 rounded mr-2"></div>
-//                   <span>Answered</span>
-//                 </div>
-//                 <div className="flex items-center">
-//                   <div className="w-4 h-4 bg-blue-500 rounded mr-2"></div>
-//                   <span>Flagged</span>
-//                 </div>
-//                 <div className="flex items-center">
-//                   <div className="w-4 h-4 bg-gray-200 rounded mr-2"></div>
-//                   <span>Not answered</span>
-//                 </div>
-//               </div>
-
-//               {/* Quick Submit */}
-//               <button
-//                 onClick={() => setShowConfirmSubmit(true)}
-//                 className={`w-full py-2 px-4 rounded-lg font-medium transition duration-200 ${
-//                   allQuestionsAnswered
-//                     ? 'bg-green-500 hover:bg-green-600 text-white'
-//                     : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-//                 }`}
-//                 disabled={!allQuestionsAnswered}
-//               >
-//                 Submit Assignment
-//               </button>
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-
-//       {/* Confirm Submit Modal */}
-//       {showConfirmSubmit && (
-//         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-//           <div className="bg-white rounded-lg p-6 max-w-md w-full">
-//             <h3 className="text-xl font-bold text-gray-800 mb-4">Submit Assignment?</h3>
-//             <p className="text-gray-600 mb-6">
-//               You have answered {getAnsweredCount()} out of {questions.length} questions. 
-//               {!allQuestionsAnswered && " Some questions remain unanswered."} Are you sure you want to submit your assignment?
-//             </p>
-//             <div className="flex space-x-4">
-//               <button
-//                 onClick={() => setShowConfirmSubmit(false)}
-//                 className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-2 px-4 rounded-lg transition duration-200"
-//               >
-//                 Cancel
-//               </button>
-//               <button
-//                 onClick={handleSubmitAssignment}
-//                 className="flex-1 bg-yellow-500 hover:bg-yellow-600 text-white font-medium py-2 px-4 rounded-lg transition duration-200"
-//               >
-//                 Submit
-//               </button>
-//             </div>
-//           </div>
-//         </div>
-//       )}
-//     </div>
-//   );
-// }
-
-
-// import { useState } from 'react';
-// import { CheckCircle, XCircle, ArrowLeft, ArrowRight, Flag, AlertTriangle, FileText, Calendar, User, BookOpen } from 'lucide-react';
-// import DynamicBreadcrumb from '../../Components/Ui/DynamicBreadcrumb';
-
-// export default function AssignmentDetails() {
-//   // Enhanced questions data with more realistic content
-//   const questions = [
-//     {
-//       id: 1,
-//       text: "Why does the sky appear blue during the day but turns red at sunset?",
-//       answers: [
-//         "Blue light has shorter wavelengths and scatters more in the atmosphere",
-//         "The sun emits more blue light during the day",
-//         "Earth's magnetic field affects light colors",
-//         "Oxygen molecules absorb red light during the day"
-//       ],
-//       correctAnswer: 0,
-//       explanation: "Blue light has a shorter wavelength and gets scattered more by particles in the atmosphere, making the sky appear blue during the day."
-//     },
-//     {
-//       id: 2,
-//       text: "What is the phenomenon of light refraction?",
-//       answers: [
-//         "Light bouncing off surfaces",
-//         "Light bending when passing through different mediums",
-//         "Light being absorbed by materials",
-//         "Light splitting into different colors"
-//       ],
-//       correctAnswer: 1,
-//       explanation: "Refraction occurs when light passes from one medium to another with different optical densities, causing the light to bend."
-//     },
-//     {
-//       id: 3,
-//       text: "How is a rainbow formed?",
-//       answers: [
-//         "Sunlight reflecting off water surfaces",
-//         "Light refracting and reflecting inside water droplets",
-//         "Clouds filtering different colors of light",
-//         "Atmospheric pressure creating color bands"
-//       ],
-//       correctAnswer: 1,
-//       explanation: "Rainbows form when sunlight enters water droplets, refracts, reflects off the back of the droplet, and refracts again as it exits."
-//     },
-//     {
-//       id: 4,
-//       text: "What is the difference between reflection and refraction?",
-//       answers: [
-//         "Reflection changes light color, refraction doesn't",
-//         "Reflection bounces light back, refraction bends light through materials",
-//         "Reflection only works with mirrors, refraction with glass",
-//         "There is no difference between them"
-//       ],
-//       correctAnswer: 1,
-//       explanation: "Reflection occurs when light bounces off a surface, while refraction occurs when light bends as it passes through different materials."
-//     },
-//     {
-//       id: 5,
-//       text: "How do magnifying lenses work?",
-//       answers: [
-//         "They increase the amount of light entering the eye",
-//         "They use convex lenses to bend light rays and create enlarged images",
-//         "They filter out unwanted light frequencies",
-//         "They reflect light at different angles"
-//       ],
-//       correctAnswer: 1,
-//       explanation: "Magnifying lenses use convex (converging) lenses that bend light rays to create a virtual, enlarged image of the object."
-//     }
-//   ];
-
-//   // Assignment metadata
-//   const assignmentInfo = {
-//     title: "Physics - Light and Optics Assignment",
-//     course: "Third Preparatory - Complete International Curriculum",
-//     dueDate: "2024-08-15",
-//     totalQuestions: questions.length,
-//     instructor: "Dr. Sarah Ahmed",
-//     points: 50
-//   };
-
-//   // State management
-//   const [currentQuestion, setCurrentQuestion] = useState(0);
-//   const [selectedAnswers, setSelectedAnswers] = useState({});
-//   const [flaggedQuestions, setFlaggedQuestions] = useState(new Set());
-//   const [isSubmitted, setIsSubmitted] = useState(false);
-//   const [showResults, setShowResults] = useState(false);
-//   const [showConfirmSubmit, setShowConfirmSubmit] = useState(false);
-//   const [viewMode, setViewMode] = useState('single'); // 'single' or 'all'
-
-//   const handleAnswerSelect = (questionId, answerIndex) => {
-//     setSelectedAnswers(prev => ({
-//       ...prev,
-//       [questionId]: answerIndex
-//     }));
-//   };
-
-//   const handleFlagQuestion = () => {
-//     const newFlagged = new Set(flaggedQuestions);
-//     if (newFlagged.has(currentQuestion)) {
-//       newFlagged.delete(currentQuestion);
-//     } else {
-//       newFlagged.add(currentQuestion);
-//     }
-//     setFlaggedQuestions(newFlagged);
-//   };
-
-//   const goToQuestion = (questionIndex) => {
-//     setCurrentQuestion(questionIndex);
-//     setViewMode('single');
-//   };
-
-//   const nextQuestion = () => {
-//     if (currentQuestion < questions.length - 1) {
-//       setCurrentQuestion(currentQuestion + 1);
-//     }
-//   };
-
-//   const previousQuestion = () => {
-//     if (currentQuestion > 0) {
-//       setCurrentQuestion(currentQuestion - 1);
-//     }
-//   };
-
-//   const getAnsweredCount = () => {
-//     return Object.keys(selectedAnswers).length;
-//   };
-
-//   const calculateScore = () => {
-//     let correct = 0;
-//     questions.forEach((question, index) => {
-//       if (selectedAnswers[question.id] === question.correctAnswer) {
-//         correct++;
-//       }
-//     });
-//     return {
-//       correct,
-//       total: questions.length,
-//       percentage: Math.round((correct / questions.length) * 100),
-//       points: Math.round((correct / questions.length) * assignmentInfo.points)
-//     };
-//   };
-
-//   const handleSubmitAssignment = () => {
-//     if (Object.keys(selectedAnswers).length !== questions.length) return;
-//     setIsSubmitted(true);
-//     setShowResults(true);
-//     setShowConfirmSubmit(false);
-//   };
-
-//   const getQuestionStatus = (questionIndex) => {
-//     const questionId = questions[questionIndex].id;
-//     if (selectedAnswers.hasOwnProperty(questionId)) {
-//       if (isSubmitted) {
-//         return selectedAnswers[questionId] === questions[questionIndex].correctAnswer ? 'correct' : 'incorrect';
-//       }
-//       return 'answered';
-//     }
-//     return flaggedQuestions.has(questionIndex) ? 'flagged' : 'unanswered';
-//   };
-
-//   const getStatusColor = (status) => {
-//     switch (status) {
-//       case 'correct': return 'bg-green-500 text-white';
-//       case 'incorrect': return 'bg-red-500 text-white';
-//       case 'answered': return 'bg-yellow-500 text-white';
-//       case 'flagged': return 'bg-blue-500 text-white';
-//       default: return 'bg-gray-200 text-gray-700 hover:bg-gray-300';
-//     }
-//   };
-
-//   // Check if all questions are answered
-//   const allQuestionsAnswered = Object.keys(selectedAnswers).length === questions.length;
-
-//   // Results View
-//   if (showResults) {
-//     const score = calculateScore();
-//     return (
-//       <div>
-//         <DynamicBreadcrumb
-//           MainTitle={assignmentInfo.course}
-//           BreadCrumbs={[
-//             {label:"Home" , href:"/home"},
-//             {label:"course Name" , href:"/courseId"},
-//             {label:"Assignment Results" , href:"/assignmentDetails"},
-//           ]}
-//         />
-        
-//         <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-sm">
-//           <div className="text-center mb-8">
-//             <div className="mb-4">
-//               {score.percentage >= 80 ? (
-//                 <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
-//               ) : score.percentage >= 60 ? (
-//                 <AlertTriangle className="w-16 h-16 text-yellow-500 mx-auto mb-4" />
-//               ) : (
-//                 <XCircle className="w-16 h-16 text-red-500 mx-auto mb-4" />
-//               )}
-//             </div>
-//             <h1 className="text-3xl font-bold text-gray-800 mb-2">Assignment Completed!</h1>
-//             <div className="w-20 h-1 bg-yellow-500 mx-auto mb-6"></div>
-            
-//             <div className="bg-gray-50 p-6 rounded-lg mb-6">
-//               <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-//                 <div className="text-center">
-//                   <div className="text-3xl font-bold text-gray-900">{score.correct}</div>
-//                   <div className="text-gray-600">Correct</div>
-//                 </div>
-//                 <div className="text-center">
-//                   <div className="text-3xl font-bold text-gray-900">{score.total - score.correct}</div>
-//                   <div className="text-gray-600">Incorrect</div>
-//                 </div>
-//                 <div className="text-center">
-//                   <div className={`text-3xl font-bold ${score.percentage >= 80 ? 'text-green-600' : score.percentage >= 60 ? 'text-yellow-600' : 'text-red-600'}`}>
-//                     {score.percentage}%
-//                   </div>
-//                   <div className="text-gray-600">Score</div>
-//                 </div>
-//                 <div className="text-center">
-//                   <div className="text-3xl font-bold text-yellow-600">{score.points}</div>
-//                   <div className="text-gray-600">Points</div>
-//                 </div>
-//               </div>
-//             </div>
-//           </div>
-
-//           {/* Review Answers */}
-//           <div className="space-y-6">
-//             <h2 className="text-xl font-semibold text-gray-800 mb-4">Review Your Answers</h2>
-//             {questions.map((question, index) => {
-//               const userAnswer = selectedAnswers[question.id];
-//               const isCorrect = userAnswer === question.correctAnswer;
-              
-//               return (
-//                 <div key={question.id} className="border border-gray-200 rounded-lg p-4">
-//                   <div className="flex items-start justify-between mb-3">
-//                     <h3 className="font-medium text-yellow-800">Question {index + 1}</h3>
-//                     {isCorrect ? (
-//                       <CheckCircle className="w-5 h-5 text-green-500" />
-//                     ) : (
-//                       <XCircle className="w-5 h-5 text-red-500" />
-//                     )}
-//                   </div>
-                  
-//                   <p className="text-gray-700 mb-4">{question.text}</p>
-                  
-//                   <div className="space-y-2 mb-4">
-//                     {question.answers.map((answer, optionIndex) => (
-//                       <div
-//                         key={optionIndex}
-//                         className={`p-3 rounded border ${
-//                           optionIndex === question.correctAnswer
-//                             ? 'bg-green-50 border-green-300 text-green-800'
-//                             : optionIndex === userAnswer && !isCorrect
-//                             ? 'bg-red-50 border-red-300 text-red-800'
-//                             : 'bg-gray-50 border-gray-200'
-//                         }`}
-//                       >
-//                         <div className="flex items-center">
-//                           <span className="w-6 h-6 flex items-center justify-center rounded-full bg-white border border-gray-300 mr-3 text-sm">
-//                             {optionIndex + 1}
-//                           </span>
-//                           {answer}
-//                           {optionIndex === question.correctAnswer && (
-//                             <span className="ml-auto text-green-600 font-medium">✓ Correct</span>
-//                           )}
-//                           {optionIndex === userAnswer && !isCorrect && (
-//                             <span className="ml-auto text-red-600 font-medium">✗ Your answer</span>
-//                           )}
-//                         </div>
-//                       </div>
-//                     ))}
-//                   </div>
-                  
-//                   {question.explanation && (
-//                     <div className="bg-blue-50 p-3 rounded border-l-4 border-blue-400">
-//                       <p className="text-blue-800 text-sm">
-//                         <strong>Explanation:</strong> {question.explanation}
-//                       </p>
-//                     </div>
-//                   )}
-//                 </div>
-//               );
-//             })}
-//           </div>
-          
-//           <div className="mt-8 text-center">
-//             <button
-//               onClick={() => window.location.reload()}
-//               className="bg-yellow-500 hover:bg-yellow-600 text-white font-medium py-3 px-8 rounded-lg transition duration-200"
-//             >
-//               Retake Assignment
-//             </button>
-//           </div>
-//         </div>
-//       </div>
-//     );
-//   }
-
-//   return (
-//     <div>
-//       <DynamicBreadcrumb
-//         MainTitle={assignmentInfo.course}
-//         BreadCrumbs={[
-//           {label:"Home" , href:"/home"},
-//           {label:"course Name" , href:"/courseId"},
-//           {label:"Assignment" , href:"/assignmentDetails"},
-//         ]}
-//       />
-
-//       <div className="max-w-7xl mx-auto p-6">
-//         {/* Assignment Header */}
-//         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
-//           <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
-//             <div>
-//               <h1 className="text-2xl font-bold text-gray-800 mb-2">{assignmentInfo.title}</h1>
-//               <div className="w-16 h-1 bg-yellow-500 mb-4"></div>
-//               <div className="flex flex-wrap gap-4 text-sm text-gray-600">
-//                 <div className="flex items-center">
-//                   <User className="w-4 h-4 mr-1" />
-//                   {assignmentInfo.instructor}
-//                 </div>
-//                 <div className="flex items-center">
-//                   <FileText className="w-4 h-4 mr-1" />
-//                   {assignmentInfo.totalQuestions} Questions
-//                 </div>
-//                 <div className="flex items-center">
-//                   <BookOpen className="w-4 h-4 mr-1" />
-//                   {assignmentInfo.points} Points
-//                 </div>
-//               </div>
-//             </div>
-            
-//             <div className="flex items-center space-x-4">
-//               <div className="flex items-center bg-blue-50 px-3 py-2 rounded-lg">
-//                 <Calendar className="w-5 h-5 text-blue-600 mr-2" />
-//                 <span className="text-blue-700 text-sm">Due: {new Date(assignmentInfo.dueDate).toLocaleDateString()}</span>
-//               </div>
-//             </div>
-//           </div>
-//         </div>
-
-//         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-//           {/* Main Content Area */}
-//           <div className="lg:col-span-3">
-//             <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-//               {/* View Toggle */}
-//               <div className="flex justify-between items-center mb-6">
-//                 <div className="flex space-x-2">
-//                   <button
-//                     onClick={() => setViewMode('single')}
-//                     className={`px-4 py-2 rounded-lg transition duration-200 ${
-//                       viewMode === 'single' 
-//                         ? 'bg-yellow-500 text-white' 
-//                         : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-//                     }`}
-//                   >
-//                     Single Question
-//                   </button>
-//                   <button
-//                     onClick={() => setViewMode('all')}
-//                     className={`px-4 py-2 rounded-lg transition duration-200 ${
-//                       viewMode === 'all' 
-//                         ? 'bg-yellow-500 text-white' 
-//                         : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-//                     }`}
-//                   >
-//                     All Questions
-//                   </button>
-//                 </div>
-
-//                 {viewMode === 'single' && (
-//                   <div className="flex items-center space-x-2">
-//                     <button
-//                       onClick={handleFlagQuestion}
-//                       className={`p-2 rounded-lg transition duration-200 ${
-//                         flaggedQuestions.has(currentQuestion)
-//                           ? 'bg-blue-500 text-white'
-//                           : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
-//                       }`}
-//                     >
-//                       <Flag className="w-5 h-5" />
-//                     </button>
-//                   </div>
-//                 )}
-//               </div>
-
-//               {viewMode === 'single' ? (
-//                 // Single Question View
-//                 <div>
-//                   {/* Progress Bar */}
-//                   <div className="mb-6">
-//                     <div className="flex justify-between text-sm text-gray-600 mb-2">
-//                       <span>Question {currentQuestion + 1} of {questions.length}</span>
-//                       <span>{getAnsweredCount()} answered</span>
-//                     </div>
-//                     <div className="w-full bg-gray-200 rounded-full h-2">
-//                       <div
-//                         className="bg-yellow-500 h-2 rounded-full transition-all duration-300"
-//                         style={{ width: `${((currentQuestion + 1) / questions.length) * 100}%` }}
-//                       ></div>
-//                     </div>
-//                   </div>
-
-//                   {/* Question */}
-//                   <div className="mb-8">
-//                     <h3 className="text-lg font-medium text-yellow-800 mb-4">
-//                       Question {currentQuestion + 1}
-//                     </h3>
-//                     <p className="text-gray-700 mb-6">{questions[currentQuestion].text}</p>
-                    
-//                     <div className="space-y-3">
-//                       {questions[currentQuestion].answers.map((answer, index) => (
-//                         <div
-//                           key={index}
-//                           onClick={() => handleAnswerSelect(questions[currentQuestion].id, index)}
-//                           className={`p-4 border rounded-lg cursor-pointer transition-colors duration-200 ${
-//                             selectedAnswers[questions[currentQuestion].id] === index
-//                               ? 'bg-yellow-400 border-yellow-300'
-//                               : 'bg-gray-50 border-gray-200 hover:bg-gray-100'
-//                           }`}
-//                         >
-//                           <div className="flex items-center">
-//                             <span className="w-6 h-6 flex items-center justify-center rounded-full bg-white border border-gray-300 mr-3">
-//                               {index + 1}
-//                             </span>
-//                             <span>{answer}</span>
-//                           </div>
-//                         </div>
-//                       ))}
-//                     </div>
-//                   </div>
-
-//                   {/* Navigation */}
-//                   <div className="flex justify-between items-center">
-//                     <button
-//                       onClick={previousQuestion}
-//                       disabled={currentQuestion === 0}
-//                       className="flex items-center px-4 py-2 text-gray-600 hover:text-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition duration-200"
-//                     >
-//                       <ArrowLeft className="w-5 h-5 mr-2" />
-//                       Previous
-//                     </button>
-
-//                     <div className="flex space-x-3">
-//                       {currentQuestion === questions.length - 1 ? (
-//                         <button
-//                           onClick={() => allQuestionsAnswered && setShowConfirmSubmit(true)}
-//                           disabled={!allQuestionsAnswered}
-//                           className={`bg-yellow-500 hover:bg-yellow-600 text-white font-medium py-2 px-6 rounded-lg transition duration-200 ${
-//                             !allQuestionsAnswered ? 'opacity-50 cursor-not-allowed' : ''
-//                           }`}
-//                         >
-//                           Submit Assignment
-//                         </button>
-//                       ) : (
-//                         <button
-//                           onClick={nextQuestion}
-//                           className="bg-yellow-500 hover:bg-yellow-600 text-white font-medium py-2 px-6 rounded-lg transition duration-200 flex items-center"
-//                         >
-//                           Next
-//                           <ArrowRight className="w-5 h-5 ml-2" />
-//                         </button>
-//                       )}
-//                     </div>
-//                   </div>
-//                 </div>
-//               ) : (
-//                 // All Questions View
-//                 <div>
-//                   {questions.map((question) => (
-//                     <div key={question.id} className="mb-8 pb-8 border-b border-gray-200 last:border-b-0">
-//                       <h3 className="text-lg font-medium text-yellow-800 mb-4">Question {question.id}</h3>
-//                       <p className="text-gray-700 mb-6">{question.text}</p>
-                      
-//                       <div className="space-y-3">
-//                         {question.answers.map((answer, index) => (
-//                           <div
-//                             key={index}
-//                             onClick={() => handleAnswerSelect(question.id, index)}
-//                             className={`p-4 border rounded-lg cursor-pointer transition-colors duration-200 ${
-//                               selectedAnswers[question.id] === index
-//                                 ? 'bg-yellow-400 border-yellow-300'
-//                                 : 'bg-gray-50 border-gray-200 hover:bg-gray-100'
-//                             }`}
-//                           >
-//                             <div className="flex items-center">
-//                               <span className="w-6 h-6 flex items-center justify-center rounded-full bg-white border border-gray-300 mr-3">
-//                                 {index + 1}
-//                               </span>
-//                               <span>{answer}</span>
-//                             </div>
-//                           </div>
-//                         ))}
-//                       </div>
-//                     </div>
-//                   ))}
-
-//                   {/* Submit Button for All Questions View */}
-//                   <div className='flex justify-center items-center mt-8'>
-//                     <button
-//                       onClick={() => setShowConfirmSubmit(true)}
-//                       disabled={!allQuestionsAnswered}
-//                       className={`w-full max-w-3xl py-3 px-6 rounded-lg font-medium transition-colors duration-200 ${
-//                         allQuestionsAnswered
-//                           ? 'bg-yellow-600 hover:bg-yellow-800 text-white'
-//                           : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-//                       }`}
-//                     >
-//                       Submit Assignment
-//                     </button>
-//                   </div>
-//                 </div>
-//               )}
-//             </div>
-//           </div>
-
-//           {/* Question Navigator Sidebar */}
-//           <div className="lg:col-span-1">
-//             <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sticky top-6">
-//               <h3 className="font-medium text-gray-800 mb-4">Questions Overview</h3>
-              
-//               {/* Progress Summary */}
-//               <div className="bg-gray-50 p-3 rounded-lg mb-4">
-//                 <div className="text-center">
-//                   <div className="text-2xl font-bold text-yellow-600">{getAnsweredCount()}/{questions.length}</div>
-//                   <div className="text-sm text-gray-600">Completed</div>
-//                 </div>
-//               </div>
-              
-//               <div className="grid grid-cols-4 lg:grid-cols-6 gap-2 mb-4">
-//                 {questions.map((question, index) => {
-//                   const status = getQuestionStatus(index);
-//                   return (
-//                     <button
-//                       key={question.id}
-//                       onClick={() => goToQuestion(index)}
-//                       className={`relative w-10 h-10 rounded text-sm font-medium transition duration-200 ${getStatusColor(status)} ${
-//                         currentQuestion === index && viewMode === 'single' ? 'ring-2 ring-blue-400' : ''
-//                       }`}
-//                     >
-//                       {index + 1}
-//                       {flaggedQuestions.has(index) && (
-//                         <Flag className="w-3 h-3 absolute -top-1 -right-1 text-blue-600" />
-//                       )}
-//                     </button>
-//                   );
-//                 })}
-//               </div>
-
-//               {/* Legend */}
-//               <div className="space-y-2 text-xs mb-4">
-//                 <div className="flex items-center">
-//                   <div className="w-4 h-4 bg-yellow-500 rounded mr-2"></div>
-//                   <span>Answered</span>
-//                 </div>
-//                 <div className="flex items-center">
-//                   <div className="w-4 h-4 bg-blue-500 rounded mr-2"></div>
-//                   <span>Flagged</span>
-//                 </div>
-//                 <div className="flex items-center">
-//                   <div className="w-4 h-4 bg-gray-200 rounded mr-2"></div>
-//                   <span>Not answered</span>
-//                 </div>
-//               </div>
-
-//               {/* Quick Submit */}
-//               <button
-//                 onClick={() => setShowConfirmSubmit(true)}
-//                 disabled={!allQuestionsAnswered}
-//                 className={`w-full py-2 px-4 rounded-lg font-medium transition duration-200 ${
-//                   allQuestionsAnswered
-//                     ? 'bg-yellow-500 hover:bg-yellow-600 text-white'
-//                     : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-//                 }`}
-//               >
-//                 Submit Assignment
-//               </button>
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-
-//       {/* Confirm Submit Modal */}
-//       {showConfirmSubmit && (
-//         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-//           <div className="bg-white rounded-lg p-6 max-w-md w-full">
-//             <h3 className="text-xl font-bold text-gray-800 mb-4">
-//               {allQuestionsAnswered ? "Submit Assignment?" : "Incomplete Assignment"}
-//             </h3>
-//             <p className="text-gray-600 mb-6">
-//               You have answered {getAnsweredCount()} out of {questions.length} questions. 
-//               {!allQuestionsAnswered && " Please answer all questions before submitting."}
-//             </p>
-//             <div className="flex space-x-4">
-//               <button
-//                 onClick={() => setShowConfirmSubmit(false)}
-//                 className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-2 px-4 rounded-lg transition duration-200"
-//               >
-//                 Cancel
-//               </button>
-//               <button
-//                 onClick={handleSubmitAssignment}
-//                 disabled={!allQuestionsAnswered}
-//                 className={`flex-1 bg-yellow-500 hover:bg-yellow-600 text-white font-medium py-2 px-4 rounded-lg transition duration-200 ${
-//                   !allQuestionsAnswered ? 'opacity-50 cursor-not-allowed' : ''
-//                 }`}
-//               >
-//                 Submit
-//               </button>
-//             </div>
-//           </div>
-//         </div>
-//       )}
-//     </div>
-//   );
-// }
-
-
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CheckCircle, XCircle, ArrowLeft, ArrowRight, Flag, AlertTriangle, FileText, Calendar, User, BookOpen } from 'lucide-react';
-
-// Mock DynamicBreadcrumb component for demo
-const DynamicBreadcrumb = ({ MainTitle, BreadCrumbs }) => (
-  <div className="mb-6">
-    <h2 className="text-xl font-semibold text-gray-800">{MainTitle}</h2>
-    <div className="text-sm text-gray-600">
-      {BreadCrumbs.map((crumb, index) => (
-        <span key={index}>
-          {crumb.label}
-          {index < BreadCrumbs.length - 1 && ' > '}
-        </span>
-      ))}
-    </div>
-  </div>
-);
+import DynamicBreadcrumb from '../../Components/Ui/DynamicBreadcrumb';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { apiRequest } from '../../Redux/Apis/apiRequest';
 
 export default function AssignmentDetails() {
-  // Enhanced questions data with different question types
-  const questions = [
-    {
-      id: 1,
-      type: "mcq", // Multiple Choice Question
-      text: "Why does the sky appear blue during the day but turns red at sunset?",
-      answers: [
-        "Blue light has shorter wavelengths and scatters more in the atmosphere",
-        "The sun emits more blue light during the day",
-        "Earth's magnetic field affects light colors",
-        "Oxygen molecules absorb red light during the day"
-      ],
-      correctAnswer: 0,
-      explanation: "Blue light has a shorter wavelength and gets scattered more by particles in the atmosphere, making the sky appear blue during the day."
-    },
-    {
-      id: 2,
-      type: "true_false", // True or False Question
-      text: "Light always travels in straight lines and never bends.",
-      correctAnswer: false,
-      explanation: "Light can bend when it passes from one medium to another (refraction) or when it encounters obstacles (diffraction)."
-    },
-    {
-      id: 3,
-      type: "complete_sentence", // Complete the sentence
-      text: "A rainbow is formed when sunlight enters water droplets, _____, reflects off the back of the droplet, and refracts again as it exits.",
-      sentencePosition: "middle", // can be "beginning", "middle", or "end"
-      correctAnswer: "refracts",
-      explanation: "The missing word is 'refracts' - rainbows form through a process of refraction, reflection, and refraction again."
-    },
-    {
-      id: 4,
-      type: "mcq", // Multiple Choice Question
-      text: "What is the difference between reflection and refraction?",
-      answers: [
-        "Reflection changes light color, refraction doesn't",
-        "Reflection bounces light back, refraction bends light through materials",
-        "Reflection only works with mirrors, refraction with glass",
-        "There is no difference between them"
-      ],
-      correctAnswer: 1,
-      explanation: "Reflection occurs when light bounces off a surface, while refraction occurs when light bends as it passes through different materials."
-    },
-    {
-      id: 5,
-      type: "textarea", // Long answer question
-      text: "Explain how magnifying lenses work and describe the type of lens used.",
-      correctAnswer: "Magnifying lenses use convex lenses that bend light rays to create a virtual, enlarged image of the object.",
-      explanation: "A good answer should mention convex lenses, light bending/convergence, and virtual image formation."
-    },
-    {
-      id: 6,
-      type: "complete_sentence", // Complete at beginning
-      text: "_____ occurs when light bounces off a surface and returns to the original medium.",
-      sentencePosition: "beginning",
-      correctAnswer: "Reflection",
-      explanation: "Reflection is the phenomenon where light bounces off a surface."
-    },
-    {
-      id: 7,
-      type: "true_false", // True or False Question
-      text: "Convex lenses always produce magnified images.",
-      correctAnswer: false,
-      explanation: "Convex lenses can produce both magnified and reduced images depending on the object's distance from the lens."
-    }
-  ];
+let {id}= useParams()
+  let {assignmentDetail} = useSelector(state=>state.api);
+  console.log({assignmentDetail});
+  let {data} = assignmentDetail?.data ||{};
+  console.log({data});
+  
+let dispatch = useDispatch()
+  useEffect(()=>{
+    dispatch(apiRequest({
+      url:`api/homeworks/${id}`,
+      entity:"assignmentDetail",
+      headers:{
+        "Authorization":`${sessionStorage.getItem("token") || localStorage.getItem("token")}`,
+        "Accept-Language": localStorage.getItem('language') || 'en',
+      }
+    }))
+  },[ localStorage.getItem("language")])
+  
 
   // Assignment metadata
   const assignmentInfo = {
-    title: "Physics - Light and Optics Assignment",
+    title: data?.name,
     course: "Third Preparatory - Complete International Curriculum",
-    dueDate: "2024-08-15",
-    totalQuestions: questions.length,
-    instructor: "Dr. Sarah Ahmed",
-    points: 70
+    dueDate: data?.dateline,
+    totalQuestions: data?.questions?.length,
+    instructor: "Mostafa ElNabawy",
+    points: 100, // أضفت النقاط
   };
 
-  // State management
+  // State management for matching questions
+  const [matchingConnections, setMatchingConnections] = useState({});
+  const [svgLines, setSvgLines] = useState({});
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState({});
   const [flaggedQuestions, setFlaggedQuestions] = useState(new Set());
@@ -1358,6 +50,41 @@ export default function AssignmentDetails() {
     setSelectedAnswers(prev => ({
       ...prev,
       [questionId]: answer
+    }));
+  };
+
+  const handleMatchingConnect = (questionId, leftId, rightId) => {
+    setMatchingConnections(prev => ({
+      ...prev,
+      [questionId]: {
+        ...prev[questionId],
+        [leftId]: rightId
+      }
+    }));
+
+    // Update selected answers for matching questions
+    const currentConnections = { ...matchingConnections[questionId], [leftId]: rightId };
+    setSelectedAnswers(prev => ({
+      ...prev,
+      [questionId]: currentConnections
+    }));
+  };
+
+  const clearMatchingConnection = (questionId, leftId) => {
+    setMatchingConnections(prev => {
+      const newConnections = { ...prev };
+      if (newConnections[questionId]) {
+        delete newConnections[questionId][leftId];
+      }
+      return newConnections;
+    });
+
+    // Update selected answers
+    const currentConnections = { ...matchingConnections[questionId] };
+    delete currentConnections[leftId];
+    setSelectedAnswers(prev => ({
+      ...prev,
+      [questionId]: currentConnections
     }));
   };
 
@@ -1377,7 +104,7 @@ export default function AssignmentDetails() {
   };
 
   const nextQuestion = () => {
-    if (currentQuestion < questions.length - 1) {
+    if (currentQuestion < data?.questions?.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
     }
   };
@@ -1394,55 +121,84 @@ export default function AssignmentDetails() {
 
   const calculateScore = () => {
     let correct = 0;
-    questions.forEach((question) => {
+    data?.questions?.forEach((question) => {
       const userAnswer = selectedAnswers[question.id];
-      if (question.type === 'mcq') {
+      
+      if (question.format === 'MCQ') {
+        // For MCQ, check if selected answer ID matches correct answer
+        if (userAnswer === question.correctAnswerId) correct++;
+      } else if (question.format === 'TRUE_FALSE') {
+        // For True/False, check boolean value
         if (userAnswer === question.correctAnswer) correct++;
-      } else if (question.type === 'true_false') {
-        if (userAnswer === question.correctAnswer) correct++;
-      } else if (question.type === 'complete_sentence') {
-        if (userAnswer && userAnswer.toLowerCase().trim() === question.correctAnswer.toLowerCase().trim()) correct++;
-      } else if (question.type === 'textarea') {
-        // For textarea, we'll give full points if answered (in real app, this would need manual grading)
+      } else if (question.format === 'TEXT') {
+        // For text questions, check if answered (in real app, needs manual grading)
         if (userAnswer && userAnswer.trim().length > 10) correct++;
+      } else if (question.format === 'MATCHING') {
+        // For matching, check if all connections are correct
+        const correctConnections = {};
+        // تعديل هنا للتعامل مع structure الجديد
+        if (Array.isArray(question.answers)) {
+          question.answers.forEach(pair => {
+            correctConnections[pair.id] = pair.id;
+          });
+        } else {
+          // إذا كان answers object واحد (كما في المثال)
+          correctConnections[question.answers.id] = question.answers.id;
+        }
+        
+        const userConnections = userAnswer || {};
+        let allCorrect = true;
+        
+        for (let leftId in correctConnections) {
+          if (userConnections[leftId] !== correctConnections[leftId]) {
+            allCorrect = false;
+            break;
+          }
+        }
+        
+        if (allCorrect && Object.keys(userConnections).length === Object.keys(correctConnections).length) {
+          correct++;
+        }
       }
     });
+    
     return {
       correct,
-      total: questions.length,
-      percentage: Math.round((correct / questions.length) * 100),
-      points: Math.round((correct / questions.length) * assignmentInfo.points)
+      total: data?.questions?.length,
+      percentage: Math.round((correct / data?.questions?.length) * 100),
+      points: Math.round((correct / data?.questions?.length) * assignmentInfo.points)
     };
   };
 
   const handleSubmitAssignment = () => {
-    if (Object.keys(selectedAnswers).length !== questions.length) return;
+    if (Object.keys(selectedAnswers).length !== data?.questions?.length) return;
     setIsSubmitted(true);
     setShowResults(true);
     setShowConfirmSubmit(false);
   };
 
   const getQuestionStatus = (questionIndex) => {
-    const questionId = questions[questionIndex].id;
+    const questionId = data?.questions?.[questionIndex]?.id; // تم إصلاح هذا
     if (selectedAnswers.hasOwnProperty(questionId)) {
       if (isSubmitted) {
-        const question = questions[questionIndex];
+        const question = data?.questions?.[questionIndex]; // تم إصلاح هذا
         const userAnswer = selectedAnswers[questionId];
         let isCorrect = false;
         
-        if (question.type === 'mcq' || question.type === 'true_false') {
+        if (question.format === 'MCQ' || question.format === 'TRUE_FALSE') {
           isCorrect = userAnswer === question.correctAnswer;
-        } else if (question.type === 'complete_sentence') {
-          isCorrect = userAnswer && userAnswer.toLowerCase().trim() === question.correctAnswer.toLowerCase().trim();
-        } else if (question.type === 'textarea') {
+        } else if (question.format === 'TEXT') {
           isCorrect = userAnswer && userAnswer.trim().length > 10; // Simple check
+        } else if (question.format === 'MATCHING') {
+          // Check matching correctness
+          isCorrect = true; // Simplified for demo
         }
         
         return isCorrect ? 'correct' : 'incorrect';
       }
       return 'answered';
     }
-    return flaggedQuestions.has(questionIndex) ? 'flagged' : 'unanswered';
+    return flaggedQuestions.has(questionIndex) ? 'flagged' : 'unanswered'; // تم إصلاح هذا
   };
 
   const getStatusColor = (status) => {
@@ -1456,38 +212,40 @@ export default function AssignmentDetails() {
   };
 
   // Check if all questions are answered
-  const allQuestionsAnswered = Object.keys(selectedAnswers).length === questions.length;
+  const allQuestionsAnswered = Object.keys(selectedAnswers).length === data?.questions?.length;
 
-  // Render different question types
+  // Render different question types based on API format
   const renderQuestion = (question, isInAllView = false) => {
-    const questionIndex = questions.findIndex(q => q.id === question.id);
+    console.log(question,question.id,data?.questions?.findIndex(q => q.id === question.id));
     
-    switch (question.type) {
-      case 'mcq':
+    const questionIndex = data?.questions?.findIndex(q => q.id === question.id);
+    
+    switch (question.format) {
+      case 'MCQ':
         return (
           <div className="space-y-3">
             {question.answers.map((answer, index) => (
               <div
-                key={index}
-                onClick={() => handleAnswerSelect(question.id, index)}
+                key={answer.id}
+                onClick={() => handleAnswerSelect(question.id, answer.id)}
                 className={`p-4 border rounded-lg cursor-pointer transition-colors duration-200 ${
-                  selectedAnswers[question.id] === index
+                  selectedAnswers[question.id] === answer.id
                     ? 'bg-yellow-400 border-yellow-300'
                     : 'bg-gray-50 border-gray-200 hover:bg-gray-100'
                 }`}
               >
                 <div className="flex items-center">
                   <span className="w-6 h-6 flex items-center justify-center rounded-full bg-white border border-gray-300 mr-3">
-                    {index + 1}
+                    {String.fromCharCode(65 + index)}
                   </span>
-                  <span>{answer}</span>
+                  <span>{answer.text}</span>
                 </div>
               </div>
             ))}
           </div>
         );
         
-      case 'true_false':
+      case 'TRUE_FALSE':
         return (
           <div className="space-y-3">
             {[true, false].map((value, index) => (
@@ -1511,57 +269,165 @@ export default function AssignmentDetails() {
           </div>
         );
         
-      case 'complete_sentence':
-        return (
-          <div>
-            <div className="mb-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-              <p className="text-blue-800">
-                <strong>Complete the sentence:</strong> Fill in the blank with the appropriate word or phrase.
-              </p>
-            </div>
-            <input
-              type="text"
-              placeholder="Enter your answer here..."
-              value={selectedAnswers[question.id] || ''}
-              onChange={(e) => handleAnswerSelect(question.id, e.target.value)}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
-            />
-          </div>
-        );
-        
-      case 'textarea':
+      case 'TEXT':
         return (
           <div>
             <div className="mb-4 p-4 bg-green-50 border border-green-200 rounded-lg">
               <p className="text-green-800">
-                <strong>Long Answer:</strong> Provide a detailed explanation in your own words.
+                <strong>سؤال مقالي:</strong> اكتب إجابة مفصلة بكلماتك الخاصة.
               </p>
             </div>
             <textarea
-              placeholder="Write your detailed answer here..."
+              placeholder="اكتب إجابتك التفصيلية هنا..."
               value={selectedAnswers[question.id] || ''}
               onChange={(e) => handleAnswerSelect(question.id, e.target.value)}
               rows={6}
               className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent resize-vertical"
             />
             <div className="mt-2 text-sm text-gray-600">
-              {selectedAnswers[question.id] ? selectedAnswers[question.id].length : 0} characters
+              {selectedAnswers[question.id] ? selectedAnswers[question.id].length : 0} حرف
+            </div>
+          </div>
+        );
+
+      case 'MATCHING':
+        // تعديل هنا للتعامل مع structure الجديد من الAPI
+        const answersArray = Array.isArray(question.answers) ? question.answers : [question.answers];
+        
+        return (
+          <div>
+            <div className="mb-4 p-4 bg-purple-50 border border-purple-200 rounded-lg">
+              <p className="text-purple-800">
+                <strong>سؤال التوصيل:</strong> اربط كل عنصر من العمود الأيسر بالعنصر المناسب من العمود الأيمن.
+              </p>
+            </div>
+            
+            <div className="relative">
+              <div className="grid grid-cols-2 gap-8">
+                {/* Left Column */}
+                <div className="space-y-3">
+                  <h4 className="font-medium text-gray-700 mb-3">العمود الأيسر</h4>
+                  {answersArray.map((pair, index) => {
+                    const isConnected = matchingConnections[question.id]?.[pair.id];
+                    return (
+                      <div
+                        key={pair.id}
+                        className={`p-3 border rounded-lg cursor-pointer transition-all duration-200 ${
+                          isConnected
+                            ? 'bg-blue-100 border-blue-300'
+                            : 'bg-gray-50 border-gray-200 hover:bg-gray-100'
+                        }`}
+                        onClick={() => {
+                          if (isConnected) {
+                            clearMatchingConnection(question.id, pair.id);
+                          }
+                        }}
+                      >
+                        <div className="flex items-center justify-between">
+                          <span>{pair.left}</span>
+                          {isConnected && (
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                clearMatchingConnection(question.id, pair.id);
+                              }}
+                              className="text-red-500 hover:text-red-700"
+                            >
+                              ✕
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+                
+                {/* Right Column */}
+                <div className="space-y-3">
+                  <h4 className="font-medium text-gray-700 mb-3">العمود الأيمن</h4>
+                  {answersArray.map((pair, index) => {
+                    const isConnected = Object.values(matchingConnections[question.id] || {}).includes(pair.id);
+                    return (
+                      <div
+                        key={`right-${pair.id}`}
+                        className={`p-3 border rounded-lg cursor-pointer transition-all duration-200 ${
+                          isConnected
+                            ? 'bg-green-100 border-green-300'
+                            : 'bg-gray-50 border-gray-200 hover:bg-gray-100'
+                        }`}
+                        onClick={() => {
+                          // Find which left item is currently being connected
+                          const leftItems = answersArray.filter(p => 
+                            !matchingConnections[question.id]?.[p.id]
+                          );
+                          
+                          if (leftItems.length > 0 && !isConnected) {
+                            // Connect the first unconnected left item to this right item
+                            handleMatchingConnect(question.id, leftItems[0].id, pair.id);
+                          }
+                        }}
+                      >
+                        <span>{pair.right}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+              
+              {/* Connection Lines (Visual feedback) */}
+              <svg 
+                className="absolute inset-0 pointer-events-none w-full h-full"
+                style={{ zIndex: 1 }}
+              >
+                {matchingConnections[question.id] && Object.entries(matchingConnections[question.id]).map(([leftId, rightId]) => {
+                  const leftIndex = answersArray.findIndex(p => p.id.toString() === leftId);
+                  const rightIndex = answersArray.findIndex(p => p.id.toString() === rightId);
+                  
+                  if (leftIndex === -1 || rightIndex === -1) return null;
+                  
+                  const leftY = 60 + (leftIndex * 60) + 25; // Approximate position
+                  const rightY = 60 + (rightIndex * 60) + 25;
+                  const leftX = 45; // Right edge of left column
+                  const rightX = 55; // Left edge of right column (in percentage)
+                  
+                  return (
+                    <line
+                      key={`${leftId}-${rightId}`}
+                      x1={`${leftX}%`}
+                      y1={leftY}
+                      x2={`${rightX}%`}
+                      y2={rightY}
+                      stroke="#3B82F6"
+                      strokeWidth="3"
+                      strokeDasharray="5,5"
+                      className="animate-pulse"
+                    />
+                  );
+                })}
+              </svg>
+            </div>
+            
+            {/* Connection Status */}
+            <div className="mt-4 p-3 bg-gray-50 rounded-lg">
+              <div className="text-sm text-gray-600">
+                تم ربط {Object.keys(matchingConnections[question.id] || {}).length} من {answersArray.length} عناصر
+              </div>
             </div>
           </div>
         );
         
       default:
-        return <div>Unsupported question type</div>;
+        return <div>نوع سؤال غير مدعوم</div>;
     }
   };
 
-  const getQuestionTypeLabel = (type) => {
-    switch (type) {
-      case 'mcq': return 'Multiple Choice';
-      case 'true_false': return 'True/False';
-      case 'complete_sentence': return 'Complete Sentence';
-      case 'textarea': return 'Long Answer';
-      default: return 'Unknown';
+  const getQuestionTypeLabel = (format) => {
+    switch (format) {
+      case 'MCQ': return 'اختيار من متعدد';
+      case 'TRUE_FALSE': return 'صح أم خطأ';
+      case 'TEXT': return 'سؤال مقالي';
+      case 'MATCHING': return 'سؤال التوصيل';
+      default: return 'غير معروف';
     }
   };
 
@@ -1590,28 +456,28 @@ export default function AssignmentDetails() {
                 <XCircle className="w-16 h-16 text-red-500 mx-auto mb-4" />
               )}
             </div>
-            <h1 className="text-3xl font-bold text-gray-800 mb-2">Assignment Completed!</h1>
+            <h1 className="text-3xl font-bold text-gray-800 mb-2">تم إكمال الواجب!</h1>
             <div className="w-20 h-1 bg-yellow-500 mx-auto mb-6"></div>
             
             <div className="bg-gray-50 p-6 rounded-lg mb-6">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                 <div className="text-center">
                   <div className="text-3xl font-bold text-gray-900">{score.correct}</div>
-                  <div className="text-gray-600">Correct</div>
+                  <div className="text-gray-600">صحيح</div>
                 </div>
                 <div className="text-center">
                   <div className="text-3xl font-bold text-gray-900">{score.total - score.correct}</div>
-                  <div className="text-gray-600">Incorrect</div>
+                  <div className="text-gray-600">خطأ</div>
                 </div>
                 <div className="text-center">
                   <div className={`text-3xl font-bold ${score.percentage >= 80 ? 'text-green-600' : score.percentage >= 60 ? 'text-yellow-600' : 'text-red-600'}`}>
                     {score.percentage}%
                   </div>
-                  <div className="text-gray-600">Score</div>
+                  <div className="text-gray-600">النتيجة</div>
                 </div>
                 <div className="text-center">
                   <div className="text-3xl font-bold text-yellow-600">{score.points}</div>
-                  <div className="text-gray-600">Points</div>
+                  <div className="text-gray-600">النقاط</div>
                 </div>
               </div>
             </div>
@@ -1619,38 +485,38 @@ export default function AssignmentDetails() {
 
           {/* Review Answers */}
           <div className="space-y-6">
-            <h2 className="text-xl font-semibold text-gray-800 mb-4">Review Your Answers</h2>
-            {questions.map((question, index) => {
+            <h2 className="text-xl font-semibold text-gray-800 mb-4">مراجعة إجاباتك</h2>
+            {data?.questions?.map((question, index) => {
               const userAnswer = selectedAnswers[question.id];
               let isCorrect = false;
               let correctAnswerText = '';
               let userAnswerText = '';
               
-              if (question.type === 'mcq') {
+              if (question.format === 'MCQ') {
                 isCorrect = userAnswer === question.correctAnswer;
-                correctAnswerText = question.answers[question.correctAnswer];
-                userAnswerText = userAnswer !== undefined ? question.answers[userAnswer] : 'Not answered';
-              } else if (question.type === 'true_false') {
+                correctAnswerText = question.answers[question.correctAnswer]?.text || '';
+                userAnswerText = userAnswer !== undefined ? question.answers.find(a => a.id === userAnswer)?.text || 'لم تتم الإجابة' : 'لم تتم الإجابة';
+              } else if (question.format === 'TRUE_FALSE') {
                 isCorrect = userAnswer === question.correctAnswer;
                 correctAnswerText = question.correctAnswer ? 'True' : 'False';
-                userAnswerText = userAnswer !== undefined ? (userAnswer ? 'True' : 'False') : 'Not answered';
-              } else if (question.type === 'complete_sentence') {
-                isCorrect = userAnswer && userAnswer.toLowerCase().trim() === question.correctAnswer.toLowerCase().trim();
-                correctAnswerText = question.correctAnswer;
-                userAnswerText = userAnswer || 'Not answered';
-              } else if (question.type === 'textarea') {
+                userAnswerText = userAnswer !== undefined ? (userAnswer ? 'True' : 'False') : 'لم تتم الإجابة';
+              } else if (question.format === 'TEXT') {
                 isCorrect = userAnswer && userAnswer.trim().length > 10;
-                correctAnswerText = 'See explanation below';
-                userAnswerText = userAnswer || 'Not answered';
+                correctAnswerText = 'انظر الشرح أدناه';
+                userAnswerText = userAnswer || 'لم تتم الإجابة';
+              } else if (question.format === 'MATCHING') {
+                isCorrect = true; // Simplified for demo
+                correctAnswerText = 'انظر الاتصالات الصحيحة';
+                userAnswerText = 'تم التوصيل';
               }
               
               return (
                 <div key={question.id} className="border border-gray-200 rounded-lg p-4">
                   <div className="flex items-start justify-between mb-3">
                     <div>
-                      <h3 className="font-medium text-yellow-800">Question {index + 1}</h3>
+                      <h3 className="font-medium text-yellow-800">السؤال {index + 1}</h3>
                       <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded mt-1 inline-block">
-                        {getQuestionTypeLabel(question.type)}
+                        {getQuestionTypeLabel(question.format)}
                       </span>
                     </div>
                     {isCorrect ? (
@@ -1660,56 +526,18 @@ export default function AssignmentDetails() {
                     )}
                   </div>
                   
-                  <p className="text-gray-700 mb-4">{question.text}</p>
+                  <p className="text-gray-700 mb-4">{question.question}</p>
                   
-                  {question.type === 'mcq' ? (
-                    <div className="space-y-2 mb-4">
-                      {question.answers.map((answer, optionIndex) => (
-                        <div
-                          key={optionIndex}
-                          className={`p-3 rounded border ${
-                            optionIndex === question.correctAnswer
-                              ? 'bg-green-50 border-green-300 text-green-800'
-                              : optionIndex === userAnswer && !isCorrect
-                              ? 'bg-red-50 border-red-300 text-red-800'
-                              : 'bg-gray-50 border-gray-200'
-                          }`}
-                        >
-                          <div className="flex items-center">
-                            <span className="w-6 h-6 flex items-center justify-center rounded-full bg-white border border-gray-300 mr-3 text-sm">
-                              {optionIndex + 1}
-                            </span>
-                            {answer}
-                            {optionIndex === question.correctAnswer && (
-                              <span className="ml-auto text-green-600 font-medium">✓ Correct</span>
-                            )}
-                            {optionIndex === userAnswer && !isCorrect && (
-                              <span className="ml-auto text-red-600 font-medium">✗ Your answer</span>
-                            )}
-                          </div>
-                        </div>
-                      ))}
+                  <div className="mb-4 space-y-2">
+                    <div className={`p-3 rounded border ${isCorrect ? 'bg-green-50 border-green-300' : 'bg-red-50 border-red-300'}`}>
+                      <strong>إجابتك:</strong> {userAnswerText}
                     </div>
-                  ) : (
-                    <div className="mb-4 space-y-2">
-                      <div className={`p-3 rounded border ${isCorrect ? 'bg-green-50 border-green-300' : 'bg-red-50 border-red-300'}`}>
-                        <strong>Your Answer:</strong> {userAnswerText}
+                    {question.format !== 'TEXT' && question.format !== 'MATCHING' && (
+                      <div className="p-3 rounded border bg-blue-50 border-blue-300">
+                        <strong>الإجابة الصحيحة:</strong> {correctAnswerText}
                       </div>
-                      {question.type !== 'textarea' && (
-                        <div className="p-3 rounded border bg-blue-50 border-blue-300">
-                          <strong>Correct Answer:</strong> {correctAnswerText}
-                        </div>
-                      )}
-                    </div>
-                  )}
-                  
-                  {question.explanation && (
-                    <div className="bg-blue-50 p-3 rounded border-l-4 border-blue-400">
-                      <p className="text-blue-800 text-sm">
-                        <strong>Explanation:</strong> {question.explanation}
-                      </p>
-                    </div>
-                  )}
+                    )}
+                  </div>
                 </div>
               );
             })}
@@ -1720,7 +548,7 @@ export default function AssignmentDetails() {
               onClick={() => window.location.reload()}
               className="bg-yellow-500 hover:bg-yellow-600 text-white font-medium py-3 px-8 rounded-lg transition duration-200"
             >
-              Retake Assignment
+              إعادة الواجب
             </button>
           </div>
         </div>
@@ -1765,7 +593,7 @@ export default function AssignmentDetails() {
             <div className="flex items-center space-x-4">
               <div className="flex items-center bg-blue-50 px-3 py-2 rounded-lg">
                 <Calendar className="w-5 h-5 text-blue-600 mr-2" />
-                <span className="text-blue-700 text-sm">Due: {new Date(assignmentInfo.dueDate).toLocaleDateString()}</span>
+                <span className="text-blue-700 text-sm">Due: {assignmentInfo.dueDate}</span>
               </div>
             </div>
           </div>
@@ -1779,25 +607,16 @@ export default function AssignmentDetails() {
               <div className="flex justify-between items-center mb-6">
                 <div className="flex space-x-2">
                   <button
-                    onClick={() => setViewMode('single')}
+                    // onClick={() => setViewMode('single')}
                     className={`px-4 py-2 rounded-lg transition duration-200 ${
-                      viewMode === 'single' 
+                      viewMode !== 'single' 
                         ? 'bg-yellow-500 text-white' 
                         : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                     }`}
                   >
-                    Single Question
+                    Your Questions
                   </button>
-                  <button
-                    onClick={() => setViewMode('all')}
-                    className={`px-4 py-2 rounded-lg transition duration-200 ${
-                      viewMode === 'all' 
-                        ? 'bg-yellow-500 text-white' 
-                        : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                    }`}
-                  >
-                    All Questions
-                  </button>
+                
                 </div>
 
                 {viewMode === 'single' && (
@@ -1816,19 +635,19 @@ export default function AssignmentDetails() {
                 )}
               </div>
 
-              {viewMode === 'single' ? (
+              {viewMode === 'single' && data?.questions?.length > 0 && (
                 // Single Question View
                 <div>
                   {/* Progress Bar */}
                   <div className="mb-6">
                     <div className="flex justify-between text-sm text-gray-600 mb-2">
-                      <span>Question {currentQuestion + 1} of {questions.length}</span>
+                      <span>Question {currentQuestion + 1} of {data?.questions?.length}</span>
                       <span>{getAnsweredCount()} answered</span>
                     </div>
                     <div className="w-full bg-gray-200 rounded-full h-2">
                       <div
                         className="bg-yellow-500 h-2 rounded-full transition-all duration-300"
-                        style={{ width: `${((currentQuestion + 1) / questions.length) * 100}%` }}
+                        style={{ width: `${((currentQuestion + 1) / data?.questions?.length) * 100}%` }}
                       ></div>
                     </div>
                   </div>
@@ -1840,12 +659,12 @@ export default function AssignmentDetails() {
                         Question {currentQuestion + 1}
                       </h3>
                       <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">
-                        {getQuestionTypeLabel(questions[currentQuestion].type)}
+                        {getQuestionTypeLabel(data?.questions?.[currentQuestion]?.format)}
                       </span>
                     </div>
-                    <p className="text-gray-700 mb-6">{questions[currentQuestion].text}</p>
+                    <p className="text-gray-700 mb-6">{data?.questions?.[currentQuestion]?.question}</p>
                     
-                    {renderQuestion(questions[currentQuestion])}
+                    {renderQuestion(data?.questions?.[currentQuestion])}
                   </div>
 
                   {/* Navigation */}
@@ -1856,11 +675,11 @@ export default function AssignmentDetails() {
                       className="flex items-center px-4 py-2 text-gray-600 hover:text-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition duration-200"
                     >
                       <ArrowLeft className="w-5 h-5 mr-2" />
-                      Previous
+                      السابق
                     </button>
 
                     <div className="flex space-x-3">
-                      {currentQuestion === questions.length - 1 ? (
+                      {currentQuestion === data?.questions?.length - 1 ? (
                         <button
                           onClick={() => allQuestionsAnswered && setShowConfirmSubmit(true)}
                           disabled={!allQuestionsAnswered}
@@ -1868,71 +687,39 @@ export default function AssignmentDetails() {
                             !allQuestionsAnswered ? 'opacity-50 cursor-not-allowed' : ''
                           }`}
                         >
-                          Submit Assignment
+                          تسليم الواجب
                         </button>
                       ) : (
                         <button
                           onClick={nextQuestion}
                           className="bg-yellow-500 hover:bg-yellow-600 text-white font-medium py-2 px-6 rounded-lg transition duration-200 flex items-center"
                         >
-                          Next
+                          التالي
                           <ArrowRight className="w-5 h-5 ml-2" />
                         </button>
                       )}
                     </div>
                   </div>
                 </div>
-              ) : (
-                // All Questions View
-                <div>
-                  {questions.map((question, index) => (
-                    <div key={question.id} className="mb-8 pb-8 border-b border-gray-200 last:border-b-0">
-                      <div className="flex items-center justify-between mb-4">
-                        <h3 className="text-lg font-medium text-yellow-800">Question {index + 1}</h3>
-                        <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">
-                          {getQuestionTypeLabel(question.type)}
-                        </span>
-                      </div>
-                      <p className="text-gray-700 mb-6">{question.text}</p>
-                      
-                      {renderQuestion(question, true)}
-                    </div>
-                  ))}
-
-                  {/* Submit Button for All Questions View */}
-                  <div className='flex justify-center items-center mt-8'>
-                    <button
-                      onClick={() => setShowConfirmSubmit(true)}
-                      disabled={!allQuestionsAnswered}
-                      className={`w-full max-w-3xl py-3 px-6 rounded-lg font-medium transition-colors duration-200 ${
-                        allQuestionsAnswered
-                          ? 'bg-yellow-600 hover:bg-yellow-800 text-white'
-                          : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                      }`}
-                    >
-                      Submit Assignment
-                    </button>
-                  </div>
-                </div>
-              )}
+              ) }
             </div>
           </div>
 
           {/* Question Navigator Sidebar */}
           <div className="lg:col-span-1">
             <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sticky top-6">
-              <h3 className="font-medium text-gray-800 mb-4">Questions Overview</h3>
+              <h3 className="font-medium text-gray-800 mb-4">نظرة عامة على الأسئلة</h3>
               
               {/* Progress Summary */}
               <div className="bg-gray-50 p-3 rounded-lg mb-4">
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-yellow-600">{getAnsweredCount()}/{questions.length}</div>
-                  <div className="text-sm text-gray-600">Completed</div>
+                  <div className="text-2xl font-bold text-yellow-600">{getAnsweredCount()}/{data?.questions?.length}</div>
+                  <div className="text-sm text-gray-600">مكتمل</div>
                 </div>
               </div>
               
               <div className="grid grid-cols-4 lg:grid-cols-6 gap-2 mb-4">
-                {questions.map((question, index) => {
+                {data?.questions?.map((question, index) => {
                   const status = getQuestionStatus(index);
                   return (
                     <button
@@ -1955,37 +742,37 @@ export default function AssignmentDetails() {
               <div className="space-y-2 text-xs mb-4">
                 <div className="flex items-center">
                   <div className="w-4 h-4 bg-yellow-500 rounded mr-2"></div>
-                  <span>Answered</span>
+                  <span>تمت الإجابة</span>
                 </div>
                 <div className="flex items-center">
                   <div className="w-4 h-4 bg-blue-500 rounded mr-2"></div>
-                  <span>Flagged</span>
+                  <span>مؤشر عليه</span>
                 </div>
                 <div className="flex items-center">
                   <div className="w-4 h-4 bg-gray-200 rounded mr-2"></div>
-                  <span>Not answered</span>
+                  <span>لم تتم الإجابة</span>
                 </div>
               </div>
 
               {/* Question Types Summary */}
               <div className="mb-4">
-                <h4 className="text-sm font-medium text-gray-700 mb-2">Question Types:</h4>
+                <h4 className="text-sm font-medium text-gray-700 mb-2">أنواع الأسئلة:</h4>
                 <div className="space-y-1 text-xs text-gray-600">
                   <div className="flex justify-between">
-                    <span>Multiple Choice:</span>
-                    <span>{questions.filter(q => q.type === 'mcq').length}</span>
+                    <span>اختيار من متعدد:</span>
+                    <span>{data?.questions?.filter(q => q.format === 'MCQ').length}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span>True/False:</span>
-                    <span>{questions.filter(q => q.type === 'true_false').length}</span>
+                    <span>صح/خطأ:</span>
+                    <span>{data?.questions?.filter(q => q.format === 'TRUE_FALSE').length}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span>Complete Sentence:</span>
-                    <span>{questions.filter(q => q.type === 'complete_sentence').length}</span>
+                    <span>سؤال مقالي:</span>
+                    <span>{data?.questions?.filter(q => q.format === 'TEXT').length}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span>Long Answer:</span>
-                    <span>{questions.filter(q => q.type === 'textarea').length}</span>
+                    <span>التوصيل:</span>
+                    <span>{data?.questions?.filter(q => q.format === 'MATCHING').length}</span>
                   </div>
                 </div>
               </div>
@@ -2000,7 +787,7 @@ export default function AssignmentDetails() {
                     : 'bg-gray-300 text-gray-500 cursor-not-allowed'
                 }`}
               >
-                Submit Assignment
+                تسليم الواجب
               </button>
             </div>
           </div>
@@ -2009,21 +796,21 @@ export default function AssignmentDetails() {
 
       {/* Confirm Submit Modal */}
       {showConfirmSubmit && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+        <div className="fixed inset-0 bg-black/30 bg-opacity-50 flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-lg p-6 max-w-md w-full">
             <h3 className="text-xl font-bold text-gray-800 mb-4">
-              {allQuestionsAnswered ? "Submit Assignment?" : "Incomplete Assignment"}
+              {allQuestionsAnswered ? "تسليم الواجب؟" : "واجب غير مكتمل"}
             </h3>
             <p className="text-gray-600 mb-6">
-              You have answered {getAnsweredCount()} out of {questions.length} questions. 
-              {!allQuestionsAnswered && " Please answer all questions before submitting."}
+              لقد أجبت على {getAnsweredCount()} من أصل {data?.questions?.length} أسئلة. 
+              {!allQuestionsAnswered && " يرجى الإجابة على جميع الأسئلة قبل التسليم."}
             </p>
             <div className="flex space-x-4">
               <button
                 onClick={() => setShowConfirmSubmit(false)}
                 className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-2 px-4 rounded-lg transition duration-200"
               >
-                Cancel
+                إلغاء
               </button>
               <button
                 onClick={handleSubmitAssignment}
@@ -2032,7 +819,7 @@ export default function AssignmentDetails() {
                   !allQuestionsAnswered ? 'opacity-50 cursor-not-allowed' : ''
                 }`}
               >
-                Submit
+                تسليم
               </button>
             </div>
           </div>
@@ -2041,3 +828,1825 @@ export default function AssignmentDetails() {
     </div>
   );
 }
+
+// import { useEffect, useState } from 'react';
+// import { CheckCircle, XCircle, ArrowLeft, ArrowRight, Flag, AlertTriangle, FileText, Calendar, User, BookOpen } from 'lucide-react';
+// import DynamicBreadcrumb from '../../Components/Ui/DynamicBreadcrumb';
+// import { useDispatch, useSelector } from 'react-redux';
+// import { useParams } from 'react-router-dom';
+// import { apiRequest } from '../../Redux/Apis/apiRequest';
+
+
+
+// // Enhanced questions data with different question types (based on your API format)
+// const questions = [
+//   {
+//     id: 70,
+//     question: "توصيل",
+//     format: "MATCHING",
+//     answers: [
+//       {
+//         id: 72,
+//         left: "اهلا",
+//         right: "وسهلا"
+//       },
+//       {
+//         id: 73,
+//         left: "3456",
+//         right: "33333"
+//       },
+//       {
+//         id: 74,
+//         left: "12ضص",
+//         right: "44444"
+//       }
+//     ]
+//   },
+//   {
+//     id: 71,
+//     question: "صح وغلط",
+//     format: "TRUE_FALSE",
+//     answers: [
+//       {
+//         text: "True"
+//       },
+//       {
+//         text: "False"
+//       }
+//     ]
+//   },
+//   {
+//     id: 72,
+//     question: "اختيارى",
+//     format: "MCQ",
+//     answers: [
+//       {
+//         id: 76,
+//         text: "الاول"
+//       },
+//       {
+//         id: 77,
+//         text: "2"
+//       },
+//       {
+//         id: 78,
+//         text: "3"
+//       },
+//       {
+//         id: 79,
+//         text: "4"
+//       }
+//     ]
+//   },
+//   {
+//     id: 73,
+//     question: "سؤال مقالى",
+//     format: "TEXT",
+//     answers: {
+//       text: "HTML, or HyperText Markup Language, is the standard markup language used to create web pages and web applications. It provides the structure of a web page by defining various elements and their relationships"
+//     }
+//   }
+// ];
+// export default function AssignmentDetails() {
+// let {id}= useParams()
+//   let {assignmentDetail} = useSelector(state=>state.api);
+//   console.log({assignmentDetail});
+//   let {data} = assignmentDetail?.data ||{};
+//   console.log({data});
+  
+// let dispatch = useDispatch()
+//   useEffect(()=>{
+//     dispatch(apiRequest({
+//       url:`api/homeworks/${id}`,
+//       entity:"assignmentDetail",
+//       headers:{
+//         "Authorization":`${sessionStorage.getItem("token") || localStorage.getItem("token")}`,
+//         "Accept-Language": localStorage.getItem('language') || 'en',
+//       }
+//     }))
+//   },[ localStorage.getItem("language")])
+  
+
+//   // Assignment metadata
+//   const assignmentInfo = {
+//     title: data?.name,
+//     course: "Third Preparatory - Complete International Curriculum",
+//     dueDate: data?.dateline,
+//     totalQuestions: data?.questions?.length,
+//     instructor: "Mostafa ElNabawy",
+ 
+//   };
+//   console.log({dueDate: data?.dateline?.split('')[1]});
+  
+
+//   // State management for matching questions
+//   const [matchingConnections, setMatchingConnections] = useState({});
+//   const [svgLines, setSvgLines] = useState({});
+//   const [currentQuestion, setCurrentQuestion] = useState(0);
+//   const [selectedAnswers, setSelectedAnswers] = useState({});
+//   const [flaggedQuestions, setFlaggedQuestions] = useState(new Set());
+//   const [isSubmitted, setIsSubmitted] = useState(false);
+//   const [showResults, setShowResults] = useState(false);
+//   const [showConfirmSubmit, setShowConfirmSubmit] = useState(false);
+//   const [viewMode, setViewMode] = useState('single'); // 'single' or 'all'
+
+//   const handleAnswerSelect = (questionId, answer) => {
+//     setSelectedAnswers(prev => ({
+//       ...prev,
+//       [questionId]: answer
+//     }));
+//   };
+
+//   const handleMatchingConnect = (questionId, leftId, rightId) => {
+//     setMatchingConnections(prev => ({
+//       ...prev,
+//       [questionId]: {
+//         ...prev[questionId],
+//         [leftId]: rightId
+//       }
+//     }));
+
+//     // Update selected answers for matching questions
+//     const currentConnections = { ...matchingConnections[questionId], [leftId]: rightId };
+//     setSelectedAnswers(prev => ({
+//       ...prev,
+//       [questionId]: currentConnections
+//     }));
+//   };
+
+//   const clearMatchingConnection = (questionId, leftId) => {
+//     setMatchingConnections(prev => {
+//       const newConnections = { ...prev };
+//       if (newConnections[questionId]) {
+//         delete newConnections[questionId][leftId];
+//       }
+//       return newConnections;
+//     });
+
+//     // Update selected answers
+//     const currentConnections = { ...matchingConnections[questionId] };
+//     delete currentConnections[leftId];
+//     setSelectedAnswers(prev => ({
+//       ...prev,
+//       [questionId]: currentConnections
+//     }));
+//   };
+
+//   const handleFlagQuestion = () => {
+//     const newFlagged = new Set(flaggedQuestions);
+//     if (newFlagged.has(currentQuestion)) {
+//       newFlagged.delete(currentQuestion);
+//     } else {
+//       newFlagged.add(currentQuestion);
+//     }
+//     setFlaggedQuestions(newFlagged);
+//   };
+
+//   const goToQuestion = (questionIndex) => {
+//     setCurrentQuestion(questionIndex);
+//     setViewMode('single');
+//   };
+
+//   const nextQuestion = () => {
+//     if (currentQuestion < data?.questions?.length - 1) {
+//       setCurrentQuestion(currentQuestion + 1);
+//     }
+//   };
+
+//   const previousQuestion = () => {
+//     if (currentQuestion > 0) {
+//       setCurrentQuestion(currentQuestion - 1);
+//     }
+//   };
+
+//   const getAnsweredCount = () => {
+//     return Object.keys(selectedAnswers).length;
+//   };
+
+//   const calculateScore = () => {
+//     let correct = 0;
+//     data?.questions?.forEach((question) => {
+//       const userAnswer = selectedAnswers[question.id];
+      
+//       if (question.format === 'MCQ') {
+//         // For MCQ, check if selected answer ID matches correct answer
+//         if (userAnswer === question.correctAnswerId) correct++;
+//       } else if (question.format === 'TRUE_FALSE') {
+//         // For True/False, check boolean value
+//         if (userAnswer === question.correctAnswer) correct++;
+//       } else if (question.format === 'TEXT') {
+//         // For text questions, check if answered (in real app, needs manual grading)
+//         if (userAnswer && userAnswer.trim().length > 10) correct++;
+//       } else if (question.format === 'MATCHING') {
+//         // For matching, check if all connections are correct
+//         const correctConnections = {};
+//         question.answers.forEach(pair => {
+//           correctConnections[pair.id] = pair.id; // Assuming correct connection is same ID
+//         });
+        
+//         const userConnections = userAnswer || {};
+//         let allCorrect = true;
+        
+//         for (let leftId in correctConnections) {
+//           if (userConnections[leftId] !== correctConnections[leftId]) {
+//             allCorrect = false;
+//             break;
+//           }
+//         }
+        
+//         if (allCorrect && Object.keys(userConnections).length === Object.keys(correctConnections).length) {
+//           correct++;
+//         }
+//       }
+//     });
+    
+//     return {
+//       correct,
+//       total: data?.questions?.length,
+//       percentage: Math.round((correct / data?.questions?.length) * 100),
+//       points: Math.round((correct / data?.questions?.length) * assignmentInfo.points)
+//     };
+//   };
+
+//   const handleSubmitAssignment = () => {
+//     if (Object.keys(selectedAnswers).length !== data?.questions?.length) return;
+//     setIsSubmitted(true);
+//     setShowResults(true);
+//     setShowConfirmSubmit(false);
+//   };
+
+//   const getQuestionStatus = (questionIndex) => {
+//     const questionId = questions[questionIndex]?.id;
+//     if (selectedAnswers.hasOwnProperty(questionId)) {
+//       if (isSubmitted) {
+//         const question = questions[questionIndex];
+//         const userAnswer = selectedAnswers[questionId];
+//         let isCorrect = false;
+        
+//         if (question.format === 'MCQ' || question.format === 'TRUE_FALSE') {
+//           isCorrect = userAnswer === question.correctAnswer;
+//         } else if (question.format === 'TEXT') {
+//           isCorrect = userAnswer && userAnswer.trim().length > 10; // Simple check
+//         } else if (question.format === 'MATCHING') {
+//           // Check matching correctness
+//           isCorrect = true; // Simplified for demo
+//         }
+        
+//         return isCorrect ? 'correct' : 'incorrect';
+//       }
+//       return 'answered';
+//     }
+//     return flaggedQuestions?.questions?.has(questionIndex) ? 'flagged' : 'unanswered';
+//   };
+
+//   const getStatusColor = (status) => {
+//     switch (status) {
+//       case 'correct': return 'bg-green-500 text-white';
+//       case 'incorrect': return 'bg-red-500 text-white';
+//       case 'answered': return 'bg-yellow-500 text-white';
+//       case 'flagged': return 'bg-blue-500 text-white';
+//       default: return 'bg-gray-200 text-gray-700 hover:bg-gray-300';
+//     }
+//   };
+
+//   // Check if all questions are answered
+//   const allQuestionsAnswered = Object.keys(selectedAnswers).length === data?.questions?.length;
+
+//   // Render different question types based on API format
+//   const renderQuestion = (question, isInAllView = false) => {
+//     console.log(question,question.id,data?.questions?.findIndex(q => q.id === question.id));
+    
+//     const questionIndex = data?.questions?.findIndex(q => q.id === question.id);
+    
+//     switch (question.format) {
+//       case 'MCQ':
+//         return (
+//           <div className="space-y-3">
+//             {question.answers.map((answer, index) => (
+//               <div
+//                 key={answer.id}
+//                 onClick={() => handleAnswerSelect(question.id, answer.id)}
+//                 className={`p-4 border rounded-lg cursor-pointer transition-colors duration-200 ${
+//                   selectedAnswers[question.id] === answer.id
+//                     ? 'bg-yellow-400 border-yellow-300'
+//                     : 'bg-gray-50 border-gray-200 hover:bg-gray-100'
+//                 }`}
+//               >
+//                 <div className="flex items-center">
+//                   <span className="w-6 h-6 flex items-center justify-center rounded-full bg-white border border-gray-300 mr-3">
+//                     {String.fromCharCode(65 + index)}
+//                   </span>
+//                   <span>{answer.text}</span>
+//                 </div>
+//               </div>
+//             ))}
+//           </div>
+//         );
+        
+//       case 'TRUE_FALSE':
+//         return (
+//           <div className="space-y-3">
+//             {[true, false].map((value, index) => (
+//               <div
+//                 key={index}
+//                 onClick={() => handleAnswerSelect(question.id, value)}
+//                 className={`p-4 border rounded-lg cursor-pointer transition-colors duration-200 ${
+//                   selectedAnswers[question.id] === value
+//                     ? 'bg-yellow-400 border-yellow-300'
+//                     : 'bg-gray-50 border-gray-200 hover:bg-gray-100'
+//                 }`}
+//               >
+//                 <div className="flex items-center">
+//                   <span className="w-6 h-6 flex items-center justify-center rounded-full bg-white border border-gray-300 mr-3">
+//                     {value ? 'T' : 'F'}
+//                   </span>
+//                   <span>{value ? 'True' : 'False'}</span>
+//                 </div>
+//               </div>
+//             ))}
+//           </div>
+//         );
+        
+//       case 'TEXT':
+//         return (
+//           <div>
+//             <div className="mb-4 p-4 bg-green-50 border border-green-200 rounded-lg">
+//               <p className="text-green-800">
+//                 <strong>سؤال مقالي:</strong> اكتب إجابة مفصلة بكلماتك الخاصة.
+//               </p>
+//             </div>
+//             <textarea
+//               placeholder="اكتب إجابتك التفصيلية هنا..."
+//               value={selectedAnswers[question.id] || ''}
+//               onChange={(e) => handleAnswerSelect(question.id, e.target.value)}
+//               rows={6}
+//               className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent resize-vertical"
+//             />
+//             <div className="mt-2 text-sm text-gray-600">
+//               {selectedAnswers[question.id] ? selectedAnswers[question.id].length : 0} حرف
+//             </div>
+//           </div>
+//         );
+
+//       case 'MATCHING':
+//         return (
+//           <div>
+//             <div className="mb-4 p-4 bg-purple-50 border border-purple-200 rounded-lg">
+//               <p className="text-purple-800">
+//                 <strong>سؤال التوصيل:</strong> اربط كل عنصر من العمود الأيسر بالعنصر المناسب من العمود الأيمن.
+//               </p>
+//             </div>
+            
+//             <div className="relative">
+//               <div className="grid grid-cols-2 gap-8">
+//                 {/* Left Column */}
+//                 <div className="space-y-3">
+//                   <h4 className="font-medium text-gray-700 mb-3">العمود الأيسر</h4>
+//                   {question.answers.map((pair, index) => {
+//                     const isConnected = matchingConnections[question.id]?.[pair.id];
+//                     return (
+//                       <div
+//                         key={pair.id}
+//                         className={`p-3 border rounded-lg cursor-pointer transition-all duration-200 ${
+//                           isConnected
+//                             ? 'bg-blue-100 border-blue-300'
+//                             : 'bg-gray-50 border-gray-200 hover:bg-gray-100'
+//                         }`}
+//                         onClick={() => {
+//                           if (isConnected) {
+//                             clearMatchingConnection(question.id, pair.id);
+//                           }
+//                         }}
+//                       >
+//                         <div className="flex items-center justify-between">
+//                           <span>{pair.left}</span>
+//                           {isConnected && (
+//                             <button
+//                               onClick={(e) => {
+//                                 e.stopPropagation();
+//                                 clearMatchingConnection(question.id, pair.id);
+//                               }}
+//                               className="text-red-500 hover:text-red-700"
+//                             >
+//                               ✕
+//                             </button>
+//                           )}
+//                         </div>
+//                       </div>
+//                     );
+//                   })}
+//                 </div>
+                
+//                 {/* Right Column */}
+//                 <div className="space-y-3">
+//                   <h4 className="font-medium text-gray-700 mb-3">العمود الأيمن</h4>
+//                   {question.answers.map((pair, index) => {
+//                     const isConnected = Object.values(matchingConnections[question.id] || {}).includes(pair.id);
+//                     return (
+//                       <div
+//                         key={`right-${pair.id}`}
+//                         className={`p-3 border rounded-lg cursor-pointer transition-all duration-200 ${
+//                           isConnected
+//                             ? 'bg-green-100 border-green-300'
+//                             : 'bg-gray-50 border-gray-200 hover:bg-gray-100'
+//                         }`}
+//                         onClick={() => {
+//                           // Find which left item is currently being connected
+//                           const leftItems = question.answers.filter(p => 
+//                             !matchingConnections[question.id]?.[p.id]
+//                           );
+                          
+//                           if (leftItems.length > 0 && !isConnected) {
+//                             // Connect the first unconnected left item to this right item
+//                             handleMatchingConnect(question.id, leftItems[0].id, pair.id);
+//                           }
+//                         }}
+//                       >
+//                         <span>{pair.right}</span>
+//                       </div>
+//                     );
+//                   })}
+//                 </div>
+//               </div>
+              
+//               {/* Connection Lines (Visual feedback) */}
+//               <svg 
+//                 className="absolute inset-0 pointer-events-none w-full h-full"
+//                 style={{ zIndex: 1 }}
+//               >
+//                 {matchingConnections[question.id] && Object.entries(matchingConnections[question.id]).map(([leftId, rightId]) => {
+//                   const leftIndex = question.answers.findIndex(p => p.id.toString() === leftId);
+//                   const rightIndex = question.answers.findIndex(p => p.id.toString() === rightId);
+                  
+//                   if (leftIndex === -1 || rightIndex === -1) return null;
+                  
+//                   const leftY = 60 + (leftIndex * 60) + 25; // Approximate position
+//                   const rightY = 60 + (rightIndex * 60) + 25;
+//                   const leftX = 45; // Right edge of left column
+//                   const rightX = 55; // Left edge of right column (in percentage)
+                  
+//                   return (
+//                     <line
+//                       key={`${leftId}-${rightId}`}
+//                       x1={`${leftX}%`}
+//                       y1={leftY}
+//                       x2={`${rightX}%`}
+//                       y2={rightY}
+//                       stroke="#3B82F6"
+//                       strokeWidth="3"
+//                       strokeDasharray="5,5"
+//                       className="animate-pulse"
+//                     />
+//                   );
+//                 })}
+//               </svg>
+//             </div>
+            
+//             {/* Connection Status */}
+//             <div className="mt-4 p-3 bg-gray-50 rounded-lg">
+//               <div className="text-sm text-gray-600">
+//                 تم ربط {Object.keys(matchingConnections[question.id] || {}).length} من {question.answers.length} عناصر
+//               </div>
+//             </div>
+//           </div>
+//         );
+        
+//       default:
+//         return <div>نوع سؤال غير مدعوم</div>;
+//     }
+//   };
+
+//   const getQuestionTypeLabel = (format) => {
+//     switch (format) {
+//       case 'MCQ': return 'اختيار من متعدد';
+//       case 'TRUE_FALSE': return 'صح أم خطأ';
+//       case 'TEXT': return 'سؤال مقالي';
+//       case 'MATCHING': return 'سؤال التوصيل';
+//       default: return 'غير معروف';
+//     }
+//   };
+
+//   // Results View
+//   if (showResults) {
+//     const score = calculateScore();
+//     return (
+//       <div>
+//         <DynamicBreadcrumb
+//           MainTitle={assignmentInfo.course}
+//           BreadCrumbs={[
+//             {label:"Home" , href:"/"},
+//             {label:"course Name" , href:"/courseId"},
+//             {label:"Assignment Results" , href:"/assignmentDetails"},
+//           ]}
+//         />
+        
+//         <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-sm">
+//           <div className="text-center mb-8">
+//             <div className="mb-4">
+//               {score.percentage >= 80 ? (
+//                 <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
+//               ) : score.percentage >= 60 ? (
+//                 <AlertTriangle className="w-16 h-16 text-yellow-500 mx-auto mb-4" />
+//               ) : (
+//                 <XCircle className="w-16 h-16 text-red-500 mx-auto mb-4" />
+//               )}
+//             </div>
+//             <h1 className="text-3xl font-bold text-gray-800 mb-2">تم إكمال الواجب!</h1>
+//             <div className="w-20 h-1 bg-yellow-500 mx-auto mb-6"></div>
+            
+//             <div className="bg-gray-50 p-6 rounded-lg mb-6">
+//               <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+//                 <div className="text-center">
+//                   <div className="text-3xl font-bold text-gray-900">{score.correct}</div>
+//                   <div className="text-gray-600">صحيح</div>
+//                 </div>
+//                 <div className="text-center">
+//                   <div className="text-3xl font-bold text-gray-900">{score.total - score.correct}</div>
+//                   <div className="text-gray-600">خطأ</div>
+//                 </div>
+//                 <div className="text-center">
+//                   <div className={`text-3xl font-bold ${score.percentage >= 80 ? 'text-green-600' : score.percentage >= 60 ? 'text-yellow-600' : 'text-red-600'}`}>
+//                     {score.percentage}%
+//                   </div>
+//                   <div className="text-gray-600">النتيجة</div>
+//                 </div>
+//                 <div className="text-center">
+//                   <div className="text-3xl font-bold text-yellow-600">{score.points}</div>
+//                   <div className="text-gray-600">النقاط</div>
+//                 </div>
+//               </div>
+//             </div>
+//           </div>
+
+//           {/* Review Answers */}
+//           <div className="space-y-6">
+//             <h2 className="text-xl font-semibold text-gray-800 mb-4">مراجعة إجاباتك</h2>
+//             {data?.questions?.map((question, index) => {
+//               const userAnswer = selectedAnswers[question.id];
+//               let isCorrect = false;
+//               let correctAnswerText = '';
+//               let userAnswerText = '';
+              
+//               if (question.format === 'MCQ') {
+//                 isCorrect = userAnswer === question.correctAnswer;
+//                 correctAnswerText = question.answers[question.correctAnswer]?.text || '';
+//                 userAnswerText = userAnswer !== undefined ? question.answers.find(a => a.id === userAnswer)?.text || 'لم تتم الإجابة' : 'لم تتم الإجابة';
+//               } else if (question.format === 'TRUE_FALSE') {
+//                 isCorrect = userAnswer === question.correctAnswer;
+//                 correctAnswerText = question.correctAnswer ? 'True' : 'False';
+//                 userAnswerText = userAnswer !== undefined ? (userAnswer ? 'True' : 'False') : 'لم تتم الإجابة';
+//               } else if (question.format === 'TEXT') {
+//                 isCorrect = userAnswer && userAnswer.trim().length > 10;
+//                 correctAnswerText = 'انظر الشرح أدناه';
+//                 userAnswerText = userAnswer || 'لم تتم الإجابة';
+//               } else if (question.format === 'MATCHING') {
+//                 isCorrect = true; // Simplified for demo
+//                 correctAnswerText = 'انظر الاتصالات الصحيحة';
+//                 userAnswerText = 'تم التوصيل';
+//               }
+              
+//               return (
+//                 <div key={question.id} className="border border-gray-200 rounded-lg p-4">
+//                   <div className="flex items-start justify-between mb-3">
+//                     <div>
+//                       <h3 className="font-medium text-yellow-800">السؤال {index + 1}</h3>
+//                       <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded mt-1 inline-block">
+//                         {getQuestionTypeLabel(question.format)}
+//                       </span>
+//                     </div>
+//                     {isCorrect ? (
+//                       <CheckCircle className="w-5 h-5 text-green-500" />
+//                     ) : (
+//                       <XCircle className="w-5 h-5 text-red-500" />
+//                     )}
+//                   </div>
+                  
+//                   <p className="text-gray-700 mb-4">{question.question}</p>
+                  
+//                   <div className="mb-4 space-y-2">
+//                     <div className={`p-3 rounded border ${isCorrect ? 'bg-green-50 border-green-300' : 'bg-red-50 border-red-300'}`}>
+//                       <strong>إجابتك:</strong> {userAnswerText}
+//                     </div>
+//                     {question.format !== 'TEXT' && question.format !== 'MATCHING' && (
+//                       <div className="p-3 rounded border bg-blue-50 border-blue-300">
+//                         <strong>الإجابة الصحيحة:</strong> {correctAnswerText}
+//                       </div>
+//                     )}
+//                   </div>
+//                 </div>
+//               );
+//             })}
+//           </div>
+          
+//           <div className="mt-8 text-center">
+//             <button
+//               onClick={() => window.location.reload()}
+//               className="bg-yellow-500 hover:bg-yellow-600 text-white font-medium py-3 px-8 rounded-lg transition duration-200"
+//             >
+//               إعادة الواجب
+//             </button>
+//           </div>
+//         </div>
+//       </div>
+//     );
+//   }
+
+//   return (
+//     <div>
+//       <DynamicBreadcrumb
+//         MainTitle={assignmentInfo.course}
+//         BreadCrumbs={[
+//           {label:"Home" , href:"/home"},
+//           {label:"course Name" , href:"/courseId"},
+//           {label:"Assignment" , href:"/assignmentDetails"},
+//         ]}
+//       />
+
+//       <div className="max-w-7xl mx-auto p-6">
+//         {/* Assignment Header */}
+//         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
+//           <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
+//             <div>
+//               <h1 className="text-2xl font-bold text-gray-800 mb-2">{assignmentInfo.title}</h1>
+//               <div className="w-16 h-1 bg-yellow-500 mb-4"></div>
+//               <div className="flex flex-wrap gap-4 text-sm text-gray-600">
+//                 <div className="flex items-center">
+//                   <User className="w-4 h-4 mr-1" />
+//                   {assignmentInfo.instructor}
+//                 </div>
+//                 <div className="flex items-center">
+//                   <FileText className="w-4 h-4 mr-1" />
+//                   {assignmentInfo.totalQuestions} Questions
+//                 </div>
+//                 <div className="flex items-center">
+//                   <BookOpen className="w-4 h-4 mr-1" />
+//                   {assignmentInfo.points} Points
+//                 </div>
+//               </div>
+//             </div>
+            
+//             <div className="flex items-center space-x-4">
+//               <div className="flex items-center bg-blue-50 px-3 py-2 rounded-lg">
+//                 <Calendar className="w-5 h-5 text-blue-600 mr-2" />
+//                 <span className="text-blue-700 text-sm">Due: {assignmentInfo.dueDate}</span>
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+
+//         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+//           {/* Main Content Area */}
+//           <div className="lg:col-span-3">
+//             <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+//               {/* View Toggle */}
+//               <div className="flex justify-between items-center mb-6">
+//                 <div className="flex space-x-2">
+//                   <button
+//                     // onClick={() => setViewMode('single')}
+//                     className={`px-4 py-2 rounded-lg transition duration-200 ${
+//                       viewMode !== 'single' 
+//                         ? 'bg-yellow-500 text-white' 
+//                         : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+//                     }`}
+//                   >
+//                     Your Questions
+//                   </button>
+                
+//                 </div>
+
+//                 {viewMode === 'single' && (
+//                   <div className="flex items-center space-x-2">
+//                     <button
+//                       onClick={handleFlagQuestion}
+//                       className={`p-2 rounded-lg transition duration-200 ${
+//                         flaggedQuestions?.questions?.has(currentQuestion)
+//                           ? 'bg-blue-500 text-white'
+//                           : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
+//                       }`}
+//                     >
+//                       <Flag className="w-5 h-5" />
+//                     </button>
+//                   </div>
+//                 )}
+//               </div>
+
+//               {viewMode === 'single' && (
+//                 // Single Question View
+//                 <div>
+//                   {/* Progress Bar */}
+//                   <div className="mb-6">
+//                     <div className="flex justify-between text-sm text-gray-600 mb-2">
+//                       <span>Question {currentQuestion + 1} of {data?.questions?.length}</span>
+//                       <span>{getAnsweredCount()} answered</span>
+//                     </div>
+//                     <div className="w-full bg-gray-200 rounded-full h-2">
+//                       <div
+//                         className="bg-yellow-500 h-2 rounded-full transition-all duration-300"
+//                         style={{ width: `${((currentQuestion + 1) / data?.questions?.length) * 100}%` }}
+//                       ></div>
+//                     </div>
+//                   </div>
+
+//                   {/* Question */}
+//                   <div className="mb-8">
+//                     <div className="flex items-center justify-between mb-4">
+//                       <h3 className="text-lg font-medium text-yellow-800">
+//                         Question {currentQuestion + 1}
+//                       </h3>
+//                       <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">
+//                         {getQuestionTypeLabel(questions[currentQuestion]?.format)}
+//                       </span>
+//                     </div>
+//                     <p className="text-gray-700 mb-6">{questions[currentQuestion]?.question}</p>
+                    
+//                     {renderQuestion(questions[currentQuestion])}
+//                   </div>
+
+//                   {/* Navigation */}
+//                   <div className="flex justify-between items-center">
+//                     <button
+//                       onClick={previousQuestion}
+//                       disabled={currentQuestion === 0}
+//                       className="flex items-center px-4 py-2 text-gray-600 hover:text-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition duration-200"
+//                     >
+//                       <ArrowLeft className="w-5 h-5 mr-2" />
+//                       السابق
+//                     </button>
+
+//                     <div className="flex space-x-3">
+//                       {currentQuestion === data?.questions?.length - 1 ? (
+//                         <button
+//                           onClick={() => allQuestionsAnswered && setShowConfirmSubmit(true)}
+//                           disabled={!allQuestionsAnswered}
+//                           className={`bg-yellow-500 hover:bg-yellow-600 text-white font-medium py-2 px-6 rounded-lg transition duration-200 ${
+//                             !allQuestionsAnswered ? 'opacity-50 cursor-not-allowed' : ''
+//                           }`}
+//                         >
+//                           تسليم الواجب
+//                         </button>
+//                       ) : (
+//                         <button
+//                           onClick={nextQuestion}
+//                           className="bg-yellow-500 hover:bg-yellow-600 text-white font-medium py-2 px-6 rounded-lg transition duration-200 flex items-center"
+//                         >
+//                           التالي
+//                           <ArrowRight className="w-5 h-5 ml-2" />
+//                         </button>
+//                       )}
+//                     </div>
+//                   </div>
+//                 </div>
+//               ) }
+//             </div>
+//           </div>
+
+//           {/* Question Navigator Sidebar */}
+//           <div className="lg:col-span-1">
+//             <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sticky top-6">
+//               <h3 className="font-medium text-gray-800 mb-4">نظرة عامة على الأسئلة</h3>
+              
+//               {/* Progress Summary */}
+//               <div className="bg-gray-50 p-3 rounded-lg mb-4">
+//                 <div className="text-center">
+//                   <div className="text-2xl font-bold text-yellow-600">{getAnsweredCount()}/{data?.questions?.length}</div>
+//                   <div className="text-sm text-gray-600">مكتمل</div>
+//                 </div>
+//               </div>
+              
+//               <div className="grid grid-cols-4 lg:grid-cols-6 gap-2 mb-4">
+//                 {data?.questions?.map((question, index) => {
+//                   const status = getQuestionStatus(index);
+//                   return (
+//                     <button
+//                       key={question.id}
+//                       onClick={() => goToQuestion(index)}
+//                       className={`relative w-10 h-10 rounded text-sm font-medium transition duration-200 ${getStatusColor(status)} ${
+//                         currentQuestion === index && viewMode === 'single' ? 'ring-2 ring-blue-400' : ''
+//                       }`}
+//                     >
+//                       {index + 1}
+//                       {flaggedQuestions?.questions?.has(index) && (
+//                         <Flag className="w-3 h-3 absolute -top-1 -right-1 text-blue-600" />
+//                       )}
+//                     </button>
+//                   );
+//                 })}
+//               </div>
+
+//               {/* Legend */}
+//               <div className="space-y-2 text-xs mb-4">
+//                 <div className="flex items-center">
+//                   <div className="w-4 h-4 bg-yellow-500 rounded mr-2"></div>
+//                   <span>تمت الإجابة</span>
+//                 </div>
+//                 <div className="flex items-center">
+//                   <div className="w-4 h-4 bg-blue-500 rounded mr-2"></div>
+//                   <span>مؤشر عليه</span>
+//                 </div>
+//                 <div className="flex items-center">
+//                   <div className="w-4 h-4 bg-gray-200 rounded mr-2"></div>
+//                   <span>لم تتم الإجابة</span>
+//                 </div>
+//               </div>
+
+//               {/* Question Types Summary */}
+//               <div className="mb-4">
+//                 <h4 className="text-sm font-medium text-gray-700 mb-2">أنواع الأسئلة:</h4>
+//                 <div className="space-y-1 text-xs text-gray-600">
+//                   <div className="flex justify-between">
+//                     <span>اختيار من متعدد:</span>
+//                     <span>{data?.questions?.filter(q => q.format === 'MCQ').length}</span>
+//                   </div>
+//                   <div className="flex justify-between">
+//                     <span>صح/خطأ:</span>
+//                     <span>{data?.questions?.filter(q => q.format === 'TRUE_FALSE').length}</span>
+//                   </div>
+//                   <div className="flex justify-between">
+//                     <span>سؤال مقالي:</span>
+//                     <span>{data?.questions?.filter(q => q.format === 'TEXT').length}</span>
+//                   </div>
+//                   <div className="flex justify-between">
+//                     <span>التوصيل:</span>
+//                     <span>{data?.questions?.filter(q => q.format === 'MATCHING').length}</span>
+//                   </div>
+//                 </div>
+//               </div>
+
+//               {/* Quick Submit */}
+//               <button
+//                 onClick={() => setShowConfirmSubmit(true)}
+//                 disabled={!allQuestionsAnswered}
+//                 className={`w-full py-2 px-4 rounded-lg font-medium transition duration-200 ${
+//                   allQuestionsAnswered
+//                     ? 'bg-yellow-500 hover:bg-yellow-600 text-white'
+//                     : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+//                 }`}
+//               >
+//                 تسليم الواجب
+//               </button>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+
+//       {/* Confirm Submit Modal */}
+//       {showConfirmSubmit && (
+//         <div className="fixed inset-0 bg-black/30 bg-opacity-50 flex items-center justify-center p-4 z-50">
+//           <div className="bg-white rounded-lg p-6 max-w-md w-full">
+//             <h3 className="text-xl font-bold text-gray-800 mb-4">
+//               {allQuestionsAnswered ? "تسليم الواجب؟" : "واجب غير مكتمل"}
+//             </h3>
+//             <p className="text-gray-600 mb-6">
+//               لقد أجبت على {getAnsweredCount()} من أصل {data?.questions?.length} أسئلة. 
+//               {!allQuestionsAnswered && " يرجى الإجابة على جميع الأسئلة قبل التسليم."}
+//             </p>
+//             <div className="flex space-x-4">
+//               <button
+//                 onClick={() => setShowConfirmSubmit(false)}
+//                 className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-2 px-4 rounded-lg transition duration-200"
+//               >
+//                 إلغاء
+//               </button>
+//               <button
+//                 onClick={handleSubmitAssignment}
+//                 disabled={!allQuestionsAnswered}
+//                 className={`flex-1 bg-yellow-500 hover:bg-yellow-600 text-white font-medium py-2 px-4 rounded-lg transition duration-200 ${
+//                   !allQuestionsAnswered ? 'opacity-50 cursor-not-allowed' : ''
+//                 }`}
+//               >
+//                 تسليم
+//               </button>
+//             </div>
+//           </div>
+//         </div>
+//       )}
+//     </div>
+//   );
+// }
+
+
+
+
+
+// import { useState } from 'react';
+// import { CheckCircle, XCircle, ArrowLeft, ArrowRight, Flag, AlertTriangle, FileText, Calendar, User, BookOpen } from 'lucide-react';
+
+// // Mock DynamicBreadcrumb component for demo
+// const DynamicBreadcrumb = ({ MainTitle, BreadCrumbs }) => (
+//   <div className="mb-6">
+//     <h2 className="text-xl font-semibold text-gray-800">{MainTitle}</h2>
+//     <div className="text-sm text-gray-600">
+//       {BreadCrumbs.map((crumb, index) => (
+//         <span key={index}>
+//           {crumb.label}
+//           {index < BreadCrumbs.length - 1 && ' > '}
+//         </span>
+//       ))}
+//     </div>
+//   </div>
+// );
+
+// export default function AssignmentDetails() {
+//   // Enhanced questions data with different question types (based on your API format)
+//   const questions = [
+//     {
+//       id: 70,
+//       question: "توصيل",
+//       format: "MATCHING",
+//       answers: [
+//         {
+//           id: 72,
+//           left: "اهلا",
+//           right: "وسهلا"
+//         },
+//         {
+//           id: 73,
+//           left: "3456",
+//           right: "33333"
+//         },
+//         {
+//           id: 74,
+//           left: "12ضص",
+//           right: "44444"
+//         }
+//       ]
+//     },
+//     {
+//       id: 71,
+//       question: "صح وغلط",
+//       format: "TRUE_FALSE",
+//       answers: [
+//         {
+//           text: "True"
+//         },
+//         {
+//           text: "False"
+//         }
+//       ]
+//     },
+//     {
+//       id: 72,
+//       question: "اختيارى",
+//       format: "MCQ",
+//       answers: [
+//         {
+//           id: 76,
+//           text: "الاول"
+//         },
+//         {
+//           id: 77,
+//           text: "2"
+//         },
+//         {
+//           id: 78,
+//           text: "3"
+//         },
+//         {
+//           id: 79,
+//           text: "4"
+//         }
+//       ]
+//     },
+//     {
+//       id: 73,
+//       question: "سؤال مقالى",
+//       format: "TEXT",
+//       answers: {
+//         text: "HTML, or HyperText Markup Language, is the standard markup language used to create web pages and web applications. It provides the structure of a web page by defining various elements and their relationships"
+//       }
+//     }
+//   ];
+
+//   // Assignment metadata
+//   const assignmentInfo = {
+//     title: "Physics - Light and Optics Assignment",
+//     course: "Third Preparatory - Complete International Curriculum",
+//     dueDate: "2024-08-15",
+//     totalQuestions: data?.questions?.length,
+//     instructor: "Dr. Sarah Ahmed",
+//     points: 70
+//   };
+
+//   // State management for matching questions
+//   const [matchingConnections, setMatchingConnections] = useState({});
+//   const [svgLines, setSvgLines] = useState({});
+//   const [currentQuestion, setCurrentQuestion] = useState(0);
+//   const [selectedAnswers, setSelectedAnswers] = useState({});
+//   const [flaggedQuestions, setFlaggedQuestions] = useState(new Set());
+//   const [isSubmitted, setIsSubmitted] = useState(false);
+//   const [showResults, setShowResults] = useState(false);
+//   const [showConfirmSubmit, setShowConfirmSubmit] = useState(false);
+//   const [viewMode, setViewMode] = useState('single'); // 'single' or 'all'
+
+//   const handleAnswerSelect = (questionId, answer) => {
+//     setSelectedAnswers(prev => ({
+//       ...prev,
+//       [questionId]: answer
+//     }));
+//   };
+
+//   const handleMatchingConnect = (questionId, leftId, rightId) => {
+//     setMatchingConnections(prev => ({
+//       ...prev,
+//       [questionId]: {
+//         ...prev[questionId],
+//         [leftId]: rightId
+//       }
+//     }));
+
+//     // Update selected answers for matching questions
+//     const currentConnections = { ...matchingConnections[questionId], [leftId]: rightId };
+//     setSelectedAnswers(prev => ({
+//       ...prev,
+//       [questionId]: currentConnections
+//     }));
+//   };
+
+//   const clearMatchingConnection = (questionId, leftId) => {
+//     setMatchingConnections(prev => {
+//       const newConnections = { ...prev };
+//       if (newConnections[questionId]) {
+//         delete newConnections[questionId][leftId];
+//       }
+//       return newConnections;
+//     });
+
+//     // Update selected answers
+//     const currentConnections = { ...matchingConnections[questionId] };
+//     delete currentConnections[leftId];
+//     setSelectedAnswers(prev => ({
+//       ...prev,
+//       [questionId]: currentConnections
+//     }));
+//   };
+
+//   const handleFlagQuestion = () => {
+//     const newFlagged = new Set(flaggedQuestions);
+//     if (newFlagged.has(currentQuestion)) {
+//       newFlagged.delete(currentQuestion);
+//     } else {
+//       newFlagged.add(currentQuestion);
+//     }
+//     setFlaggedQuestions(newFlagged);
+//   };
+
+//   const goToQuestion = (questionIndex) => {
+//     setCurrentQuestion(questionIndex);
+//     setViewMode('single');
+//   };
+
+//   const nextQuestion = () => {
+//     if (currentQuestion < data?.questions?.length - 1) {
+//       setCurrentQuestion(currentQuestion + 1);
+//     }
+//   };
+
+//   const previousQuestion = () => {
+//     if (currentQuestion > 0) {
+//       setCurrentQuestion(currentQuestion - 1);
+//     }
+//   };
+
+//   const getAnsweredCount = () => {
+//     return Object.keys(selectedAnswers).length;
+//   };
+
+//   const calculateScore = () => {
+//     let correct = 0;
+//     data?.questions?.forEach((question) => {
+//       const userAnswer = selectedAnswers[question.id];
+      
+//       if (question.format === 'MCQ') {
+//         // For MCQ, check if selected answer ID matches correct answer
+//         if (userAnswer === question.correctAnswerId) correct++;
+//       } else if (question.format === 'TRUE_FALSE') {
+//         // For True/False, check boolean value
+//         if (userAnswer === question.correctAnswer) correct++;
+//       } else if (question.format === 'TEXT') {
+//         // For text questions, check if answered (in real app, needs manual grading)
+//         if (userAnswer && userAnswer.trim().length > 10) correct++;
+//       } else if (question.format === 'MATCHING') {
+//         // For matching, check if all connections are correct
+//         const correctConnections = {};
+//         question.answers.forEach(pair => {
+//           correctConnections[pair.id] = pair.id; // Assuming correct connection is same ID
+//         });
+        
+//         const userConnections = userAnswer || {};
+//         let allCorrect = true;
+        
+//         for (let leftId in correctConnections) {
+//           if (userConnections[leftId] !== correctConnections[leftId]) {
+//             allCorrect = false;
+//             break;
+//           }
+//         }
+        
+//         if (allCorrect && Object.keys(userConnections).length === Object.keys(correctConnections).length) {
+//           correct++;
+//         }
+//       }
+//     });
+    
+//     return {
+//       correct,
+//       total: data?.questions?.length,
+//       percentage: Math.round((correct / data?.questions?.length) * 100),
+//       points: Math.round((correct / data?.questions?.length) * assignmentInfo.points)
+//     };
+//   };
+
+//   const handleSubmitAssignment = () => {
+//     if (Object.keys(selectedAnswers).length !== data?.questions?.length) return;
+//     setIsSubmitted(true);
+//     setShowResults(true);
+//     setShowConfirmSubmit(false);
+//   };
+
+//   const getQuestionStatus = (questionIndex) => {
+//     const questionId = questions[questionIndex].id;
+//     if (selectedAnswers.hasOwnProperty(questionId)) {
+//       if (isSubmitted) {
+//         const question = questions[questionIndex];
+//         const userAnswer = selectedAnswers[questionId];
+//         let isCorrect = false;
+        
+//         if (question.format === 'MCQ' || question.format === 'TRUE_FALSE') {
+//           isCorrect = userAnswer === question.correctAnswer;
+//         } else if (question.format === 'TEXT') {
+//           isCorrect = userAnswer && userAnswer.trim().length > 10; // Simple check
+//         } else if (question.format === 'MATCHING') {
+//           // Check matching correctness
+//           isCorrect = true; // Simplified for demo
+//         }
+        
+//         return isCorrect ? 'correct' : 'incorrect';
+//       }
+//       return 'answered';
+//     }
+//     return flaggedQuestions?.questions?.has(questionIndex) ? 'flagged' : 'unanswered';
+//   };
+
+//   const getStatusColor = (status) => {
+//     switch (status) {
+//       case 'correct': return 'bg-green-500 text-white';
+//       case 'incorrect': return 'bg-red-500 text-white';
+//       case 'answered': return 'bg-yellow-500 text-white';
+//       case 'flagged': return 'bg-blue-500 text-white';
+//       default: return 'bg-gray-200 text-gray-700 hover:bg-gray-300';
+//     }
+//   };
+
+//   // Check if all questions are answered
+//   const allQuestionsAnswered = Object.keys(selectedAnswers).length === data?.questions?.length;
+
+//   // Render different question types based on API format
+//   const renderQuestion = (question, isInAllView = false) => {
+//     const questionIndex = data?.questions?.findIndex(q => q.id === question.id);
+    
+//     switch (question.format) {
+//       case 'MCQ':
+//         return (
+//           <div className="space-y-3">
+//             {question.answers.map((answer, index) => (
+//               <div
+//                 key={answer.id}
+//                 onClick={() => handleAnswerSelect(question.id, answer.id)}
+//                 className={`p-4 border rounded-lg cursor-pointer transition-colors duration-200 ${
+//                   selectedAnswers[question.id] === answer.id
+//                     ? 'bg-yellow-400 border-yellow-300'
+//                     : 'bg-gray-50 border-gray-200 hover:bg-gray-100'
+//                 }`}
+//               >
+//                 <div className="flex items-center">
+//                   <span className="w-6 h-6 flex items-center justify-center rounded-full bg-white border border-gray-300 mr-3">
+//                     {String.fromCharCode(65 + index)}
+//                   </span>
+//                   <span>{answer.text}</span>
+//                 </div>
+//               </div>
+//             ))}
+//           </div>
+//         );
+        
+//       case 'TRUE_FALSE':
+//         return (
+//           <div className="space-y-3">
+//             {[true, false].map((value, index) => (
+//               <div
+//                 key={index}
+//                 onClick={() => handleAnswerSelect(question.id, value)}
+//                 className={`p-4 border rounded-lg cursor-pointer transition-colors duration-200 ${
+//                   selectedAnswers[question.id] === value
+//                     ? 'bg-yellow-400 border-yellow-300'
+//                     : 'bg-gray-50 border-gray-200 hover:bg-gray-100'
+//                 }`}
+//               >
+//                 <div className="flex items-center">
+//                   <span className="w-6 h-6 flex items-center justify-center rounded-full bg-white border border-gray-300 mr-3">
+//                     {value ? 'T' : 'F'}
+//                   </span>
+//                   <span>{value ? 'True' : 'False'}</span>
+//                 </div>
+//               </div>
+//             ))}
+//           </div>
+//         );
+        
+//       case 'TEXT':
+//         return (
+//           <div>
+//             <div className="mb-4 p-4 bg-green-50 border border-green-200 rounded-lg">
+//               <p className="text-green-800">
+//                 <strong>سؤال مقالي:</strong> اكتب إجابة مفصلة بكلماتك الخاصة.
+//               </p>
+//             </div>
+//             <textarea
+//               placeholder="اكتب إجابتك التفصيلية هنا..."
+//               value={selectedAnswers[question.id] || ''}
+//               onChange={(e) => handleAnswerSelect(question.id, e.target.value)}
+//               rows={6}
+//               className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent resize-vertical"
+//             />
+//             <div className="mt-2 text-sm text-gray-600">
+//               {selectedAnswers[question.id] ? selectedAnswers[question.id].length : 0} حرف
+//             </div>
+//           </div>
+//         );
+
+//       case 'MATCHING':
+//         return (
+//           <div>
+//             <div className="mb-4 p-4 bg-purple-50 border border-purple-200 rounded-lg">
+//               <p className="text-purple-800">
+//                 <strong>سؤال التوصيل:</strong> اربط كل عنصر من العمود الأيسر بالعنصر المناسب من العمود الأيمن.
+//               </p>
+//             </div>
+            
+//             <div className="relative">
+//               <div className="grid grid-cols-2 gap-8">
+//                 {/* Left Column */}
+//                 <div className="space-y-3">
+//                   <h4 className="font-medium text-gray-700 mb-3">العمود الأيسر</h4>
+//                   {question.answers.map((pair, index) => {
+//                     const isConnected = matchingConnections[question.id]?.[pair.id];
+//                     return (
+//                       <div
+//                         key={pair.id}
+//                         className={`p-3 border rounded-lg cursor-pointer transition-all duration-200 ${
+//                           isConnected
+//                             ? 'bg-blue-100 border-blue-300'
+//                             : 'bg-gray-50 border-gray-200 hover:bg-gray-100'
+//                         }`}
+//                         onClick={() => {
+//                           if (isConnected) {
+//                             clearMatchingConnection(question.id, pair.id);
+//                           }
+//                         }}
+//                       >
+//                         <div className="flex items-center justify-between">
+//                           <span>{pair.left}</span>
+//                           {isConnected && (
+//                             <button
+//                               onClick={(e) => {
+//                                 e.stopPropagation();
+//                                 clearMatchingConnection(question.id, pair.id);
+//                               }}
+//                               className="text-red-500 hover:text-red-700"
+//                             >
+//                               ✕
+//                             </button>
+//                           )}
+//                         </div>
+//                       </div>
+//                     );
+//                   })}
+//                 </div>
+                
+//                 {/* Right Column */}
+//                 <div className="space-y-3">
+//                   <h4 className="font-medium text-gray-700 mb-3">العمود الأيمن</h4>
+//                   {question.answers.map((pair, index) => {
+//                     const isConnected = Object.values(matchingConnections[question.id] || {}).includes(pair.id);
+//                     return (
+//                       <div
+//                         key={`right-${pair.id}`}
+//                         className={`p-3 border rounded-lg cursor-pointer transition-all duration-200 ${
+//                           isConnected
+//                             ? 'bg-green-100 border-green-300'
+//                             : 'bg-gray-50 border-gray-200 hover:bg-gray-100'
+//                         }`}
+//                         onClick={() => {
+//                           // Find which left item is currently being connected
+//                           const leftItems = question.answers.filter(p => 
+//                             !matchingConnections[question.id]?.[p.id]
+//                           );
+                          
+//                           if (leftItems.length > 0 && !isConnected) {
+//                             // Connect the first unconnected left item to this right item
+//                             handleMatchingConnect(question.id, leftItems[0].id, pair.id);
+//                           }
+//                         }}
+//                       >
+//                         <span>{pair.right}</span>
+//                       </div>
+//                     );
+//                   })}
+//                 </div>
+//               </div>
+              
+//               {/* Connection Lines (Visual feedback) */}
+//               <svg 
+//                 className="absolute inset-0 pointer-events-none w-full h-full"
+//                 style={{ zIndex: 1 }}
+//               >
+//                 {matchingConnections[question.id] && Object.entries(matchingConnections[question.id]).map(([leftId, rightId]) => {
+//                   const leftIndex = question.answers.findIndex(p => p.id.toString() === leftId);
+//                   const rightIndex = question.answers.findIndex(p => p.id.toString() === rightId);
+                  
+//                   if (leftIndex === -1 || rightIndex === -1) return null;
+                  
+//                   const leftY = 60 + (leftIndex * 60) + 25; // Approximate position
+//                   const rightY = 60 + (rightIndex * 60) + 25;
+//                   const leftX = 45; // Right edge of left column
+//                   const rightX = 55; // Left edge of right column (in percentage)
+                  
+//                   return (
+//                     <line
+//                       key={`${leftId}-${rightId}`}
+//                       x1={`${leftX}%`}
+//                       y1={leftY}
+//                       x2={`${rightX}%`}
+//                       y2={rightY}
+//                       stroke="#3B82F6"
+//                       strokeWidth="3"
+//                       strokeDasharray="5,5"
+//                       className="animate-pulse"
+//                     />
+//                   );
+//                 })}
+//               </svg>
+//             </div>
+            
+//             {/* Connection Status */}
+//             <div className="mt-4 p-3 bg-gray-50 rounded-lg">
+//               <div className="text-sm text-gray-600">
+//                 تم ربط {Object.keys(matchingConnections[question.id] || {}).length} من {question.answers.length} عناصر
+//               </div>
+//             </div>
+//           </div>
+//         );
+        
+//       default:
+//         return <div>نوع سؤال غير مدعوم</div>;
+//     }
+//   };
+
+//   const getQuestionTypeLabel = (format) => {
+//     switch (format) {
+//       case 'MCQ': return 'اختيار من متعدد';
+//       case 'TRUE_FALSE': return 'صح أم خطأ';
+//       case 'TEXT': return 'سؤال مقالي';
+//       case 'MATCHING': return 'سؤال التوصيل';
+//       default: return 'غير معروف';
+//     }
+//   };
+
+//   // Results View
+//   if (showResults) {
+//     const score = calculateScore();
+//     return (
+//       <div>
+//         <DynamicBreadcrumb
+//           MainTitle={assignmentInfo.course}
+//           BreadCrumbs={[
+//             {label:"Home" , href:"/"},
+//             {label:"course Name" , href:"/courseId"},
+//             {label:"Assignment Results" , href:"/assignmentDetails"},
+//           ]}
+//         />
+        
+//         <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-sm">
+//           <div className="text-center mb-8">
+//             <div className="mb-4">
+//               {score.percentage >= 80 ? (
+//                 <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
+//               ) : score.percentage >= 60 ? (
+//                 <AlertTriangle className="w-16 h-16 text-yellow-500 mx-auto mb-4" />
+//               ) : (
+//                 <XCircle className="w-16 h-16 text-red-500 mx-auto mb-4" />
+//               )}
+//             </div>
+//             <h1 className="text-3xl font-bold text-gray-800 mb-2">تم إكمال الواجب!</h1>
+//             <div className="w-20 h-1 bg-yellow-500 mx-auto mb-6"></div>
+            
+//             <div className="bg-gray-50 p-6 rounded-lg mb-6">
+//               <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+//                 <div className="text-center">
+//                   <div className="text-3xl font-bold text-gray-900">{score.correct}</div>
+//                   <div className="text-gray-600">صحيح</div>
+//                 </div>
+//                 <div className="text-center">
+//                   <div className="text-3xl font-bold text-gray-900">{score.total - score.correct}</div>
+//                   <div className="text-gray-600">خطأ</div>
+//                 </div>
+//                 <div className="text-center">
+//                   <div className={`text-3xl font-bold ${score.percentage >= 80 ? 'text-green-600' : score.percentage >= 60 ? 'text-yellow-600' : 'text-red-600'}`}>
+//                     {score.percentage}%
+//                   </div>
+//                   <div className="text-gray-600">النتيجة</div>
+//                 </div>
+//                 <div className="text-center">
+//                   <div className="text-3xl font-bold text-yellow-600">{score.points}</div>
+//                   <div className="text-gray-600">النقاط</div>
+//                 </div>
+//               </div>
+//             </div>
+//           </div>
+
+//           {/* Review Answers */}
+//           <div className="space-y-6">
+//             <h2 className="text-xl font-semibold text-gray-800 mb-4">مراجعة إجاباتك</h2>
+//             {data?.questions?.map((question, index) => {
+//               const userAnswer = selectedAnswers[question.id];
+//               let isCorrect = false;
+//               let correctAnswerText = '';
+//               let userAnswerText = '';
+              
+//               if (question.format === 'MCQ') {
+//                 isCorrect = userAnswer === question.correctAnswer;
+//                 correctAnswerText = question.answers[question.correctAnswer]?.text || '';
+//                 userAnswerText = userAnswer !== undefined ? question.answers.find(a => a.id === userAnswer)?.text || 'لم تتم الإجابة' : 'لم تتم الإجابة';
+//               } else if (question.format === 'TRUE_FALSE') {
+//                 isCorrect = userAnswer === question.correctAnswer;
+//                 correctAnswerText = question.correctAnswer ? 'True' : 'False';
+//                 userAnswerText = userAnswer !== undefined ? (userAnswer ? 'True' : 'False') : 'لم تتم الإجابة';
+//               } else if (question.format === 'TEXT') {
+//                 isCorrect = userAnswer && userAnswer.trim().length > 10;
+//                 correctAnswerText = 'انظر الشرح أدناه';
+//                 userAnswerText = userAnswer || 'لم تتم الإجابة';
+//               } else if (question.format === 'MATCHING') {
+//                 isCorrect = true; // Simplified for demo
+//                 correctAnswerText = 'انظر الاتصالات الصحيحة';
+//                 userAnswerText = 'تم التوصيل';
+//               }
+              
+//               return (
+//                 <div key={question.id} className="border border-gray-200 rounded-lg p-4">
+//                   <div className="flex items-start justify-between mb-3">
+//                     <div>
+//                       <h3 className="font-medium text-yellow-800">السؤال {index + 1}</h3>
+//                       <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded mt-1 inline-block">
+//                         {getQuestionTypeLabel(question.format)}
+//                       </span>
+//                     </div>
+//                     {isCorrect ? (
+//                       <CheckCircle className="w-5 h-5 text-green-500" />
+//                     ) : (
+//                       <XCircle className="w-5 h-5 text-red-500" />
+//                     )}
+//                   </div>
+                  
+//                   <p className="text-gray-700 mb-4">{question.question}</p>
+                  
+//                   <div className="mb-4 space-y-2">
+//                     <div className={`p-3 rounded border ${isCorrect ? 'bg-green-50 border-green-300' : 'bg-red-50 border-red-300'}`}>
+//                       <strong>إجابتك:</strong> {userAnswerText}
+//                     </div>
+//                     {question.format !== 'TEXT' && question.format !== 'MATCHING' && (
+//                       <div className="p-3 rounded border bg-blue-50 border-blue-300">
+//                         <strong>الإجابة الصحيحة:</strong> {correctAnswerText}
+//                       </div>
+//                     )}
+//                   </div>
+//                 </div>
+//               );
+//             })}
+//           </div>
+          
+//           <div className="mt-8 text-center">
+//             <button
+//               onClick={() => window.location.reload()}
+//               className="bg-yellow-500 hover:bg-yellow-600 text-white font-medium py-3 px-8 rounded-lg transition duration-200"
+//             >
+//               إعادة الواجب
+//             </button>
+//           </div>
+//         </div>
+//       </div>
+//     );
+//   }
+
+//   return (
+//     <div>
+//       <DynamicBreadcrumb
+//         MainTitle={assignmentInfo.course}
+//         BreadCrumbs={[
+//           {label:"Home" , href:"/home"},
+//           {label:"course Name" , href:"/courseId"},
+//           {label:"Assignment" , href:"/assignmentDetails"},
+//         ]}
+//       />
+
+//       <div className="max-w-7xl mx-auto p-6">
+//         {/* Assignment Header */}
+//         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
+//           <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
+//             <div>
+//               <h1 className="text-2xl font-bold text-gray-800 mb-2">{assignmentInfo.title}</h1>
+//               <div className="w-16 h-1 bg-yellow-500 mb-4"></div>
+//               <div className="flex flex-wrap gap-4 text-sm text-gray-600">
+//                 <div className="flex items-center">
+//                   <User className="w-4 h-4 mr-1" />
+//                   {assignmentInfo.instructor}
+//                 </div>
+//                 <div className="flex items-center">
+//                   <FileText className="w-4 h-4 mr-1" />
+//                   {assignmentInfo.totalQuestions} Questions
+//                 </div>
+//                 <div className="flex items-center">
+//                   <BookOpen className="w-4 h-4 mr-1" />
+//                   {assignmentInfo.points} Points
+//                 </div>
+//               </div>
+//             </div>
+            
+//             <div className="flex items-center space-x-4">
+//               <div className="flex items-center bg-blue-50 px-3 py-2 rounded-lg">
+//                 <Calendar className="w-5 h-5 text-blue-600 mr-2" />
+//                 <span className="text-blue-700 text-sm">Due: {new Date(assignmentInfo.dueDate).toLocaleDateString()}</span>
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+
+//         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+//           {/* Main Content Area */}
+//           <div className="lg:col-span-3">
+//             <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+//               {/* View Toggle */}
+//               <div className="flex justify-between items-center mb-6">
+//                 <div className="flex space-x-2">
+//                   <button
+//                     onClick={() => setViewMode('single')}
+//                     className={`px-4 py-2 rounded-lg transition duration-200 ${
+//                       viewMode === 'single' 
+//                         ? 'bg-yellow-500 text-white' 
+//                         : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+//                     }`}
+//                   >
+//                     Single Question
+//                   </button>
+//                   <button
+//                     onClick={() => setViewMode('all')}
+//                     className={`px-4 py-2 rounded-lg transition duration-200 ${
+//                       viewMode === 'all' 
+//                         ? 'bg-yellow-500 text-white' 
+//                         : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+//                     }`}
+//                   >
+//                     All Questions
+//                   </button>
+//                 </div>
+
+//                 {viewMode === 'single' && (
+//                   <div className="flex items-center space-x-2">
+//                     <button
+//                       onClick={handleFlagQuestion}
+//                       className={`p-2 rounded-lg transition duration-200 ${
+//                         flaggedQuestions?.questions?.has(currentQuestion)
+//                           ? 'bg-blue-500 text-white'
+//                           : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
+//                       }`}
+//                     >
+//                       <Flag className="w-5 h-5" />
+//                     </button>
+//                   </div>
+//                 )}
+//               </div>
+
+//               {viewMode === 'single' ? (
+//                 // Single Question View
+//                 <div>
+//                   {/* Progress Bar */}
+//                   <div className="mb-6">
+//                     <div className="flex justify-between text-sm text-gray-600 mb-2">
+//                       <span>Question {currentQuestion + 1} of {data?.questions?.length}</span>
+//                       <span>{getAnsweredCount()} answered</span>
+//                     </div>
+//                     <div className="w-full bg-gray-200 rounded-full h-2">
+//                       <div
+//                         className="bg-yellow-500 h-2 rounded-full transition-all duration-300"
+//                         style={{ width: `${((currentQuestion + 1) / data?.questions?.length) * 100}%` }}
+//                       ></div>
+//                     </div>
+//                   </div>
+
+//                   {/* Question */}
+//                   <div className="mb-8">
+//                     <div className="flex items-center justify-between mb-4">
+//                       <h3 className="text-lg font-medium text-yellow-800">
+//                         Question {currentQuestion + 1}
+//                       </h3>
+//                       <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">
+//                         {getQuestionTypeLabel(questions[currentQuestion].format)}
+//                       </span>
+//                     </div>
+//                     <p className="text-gray-700 mb-6">{questions[currentQuestion].question}</p>
+                    
+//                     {renderQuestion(questions[currentQuestion])}
+//                   </div>
+
+//                   {/* Navigation */}
+//                   <div className="flex justify-between items-center">
+//                     <button
+//                       onClick={previousQuestion}
+//                       disabled={currentQuestion === 0}
+//                       className="flex items-center px-4 py-2 text-gray-600 hover:text-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition duration-200"
+//                     >
+//                       <ArrowLeft className="w-5 h-5 mr-2" />
+//                       السابق
+//                     </button>
+
+//                     <div className="flex space-x-3">
+//                       {currentQuestion === data?.questions?.length - 1 ? (
+//                         <button
+//                           onClick={() => allQuestionsAnswered && setShowConfirmSubmit(true)}
+//                           disabled={!allQuestionsAnswered}
+//                           className={`bg-yellow-500 hover:bg-yellow-600 text-white font-medium py-2 px-6 rounded-lg transition duration-200 ${
+//                             !allQuestionsAnswered ? 'opacity-50 cursor-not-allowed' : ''
+//                           }`}
+//                         >
+//                           تسليم الواجب
+//                         </button>
+//                       ) : (
+//                         <button
+//                           onClick={nextQuestion}
+//                           className="bg-yellow-500 hover:bg-yellow-600 text-white font-medium py-2 px-6 rounded-lg transition duration-200 flex items-center"
+//                         >
+//                           التالي
+//                           <ArrowRight className="w-5 h-5 ml-2" />
+//                         </button>
+//                       )}
+//                     </div>
+//                   </div>
+//                 </div>
+//               ) : (
+//                 // All Questions View
+//                 <div>
+//                   {data?.questions?.map((question, index) => (
+//                     <div key={question.id} className="mb-8 pb-8 border-b border-gray-200 last:border-b-0">
+//                       <div className="flex items-center justify-between mb-4">
+//                         <h3 className="text-lg font-medium text-yellow-800">Question {index + 1}</h3>
+//                         <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">
+//                           {getQuestionTypeLabel(question.format)}
+//                         </span>
+//                       </div>
+//                       <p className="text-gray-700 mb-6">{question.question}</p>
+                      
+//                       {renderQuestion(question, true)}
+//                     </div>
+//                   ))}
+
+//                   {/* Submit Button for All Questions View */}
+//                   <div className='flex justify-center items-center mt-8'>
+//                     <button
+//                       onClick={() => setShowConfirmSubmit(true)}
+//                       disabled={!allQuestionsAnswered}
+//                       className={`w-full max-w-3xl py-3 px-6 rounded-lg font-medium transition-colors duration-200 ${
+//                         allQuestionsAnswered
+//                           ? 'bg-yellow-600 hover:bg-yellow-800 text-white'
+//                           : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+//                       }`}
+//                     >
+//                       تسليم الواجب
+//                     </button>
+//                   </div>
+//                 </div>
+//               )}
+//             </div>
+//           </div>
+
+//           {/* Question Navigator Sidebar */}
+//           <div className="lg:col-span-1">
+//             <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sticky top-6">
+//               <h3 className="font-medium text-gray-800 mb-4">نظرة عامة على الأسئلة</h3>
+              
+//               {/* Progress Summary */}
+//               <div className="bg-gray-50 p-3 rounded-lg mb-4">
+//                 <div className="text-center">
+//                   <div className="text-2xl font-bold text-yellow-600">{getAnsweredCount()}/{data?.questions?.length}</div>
+//                   <div className="text-sm text-gray-600">مكتمل</div>
+//                 </div>
+//               </div>
+              
+//               <div className="grid grid-cols-4 lg:grid-cols-6 gap-2 mb-4">
+//                 {data?.questions?.map((question, index) => {
+//                   const status = getQuestionStatus(index);
+//                   return (
+//                     <button
+//                       key={question.id}
+//                       onClick={() => goToQuestion(index)}
+//                       className={`relative w-10 h-10 rounded text-sm font-medium transition duration-200 ${getStatusColor(status)} ${
+//                         currentQuestion === index && viewMode === 'single' ? 'ring-2 ring-blue-400' : ''
+//                       }`}
+//                     >
+//                       {index + 1}
+//                       {flaggedQuestions?.questions?.has(index) && (
+//                         <Flag className="w-3 h-3 absolute -top-1 -right-1 text-blue-600" />
+//                       )}
+//                     </button>
+//                   );
+//                 })}
+//               </div>
+
+//               {/* Legend */}
+//               <div className="space-y-2 text-xs mb-4">
+//                 <div className="flex items-center">
+//                   <div className="w-4 h-4 bg-yellow-500 rounded mr-2"></div>
+//                   <span>تمت الإجابة</span>
+//                 </div>
+//                 <div className="flex items-center">
+//                   <div className="w-4 h-4 bg-blue-500 rounded mr-2"></div>
+//                   <span>مؤشر عليه</span>
+//                 </div>
+//                 <div className="flex items-center">
+//                   <div className="w-4 h-4 bg-gray-200 rounded mr-2"></div>
+//                   <span>لم تتم الإجابة</span>
+//                 </div>
+//               </div>
+
+//               {/* Question Types Summary */}
+//               <div className="mb-4">
+//                 <h4 className="text-sm font-medium text-gray-700 mb-2">أنواع الأسئلة:</h4>
+//                 <div className="space-y-1 text-xs text-gray-600">
+//                   <div className="flex justify-between">
+//                     <span>اختيار من متعدد:</span>
+//                     <span>{data?.questions?.filter(q => q.format === 'MCQ').length}</span>
+//                   </div>
+//                   <div className="flex justify-between">
+//                     <span>صح/خطأ:</span>
+//                     <span>{data?.questions?.filter(q => q.format === 'TRUE_FALSE').length}</span>
+//                   </div>
+//                   <div className="flex justify-between">
+//                     <span>سؤال مقالي:</span>
+//                     <span>{data?.questions?.filter(q => q.format === 'TEXT').length}</span>
+//                   </div>
+//                   <div className="flex justify-between">
+//                     <span>التوصيل:</span>
+//                     <span>{data?.questions?.filter(q => q.format === 'MATCHING').length}</span>
+//                   </div>
+//                 </div>
+//               </div>
+
+//               {/* Quick Submit */}
+//               <button
+//                 onClick={() => setShowConfirmSubmit(true)}
+//                 disabled={!allQuestionsAnswered}
+//                 className={`w-full py-2 px-4 rounded-lg font-medium transition duration-200 ${
+//                   allQuestionsAnswered
+//                     ? 'bg-yellow-500 hover:bg-yellow-600 text-white'
+//                     : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+//                 }`}
+//               >
+//                 تسليم الواجب
+//               </button>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+
+//       {/* Confirm Submit Modal */}
+//       {showConfirmSubmit && (
+//         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+//           <div className="bg-white rounded-lg p-6 max-w-md w-full">
+//             <h3 className="text-xl font-bold text-gray-800 mb-4">
+//               {allQuestionsAnswered ? "تسليم الواجب؟" : "واجب غير مكتمل"}
+//             </h3>
+//             <p className="text-gray-600 mb-6">
+//               لقد أجبت على {getAnsweredCount()} من أصل {data?.questions?.length} أسئلة. 
+//               {!allQuestionsAnswered && " يرجى الإجابة على جميع الأسئلة قبل التسليم."}
+//             </p>
+//             <div className="flex space-x-4">
+//               <button
+//                 onClick={() => setShowConfirmSubmit(false)}
+//                 className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-2 px-4 rounded-lg transition duration-200"
+//               >
+//                 إلغاء
+//               </button>
+//               <button
+//                 onClick={handleSubmitAssignment}
+//                 disabled={!allQuestionsAnswered}
+//                 className={`flex-1 bg-yellow-500 hover:bg-yellow-600 text-white font-medium py-2 px-4 rounded-lg transition duration-200 ${
+//                   !allQuestionsAnswered ? 'opacity-50 cursor-not-allowed' : ''
+//                 }`}
+//               >
+//                 تسليم
+//               </button>
+//             </div>
+//           </div>
+//         </div>
+//       )}
+//     </div>
+//   );
+// }
