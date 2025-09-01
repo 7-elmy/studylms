@@ -297,7 +297,7 @@ export default function LoginPage() {
           {/* Remember Me + Forgot Password */}
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-2 py-2">
             <div className="flex items-center order-1 sm:order-2">
-              <input
+              {/* <input
                 type="checkbox"
                 id="rememberMe"
                 name="rememberMe"
@@ -311,7 +311,7 @@ export default function LoginPage() {
                 className="text-yellow-500 mx-2 text-xs sm:text-sm cursor-pointer"
               >
                 {t('auth.login.rememberme')}
-              </label>
+              </label> */}
             </div>
             <Link
               to="/lost-password"

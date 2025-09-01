@@ -3073,16 +3073,17 @@ export default function ProfilePage({ userType = 'student' }) {
                                 {t('profile.profileInformation')}
                             </button>
                             {userType === 'student' && (
-                                <button
-                                    onClick={() => setActiveTab('reports')}
-                                    className={`py-3 border-b-2 font-medium text-sm transition-colors duration-200 ${
-                                        activeTab === 'reports'
-                                            ? 'border-yellow-500 text-yellow-600'
-                                            : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                                    }`}
-                                >
-                                    {t('profile.academicReports')}
-                                </button>
+                                // <button
+                                //     onClick={() => setActiveTab('reports')}
+                                //     className={`py-3 border-b-2 font-medium text-sm transition-colors duration-200 ${
+                                //         activeTab === 'reports'
+                                //             ? 'border-yellow-500 text-yellow-600'
+                                //             : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                                //     }`}
+                                // >
+                                //     {t('profile.academicReports')}
+                                // </button>
+                                <></>
                             )}
                         </nav>
                     </div>
