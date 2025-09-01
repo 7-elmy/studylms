@@ -234,7 +234,7 @@ const menuItems = [
                    </button>
 
                    {languageDropdownOpen && (
-                     <div className={` absolute ${i18n.language=="ar"? "left-0" :"right-0"}  mt-2 w-48  rounded-md shadow-lg border z-50`}>
+                     <div className={` absolute ${i18n.language=="ar"? "left-0" :"right-0"} bg-white  mt-2 w-48  rounded-md shadow-lg border z-50`}>
                        <div className="py-2">
                          {languages.map((language) => (
                            <button
