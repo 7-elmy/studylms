@@ -72,15 +72,15 @@ export default function AssignmentSubmission({ courseDetails }) {
   };
 
   return (
-    <div className="">
+    <div className="w-full">
       {lessons.length > 0 ? (
-        lessons.map((lesson, index) => (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-4" key={index}>
-            {lesson?.homeworks?.map((assignment) => (
-              <div key={assignment.id} className="mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4 w-full">
+          {lessons.map((lesson, index) => (
+            lesson?.homeworks?.map((assignment) => (
+              <div key={`${lesson.id}-${assignment.id}`}>
               {console.log({assignment})}
               
-                <div className="max-w-md p-6 bg-white rounded-lg shadow-md">
+                <div className="w-full p-6 bg-white rounded-lg shadow-md">
                   {/* Header */}
                   <div className="text-center mb-6">
                     <h1 className="text-2xl font-bold text-gray-800 mb-2">
@@ -133,9 +133,9 @@ export default function AssignmentSubmission({ courseDetails }) {
                   )}
                 </div>
               </div>
-            ))}
-          </div>
-        ))
+            ))
+          ))}
+        </div>
       ) : (
         <div className="col-span-full text-center py-10">
           <p className="text-gray-500">No assignments available at this time.</p>

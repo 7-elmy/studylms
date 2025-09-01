@@ -495,7 +495,7 @@ const handleCommentSubmit = async () => {
      
       <div className="bg-gray-400 px-6 py-16">
         <div className="max-w-7xl mx-auto">
-          <h1 className="text-white text-5xl font-bold">Single Courses</h1>
+          <h1 className="text-white text-5xl font-bold">{courseDetails?.data?.data?.name}</h1>
         </div>
       </div>
 
@@ -519,32 +519,42 @@ const handleCommentSubmit = async () => {
                 {courseDetails?.data?.data?.name }
               </h1>
               
-              <div className="flex flex-col sm:flex-row gap-6 mb-8">
+              <div className="flex flex-col sm:flex-row gap-6 sm:gap-8 mb-8 p-4 sm:p-6 bg-gray-50 rounded-lg border border-gray-200">
                 <div className="flex items-center">
-                  <div className="w-8 h-8 bg-gray-300 rounded-full mr-3">
-                    <img src={courseDetails?.data?.data?.teacher_image} alt={courseDetails?.data?.data?.name || "tesds"} />
+                  <div className="w-10 h-10 bg-gray-300 rounded-full mr-3 sm:mr-4 flex items-center justify-center overflow-hidden">
+                    {courseDetails?.data?.data?.teacher_image ? (
+                      <img 
+                        src={courseDetails?.data?.data?.teacher_image} 
+                        alt={courseDetails?.data?.data?.teacher || "Instructor"} 
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <User className="w-5 h-5 text-gray-600" />
+                    )}
                   </div>
                   <div>
-                    <p className="text-sm text-gray-500">Instructor</p>
-                    <p className="font-medium text-gray-900">{courseDetails?.data?.data?.teacher}</p>
+                    <p className="text-sm text-gray-500 mb-1">Instructor</p>
+                    <p className="font-medium text-gray-900">{courseDetails?.data?.data?.teacher || "Not specified"}</p>
                   </div>
                 </div>
                 
                 <div className="flex items-center">
-                  <div className="w-6 h-6 bg-yellow-400 rounded mr-3 flex items-center justify-center">
+                  <div className="w-8 h-8 bg-yellow-400 rounded-lg mr-3 sm:mr-4 flex items-center justify-center">
                     <BookOpen className="w-4 h-4 text-white" />
                   </div>
                   <div>
-                    <p className="text-sm text-gray-500">Category</p>
-                    <p className="font-medium text-gray-900">{courseDetails?.data?.data?.category}</p>
+                    <p className="text-sm text-gray-500 mb-1">Category</p>
+                    <p className="font-medium text-gray-900">{courseDetails?.data?.data?.category || "Not specified"}</p>
                   </div>
                 </div>
                 
                 <div className="flex items-center">
-                  <div className="flex mr-2">
-                    {renderStars(5)}
+                  <div className="flex mr-2 sm:mr-3">
+                    {renderStars(courseDetails?.data?.data?.average_rating || 0)}
                   </div>
-                  <span className="text-sm text-gray-500">{`(${courseDetails?.data?.data?.average_rating})` }</span>
+                  <span className="text-sm text-gray-500 font-medium">
+                    ({courseDetails?.data?.data?.average_rating || 0})
+                  </span>
                 </div>
               </div>
               

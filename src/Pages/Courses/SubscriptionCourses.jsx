@@ -139,6 +139,9 @@ export default function SubscriptionCourses() {
     }));
   }, [dispatch, token , localStorage.getItem('language')]);
 
+  console.log({subscriptionCourse});
+  
+
   useEffect(() => {
     fetchSubscriptionCourses(1);
   }, [fetchSubscriptionCourses]);

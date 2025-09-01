@@ -80,16 +80,16 @@ useEffect(() => {
      <CourseLayout 
    
      courses={courses?.data}
-     popularCourses={popularCourses}
+    //  popularCourses={popularCourses}
      renderStars={renderStars}
      Breadcrumb1={"Home"}
-      Breadcrumb2={"Courses"}
+      Breadcrumb2={"Lessons"}
       selectedCategory={selectedCategory}
       setSelectedCategory={setSelectedCategory}
       searchTerm={searchTerm}
       setSearchTerm={setSearchTerm}
 
-      MainTitle={"Courses"}
+      MainTitle={"Lessons"}
       type="course"
       
 

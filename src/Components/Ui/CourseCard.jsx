@@ -1,179 +1,4 @@
-// import React from 'react'
-// import SubscriptionModal from './SubscriptionModal'
-// import { Link } from 'react-router-dom'
-// import { MessageSquare, Users } from 'lucide-react'
-// import { useTranslation } from 'react-i18next'
 
-
-// export default function CourseCard({course , renderStars }) {
-//   const {t , i18n} = useTranslation()
-//   return (
-//     <div  className='border border-gray-300  rounded-lg min-h-[420px]'>
-//                 {/* Course Image */}
-//                   <div className="relative">
-//                     <div className="w-full h-48 bg-gradient-to-br from-blue-100 to-purple-100 rounded-t-lg"></div>
-//                     {/* Price Badge */}
-//                     <div className="absolute top-4 left-4">
-//                       <span className={`px-3 py-1 rounded-full text-sm font-medium ${
-//                         course.price === 'FREE' 
-//                           ? 'bg-green-500 text-white' 
-//                           : 'bg-cyan-500 text-white'
-//                       }`}>
-//                         {course.price}
-//                       </span>
-//                     </div>
-//                     <div className="absolute top-4 right-4">
-//                       <SubscriptionModal/>
-//                         {/* <button className="px-3 py-1 cursor-pointer text-sm font-medium bg-amber-400 p-1  rounded-md">subscription</button> */}
-                      
-//                     </div>
-//                   </div>
-
-//                   {/* Course Content */}
-//                   <div className="p-6 ">
-                    
-                    
-//    {/* Rating */}
-//                       <div className="flex items-center">
-//                         {renderStars(course.rating)}
-//                       </div>
-
-//                     <h3 className="text-lg font-semibold text-gray-900 my-3 line-clamp-2">
-//                       {course.title}
-//                     </h3>
-                    
-//                     {/* Instructor */}
-//                     <div className="flex items-center mb-4">
-//                       <div className="w-6 h-6 bg-gray-300 rounded-full mr-2"></div>
-//                       <span className="text-sm text-gray-600">{course.instructor}</span>
-//                     </div>
-
-//                     {/* Course Stats */}
-//                     <div className="flex items-center justify-between">
-//                       <div className="flex items-center space-x-4 text-sm text-gray-500">
-//                         <div dir={i18n.language=="ar"? "rtl":"ltr"} className="flex items-center">
-//                           <Users className="w-4 h-4 mr-1" />
-//                           <span>{course.students}</span>
-//                         </div>
-//                         <div className="flex items-center">
-//                           <MessageSquare className="w-4 h-4 mr-1" />
-//                           <span>{course.comments}</span>
-//                         </div>
-//                       </div>
-//                       {/* view */}
-                   
-//                                           <Link to={`/courses/${course.id}`} className="text-custom-yellow underline text-right">{t("course.viewDetails")}</Link>
-
-//                     </div>
-//                   </div>
-//                 </div>
-//   )
-// }
-
-// import React, { use } from 'react';
-// import SubscriptionModal from './SubscriptionModal';
-// import { Link } from 'react-router-dom';
-// import { MessageSquare, Users } from 'lucide-react';
-// import { useTranslation } from 'react-i18next';
-// import { useDispatch, useSelector } from 'react-redux';
-
-// export default function CourseCard({ course, renderStars }) {
-//   const { t, i18n } = useTranslation();
-//   let dispatch = useDispatch();
-//   const [packageId, setPackageId] = React.useState(null);
-
-//   console.log({packageId});
-  
-
-//   let {subscription}= useSelector((state) => state.api);
-
-
-//  const handlesubscriptionApi = async (courseId) => {
-//     let response = await dispatch(apiRequest({
-//       entity: "subscription",
-//       url: `api/sub_scriptions/subscriptions`,
-//       method: "POST",
-//       data: formData,
-//       headers: {
-//         "Accept-Language": localStorage.getItem('language') || 'en',
-//         "Authorization": `${sessionStorage.getItem("token") || localStorage.getItem("token")}`,
-//       },
-//     }));
-//   }
-
-  
-  
-  
-//   return (
-//     <div className={`border border-gray-300 rounded-lg min-h-[420px] ${i18n.language === 'ar' ? 'text-right' : 'text-left'}`}>
-//       {/* Course Image */}
-//       <div className="relative">
-//         <div className="w-full h-48 bg-gradient-to-br from-blue-100 to-purple-100 rounded-t-lg">
-//           <img src={course.image} alt={course.price+ 1} />
-//         </div>
-//         {/* Price Badge */}
-//         <div className={`absolute top-4 ${i18n.language === 'ar' ? 'right-4' : 'left-4'}`}>
-//           <span className={`px-3 py-1 rounded-full text-sm font-medium ${
-//             course.price === 'FREE' 
-//               ? 'bg-green-500 text-white' 
-//               : 'bg-cyan-500 text-white'
-//           }`}>
-//             {course.price === 'FREE' ? t('course.free') : course.price}
-//           </span>
-//         </div>
-//         <div className={`absolute top-4 ${i18n.language === 'ar' ? 'left-4' : 'right-4'}`}>
-//           <SubscriptionModal setPackageId={setPackageId} />
-//         </div>
-//       </div>
-
-//       {/* Course Content */}
-//       <div className="p-6">
-//         {/* Rating */}
-//         <div className="flex items-center">
-//           {renderStars(course.rating)}
-//         </div>
-
-//         <h3 className="text-lg font-semibold text-gray-900 my-3 line-clamp-2">
-//           {course.name}
-//         </h3>
-        
-//         {/* Instructor */}
-//         <div className="flex items-center mb-4">
-//           <div className={`w-6 h-6 bg-gray-300 rounded-full ${i18n.language === 'ar' ? 'ml-2' : 'mr-2'}`}>
-//             <img src={course.teacher_image} alt={course.name} />
-//           </div>
-//           <span className="text-sm text-gray-600">{course.teacher}</span>
-//         </div>
-
-//         {/* Course Stats */}
-//         <div className="flex items-center justify-between">
-//           <div className="flex items-center space-x-4 text-sm text-gray-500">
-//             <div dir={i18n.language === 'ar' ? 'rtl' : 'ltr'} className="flex items-center">
-//               <Users className="w-4 h-4" />
-//               <span className={i18n.language === 'ar' ? 'mr-1' : 'ml-1'}>
-//                 {course.views} {t('course.students')}
-//               </span>
-//             </div>
-//             <div dir={i18n.language === 'ar' ? 'rtl' : 'ltr'} className="flex items-center">
-//               <MessageSquare className="w-4 h-4" />
-//               <span className={i18n.language === 'ar' ? 'mr-1' : 'ml-1'}>
-//                 {course.comments_count} {t('course.comments')}
-//               </span>
-//             </div>
-//           </div>
-          
-//           {/* View Details Link */}
-//           <Link 
-//             to={`/courses/${course.id}`} 
-//             className="text-custom-yellow underline"
-//           >
-//             {t("course.viewDetails")}
-//           </Link>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
 
 
 
@@ -181,94 +6,120 @@
 import React, { use } from 'react';
 import SubscriptionModal from './SubscriptionModal';
 import { Link } from 'react-router-dom';
-import { MessageSquare, Users } from 'lucide-react';
+import { MessageSquare, Users, Star, Clock, BookOpen } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
 export default function CourseCard({ course, renderStars }) {
   const { t, i18n } = useTranslation();
 
-
- 
-  
   return (
-    <div className={`border border-gray-300 rounded-lg min-h-[420px] ${i18n.language === 'ar' ? 'text-right' : 'text-left'}`}>
+    <div className={`group bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 min-h-[480px] ${i18n.language === 'ar' ? 'text-right' : 'text-left'}`}>
       {/* Course Image */}
-      <div className="relative">
-        <div className="w-full h-48 bg-gradient-to-br from-blue-100 to-purple-100 rounded-t-lg">
-          <img src={course.image} alt={course.price+ 1} />
+      <div className="relative overflow-hidden">
+        <div className="w-full h-52 bg-gradient-to-br from-blue-50 to-purple-50 rounded-t-xl">
+          <img 
+            src={course.image} 
+            alt={course.name} 
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+          />
         </div>
+        
         {/* Price Badge */}
         <div className={`absolute top-4 ${i18n.language === 'ar' ? 'right-4' : 'left-4'}`}>
-          {course.subscriber==false ? 
-          <span className={`px-3 py-1 rounded-full text-sm font-medium ${
-            course.price === 'FREE' 
-              ? 'bg-green-500 text-white' 
-              : 'bg-cyan-500 text-white'
-          }`}>
-            {course.price === 'FREE' ? t('course.free') : course.price + (i18n.language =="ar"?  "  جنيه  " : " EGP ")}
-          </span>:""
-          
-        }
+            <span className={`px-4 py-2 rounded-full text-sm font-semibold shadow-lg ${
+              course.price === 'FREE' 
+                ? 'bg-green-500 text-white' 
+                : 'bg-gradient-to-r from-cyan-500 to-blue-500 text-white'
+            }`}>
+              {course.price }  {(i18n.language === "ar" ? " جنيه " : " EGP ")}
+            </span>
+          {/* {course.subscriber === 1 ? (
+          ) : null} */}
         </div>
+        
+        {/* Subscription Status */}
         <div className={`absolute top-4 ${i18n.language === 'ar' ? 'left-4' : 'right-4'}`}>
-          {course.subscriber==false ?<SubscriptionModal course={course} />  :        <div className="inline-block bg-green-700 text-white px-3 py-1 rounded-2xl my-3">
-  {i18n.language === 'ar' ? "مفتوح" : "Open"}
-</div>}   
+          {course.subscriber === 0 ? (
+            <SubscriptionModal course={course} />
+          ) : (
+            <div className="inline-block bg-gradient-to-r from-green-500 to-emerald-600 text-white px-4 py-2 rounded-full shadow-lg font-semibold">
+              {i18n.language === 'ar' ? "مفتوح" : "Open"}
+            </div>
+          )}
+        </div>
+
+        {/* Category Badge */}
+        <div className="absolute bottom-4 left-4">
+          <div className="bg-black/70 text-white px-3 py-1 rounded-lg text-xs font-medium backdrop-blur-sm">
+            {course.category || "Course"}
+          </div>
         </div>
       </div>
 
       {/* Course Content */}
-      <div className="p-6 ">
-        {/* Rating */}
-        <div className="flex items-center">
-          {renderStars(course.average_rating)}
+      <div className="p-6">
+        {/* Rating and Grade */}
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center">
+            {renderStars(course.average_rating || 0)}
+            <span className="text-sm text-gray-500 ml-2">
+              ({course.average_rating || 0})
+            </span>
+          </div>
+          <div className="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-xs font-semibold">
+            {course.grade}
+          </div>
         </div>
 
-        <div className="inline-block bg-yellow-100 px-3 py-1 rounded-2xl my-3">
-  {course.grade}
-</div>
-
-        <h3 className="text-lg font-semibold text-gray-900 my-3 line-clamp-2">
+        {/* Course Title */}
+        <h3 className="text-lg font-bold text-gray-900 mb-3 line-clamp-2 leading-tight group-hover:text-blue-600 transition-colors duration-200">
           {course.name}
         </h3>
         
         {/* Instructor */}
-        <div className="flex items-center mb-4">
-          <div className={`w-6 h-6 bg-gray-300 rounded-full ${i18n.language === 'ar' ? 'ml-2' : 'mr-2'}`}>
-            <img src={course.teacher_image} alt={course.name} />
+        <div className="flex items-center mb-4 p-3 bg-gray-50 rounded-lg">
+          <div className={`w-8 h-8 bg-gray-300 rounded-full ${i18n.language === 'ar' ? 'mx-3' : 'mx-3'} overflow-hidden flex items-center justify-center`}>
+            {course.teacher_image ? (
+              <img 
+                src={course.teacher_image} 
+                alt={course.teacher} 
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <Users className="w-4 h-4 text-gray-600" />
+            )}
           </div>
-          <span className="text-sm text-gray-600">{course.teacher}</span>
+          <div>
+            <p className="text-xs text-gray-500 mb-1">{t('course.instructor')}</p>
+            <p className="text-sm font-medium text-gray-900">{course.teacher || t('course.notSpecified')}</p>
+          </div>
         </div>
 
         {/* Course Stats */}
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-4 text-sm text-gray-500">
-            <div dir={i18n.language === 'ar' ? 'rtl' : 'ltr'} className="flex items-center">
-              <Users className="w-4 h-4" />
-              <span className={i18n.language === 'ar' ? 'mr-1' : 'ml-1'}>
-                {course.views} {t('course.students')}
-              </span>
-            </div>
-            <div dir={i18n.language === 'ar' ? 'rtl' : 'ltr'} className="flex items-center">
-              <MessageSquare className="w-4 h-4" />
-              <span className={i18n.language === 'ar' ? 'mr-1' : 'ml-1'}>
-                {course.comments_count} {t('course.comments')}
-              </span>
-            </div>
+        <div className="grid grid-cols-2 gap-4 mb-6">
+          <div className="flex items-center text-sm text-gray-600">
+            <Users className="w-4 h-4 mr-2 text-blue-500" />
+            <span>{course.views} {t('course.students')}</span>
           </div>
-          
-          {/* View Details Link */}
-                    {course.subscriber==0 ?"" :        <>
- 
-          <Link 
-            to={`/class-specific-lesson/${course.id}`} 
-            className="text-custom-yellow underline"
-          >
-            {t("course.viewDetails")}
-          </Link>
-</>} 
+          <div className="flex items-center text-sm text-gray-600">
+            <MessageSquare className="w-4 h-4 mr-2 text-green-500" />
+            <span>{course.comments_count} {t('course.comments')}</span>
+          </div>
         </div>
+
+        {/* View Details Link */}
+        {course.subscriber !== 0 && (
+          <div className="border-t border-gray-100 pt-4">
+            <Link 
+              to={`/class-specific-lesson/${course.id}`} 
+              className="inline-flex items-center justify-center w-full bg-gradient-to-r from-yellow-500 to-orange-500 text-white font-semibold py-3 px-4 rounded-lg hover:from-yellow-600 hover:to-orange-600 transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+            >
+              {t("course.viewDetails")}
+              <BookOpen className="w-4 h-4 ml-2" />
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );

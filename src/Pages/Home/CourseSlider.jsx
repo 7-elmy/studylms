@@ -77,22 +77,23 @@ const CourseSlider = () => {
   //     featured: false
   //   }
   // ];
-   let {courses} = useSelector((state) => state.api);
+   let {courseswithouttoken} = useSelector((state) => state.api);
 let dispatch = useDispatch();
- console.log({courses});
+ console.log({courseswithouttoken});
  
 
 useEffect(() => {
   dispatch(apiRequest({
     url:"api/courses/allCourses",
-    entity:"courses",
+    entity:"courseswithouttoken",
     method:"get",
     headers:{
-      "Authorization": `${sessionStorage.getItem("token") || localStorage.getItem("token") }`,
+      // "Authorization": `${sessionStorage.getItem("token") || localStorage.getItem("token") }`,
      'Accept-Language': localStorage.getItem('language') || 'en'
     }
   }));
 }, [dispatch , localStorage.getItem("language")]);
+
 
   useEffect(() => {
     const handleResize = () => {
@@ -111,7 +112,7 @@ useEffect(() => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const maxSlide = Math.max(0, courses.length - itemsPerPage);
+  const maxSlide = Math.max(0, courseswithouttoken?.data?.data?.length - itemsPerPage);
 
   const nextSlide = () => setCurrentSlide(prev => Math.min(prev + 1, maxSlide));
   const prevSlide = () => setCurrentSlide(prev => Math.max(prev - 1, 0));
@@ -190,7 +191,7 @@ useEffect(() => {
           className="flex transition-transform duration-300 ease-in-out"
           style={{ transform: `translateX(-${currentSlide * (100 / itemsPerPage)}%)` }}
         >
-          {courses.data?.data?.map((course) => (
+          {courseswithouttoken.data?.data?.map((course) => (
             <div
               key={course.id}
               className={`px-3 flex-shrink-0   ${

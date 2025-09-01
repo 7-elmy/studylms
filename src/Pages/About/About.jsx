@@ -224,6 +224,8 @@ export default function About() {
       method: "GET",
       headers: {
         "Accept-Language": localStorage.getItem('language') || 'en',
+        "Authorization": `${sessionStorage.getItem("token") || localStorage.getItem("token") }`,
+ 
       }
     }))
   }, [dispatch, localStorage.getItem('language')]);

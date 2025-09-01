@@ -1,8 +1,11 @@
 {
-  "most":"فيديوهات ذات صلة",
+  "most":"دروس ذات صلة",
   "navbar": {
     "home": "الرئيسية",
-    "courses": "الدورات",
+    "courses": "كل الدروس",
+    "yourLessons": "دروسك",
+    "availableLessons": "الدروس المتاحة",
+    "subscribedLessons": "الدروس المشتركة",
     "events": "الفعاليات", 
     "pages": "الصفحات",
     "blog": "المدونة",
@@ -13,8 +16,8 @@
       "home_1": "الرئيسية 1",
       "home_2": "الرئيسية 2",
       "home_3": "الرئيسية 3",
-      "course_list": " دورات الاشتراك",
-      "course_single": "دورة واحدة",
+      "course_list": " دروس الاشتراك",
+      "course_single": "درس واحد",
       "event_list": "قائمة الفعاليات",
       "event_single": "فعالية واحدة",
       "404_page": "صفحة 404",
@@ -47,7 +50,16 @@
         "validation": {
       "invalidEmail": "الرجاء إدخال بريد إلكتروني صحيح",
       "required": "هذا الحقل مطلوب",
-      "passwordMinLength": "كلمة المرور يجب أن تكون على الأقل {{min}} أحرف"
+    "passwordMinLength": "كلمة المرور يجب أن تكون على الأقل {{min}} أحرف",
+    "invalidLogin": "البريد الإلكتروني أو كلمة المرور غير صحيحة",
+    "nameRequired": "الاسم مطلوب (على الأقل حرفين)",
+    "emailInvalid": "الرجاء إدخال بريد إلكتروني صحيح",
+    "phoneInvalid": "الرجاء إدخال رقم هاتف صحيح",
+    "countryRequired": "يرجى اختيار بلد",
+    "governorateRequired": "يرجى اختيار محافظة",
+    "classRequired": "يرجى اختيار فصل",
+    "gradeRequired": "يرجى اختيار صف",
+    "sectionRequired": "يرجى اختيار قسم"
     },
     "back": "العودة إلى الاختيار",
     "login": {
@@ -219,9 +231,11 @@
    "cancel":"الغاء",
    "free": "مجاني",
    "students": "طالب",
-      "comments": "تعليق"
+   "comments": "تعليق",
+   "instructor": "المدرب",
+   "notSpecified": "غير محدد"
 
-},
+ },
  "class": {
     "title": "كيف تعمل فصولنا",
     "description": "شارك عملك للتعاون مع عناصر التصميم النابضة بالحياة لدينا.",
@@ -380,7 +394,7 @@
   "breadcrumbs": {
     "home": "الرئيسية",
     "contact": "اتصل بنا",
-    "courses": "الكورسات",
+    "courses": "الدروس",
      "subscriptions": "الاشتراكات"
 
   },
@@ -390,7 +404,7 @@
   },
   "pageTitles": {
     "subscriptions": "الاشتراكات",
-     "courses": "الكورسات"
+     "courses": "الدروس"
   },
    "categories": {
     "title": "الفئات",
@@ -401,7 +415,9 @@
   "courses": {
     "showingResults": "عرض {{showing}} من {{total}} كورس",
     "inCategory": "في فئة \"{{category}}\"",
-    "forSearchTerm": "للبحث عن \"{{term}}\""
+    "forSearchTerm": "للبحث عن \"{{term}}\"",
+    "noCoursesFound": "لم يتم العثور على دورات",
+    "noCoursesAvailable": "لا توجد دورات متاحة حالياً"
   },
 
   "subscriptions": {
@@ -449,6 +465,65 @@
         "six": "دعم مستمر طوال العام"
       }
     }
+  },
+
+  "profile": {
+    "student": "طالب",
+    "parentOf": "ولي أمر",
+    "edit": "تعديل الملف الشخصي",
+    "cancel": "إلغاء",
+    "save": "حفظ التغييرات",
+    "saving": "جاري الحفظ...",
+    "updateSuccess": "تم تحديث الملف الشخصي بنجاح!",
+    "updateError": "خطأ في تحديث الملف الشخصي",
+    "profileUpdated": "تم تحديث الملف الشخصي بنجاح",
+    "noChangesToSave": "لا توجد تغييرات للحفظ",
+    "sectionsLoadError": "خطأ في تحميل الأقسام",
+    "profileInformation": "معلومات الملف الشخصي",
+    "academicReports": "التقارير الأكاديمية",
+    "personalInformation": "المعلومات الشخصية",
+    "fullName": "الاسم الكامل",
+    "email": "البريد الإلكتروني",
+    "phone": "رقم الهاتف",
+    "country": "البلد",
+    "governorate": "المحافظة",
+    "grade": "الصف",
+    "section": "القسم",
+    "class": "الفصل",
+    "studentCode": "رمز الطالب",
+    "childStudentCode": "رمز طالب الطفل",
+    "studentId": "رقم الطالب",
+    "childStudentId": "رقم طالب الطفل",
+    "accountStatus": "حالة الحساب",
+    "active": "نشط",
+    "pending": "في الانتظار",
+    "inactive": "غير نشط",
+    "selectCountry": "اختر البلد",
+    "selectGovernorate": "اختر المحافظة",
+    "selectGrade": "اختر الصف",
+    "selectSection": "اختر القسم",
+    "selectClass": "اختر الفصل",
+    "searchCountries": "البحث في البلدان...",
+    "searchGovernorates": "البحث في المحافظات...",
+    "searchGrade": "البحث في الصفوف...",
+    "searchSection": "البحث في الأقسام...",
+    "searchClass": "البحث في الفصول...",
+    "selectCountryFirst": "يرجى اختيار بلد أولاً",
+    "selectGradeFirst": "يرجى اختيار صف أولاً",
+    "noGovernorates": "لا توجد محافظات متاحة",
+    "noGrade": "لا توجد صفوف متاحة",
+    "noSection": "لا توجد أقسام متاحة",
+    "noClass": "لا توجد فصول متاحة",
+    "saveChanges": "حفظ التغييرات",
+    "academicProgress": "التقدم الأكاديمي",
+    "attendanceOverview": "نظرة عامة على الحضور",
+    "recentActivities": "الأنشطة الأخيرة",
+    "score": "الدرجة",
+    "lastTest": "آخر اختبار",
+    "totalDays": "إجمالي الأيام",
+    "present": "حاضر",
+    "absent": "غائب",
+    "attendanceRate": "معدل الحضور"
   }
 
 

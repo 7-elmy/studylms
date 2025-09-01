@@ -250,10 +250,10 @@ export default function LoginPage() {
               value={formik.values.login}
               dir={language === 'ar' ? 'rtl' : 'ltr'}
             />
-            {formik.touched.login && formik.errors.login && (
-              <div className="text-red-500 text-xs mt-1">{formik.errors.login}</div>
-            )}
           </div>
+          {formik.touched.login && formik.errors.login && (
+            <div className="text-red-500 text-xs mt-1">{formik.errors.login}</div>
+          )}
 
           {/* Password */}
           <div className="relative">
@@ -289,10 +289,10 @@ export default function LoginPage() {
             >
               {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
             </button>
-            {formik.touched.password && formik.errors.password && (
-              <div className="text-red-500 text-xs mt-1">{formik.errors.password}</div>
-            )}
           </div>
+          {formik.touched.password && formik.errors.password && (
+            <div className="text-red-500 text-xs mt-1">{formik.errors.password}</div>
+          )}
 
           {/* Remember Me + Forgot Password */}
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-2 py-2">

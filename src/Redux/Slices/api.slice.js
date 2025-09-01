@@ -32,6 +32,7 @@ const apiSlice = createSlice({
   quizDetail:{data: null, loading: false, error: null},
   assignmentDetailanswer:{data: null, loading: false, error: null},
   quizDetailAnswer:{data: null, loading: false, error: null},
+  courseswithouttoken:{data: null, loading: false, error: null},
   },
   reducers: {
     clearApiError: (state, action) => {

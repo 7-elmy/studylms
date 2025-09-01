@@ -1,8 +1,11 @@
 {
-  "most":"Related videos",
+  "most":"Related Lessons",
   "navbar": {
     "home": "Home",
-    "courses": "Courses", 
+    "courses": "All Lessons", 
+    "yourLessons": "Your Lessons",
+    "availableLessons": "Available Lessons",
+    "subscribedLessons": "Subscribed Lessons",
     "events": "Events",
     "pages": "Pages",
     "blog": "Blog",
@@ -13,8 +16,8 @@
       "home_1": "Home 1",
       "home_2": "Home 2", 
       "home_3": "Home 3",
-      "course_list": "Subscription Courses",
-      "course_single": "Course Single",
+      "course_list": "Subscription Lessons",
+      "course_single": "Lesson Single",
       "event_list": "Event List",
       "event_single": "Event Single",
       "404_page": "404 Page",
@@ -47,7 +50,8 @@
     "validation": {
       "invalidEmail": "Please enter a valid email address",
       "required": "This field is required",
-      "passwordMinLength": "Password must be at least {{min}} characters"
+      "passwordMinLength": "Password must be at least {{min}} characters",
+      "invalidLogin": "Invalid email or password"
     },
 
     "back":"Back To Selection",
@@ -233,7 +237,7 @@
 
 ,
 
-  "course":{
+    "course":{
   "relatedVideos": "Related Videos",
    "subscriptions": "Subscriptions",
    "viewDetails":"View Details",
@@ -241,10 +245,12 @@
    "cancel":"Cancel",
     "free": "FREE",
     "students": "students",
-      "comments": "comments"
-  
-
-}, 
+    "comments": "comments",
+    "instructor": "Instructor",
+    "notSpecified": "Not specified"
+   
+ 
+ }, 
 "class":{
     "title": "How Our Classes Work",
     "description": "Share your work to collaborate with our vibrant design element.",
@@ -369,7 +375,7 @@
   "breadcrumbs": {
     "home": "Home",
     "contact": "contact",
-    "courses": "Courses",
+    "courses": "Lessons",
      "subscriptions": "Subscriptions"
   
   },
@@ -379,7 +385,7 @@
   },
   "pageTitles": {
     "subscriptions": "Subscriptions",
-    "courses": "Courses"
+    "courses": "Lessons"
 },
 "categories": {
     "title": "Categories",
@@ -390,7 +396,9 @@
   "courses": {
   "showingResults": "Showing {{showing}} of {{total}} courses",
   "inCategory": "in category \"{{category}}\"",
-  "forSearchTerm": "for search term \"{{term}}\""
+  "forSearchTerm": "for search term \"{{term}}\"",
+  "noCoursesFound": "No courses found",
+  "noCoursesAvailable": "No courses available at the moment"
 },
 
 
@@ -453,6 +461,9 @@
     "saving": "Saving...",
     "updateSuccess": "Profile updated successfully!",
     "updateError": "Error updating profile",
+    "profileUpdated": "Profile updated successfully",
+    "noChangesToSave": "No changes to save",
+    "sectionsLoadError": "Error loading sections",
     "profileInformation": "Profile Information",
     "academicReports": "Academic Reports",
     "personalInformation": "Personal Information",
@@ -461,18 +472,43 @@
     "phone": "Phone Number",
     "country": "Country",
     "governorate": "Governorate",
+    "grade": "Grade",
+    "section": "Section",
     "class": "Class",
     "studentCode": "Student Code",
     "childStudentCode": "Child's Student Code",
+    "studentId": "Student ID",
+    "childStudentId": "Child Student ID",
+    "accountStatus": "Account Status",
+    "active": "Active",
+    "pending": "Pending",
+    "inactive": "Inactive",
     "selectCountry": "Select Country",
     "selectGovernorate": "Select Governorate",
+    "selectGrade": "Select Grade",
+    "selectSection": "Select Section",
     "selectClass": "Select Class",
     "searchCountries": "Search countries...",
     "searchGovernorates": "Search governorates...",
+    "searchGrade": "Search grade...",
+    "searchSection": "Search section...",
     "searchClass": "Search class...",
     "selectCountryFirst": "Please select a country first",
+    "selectGradeFirst": "Please select a grade first",
     "noGovernorates": "No governorates found",
-    "noClass": "No classes found"
+    "noGrade": "No grades available",
+    "noSection": "No sections available",
+    "noClass": "No classes found",
+    "saveChanges": "Save Changes",
+    "academicProgress": "Academic Progress",
+    "attendanceOverview": "Attendance Overview",
+    "recentActivities": "Recent Activities",
+    "score": "Score",
+    "lastTest": "Last Test",
+    "totalDays": "Total Days",
+    "present": "Present",
+    "absent": "Absent",
+    "attendanceRate": "Attendance Rate"
   },
   "validation": {
     "nameRequired": "Name is required (minimum 2 characters)",
@@ -480,7 +516,9 @@
     "phoneInvalid": "Please enter a valid phone number",
     "countryRequired": "Please select a country",
     "governorateRequired": "Please select a governorate",
-    "classRequired": "Please select a class"
+    "classRequired": "Please select a class",
+    "gradeRequired": "Please select a grade",
+    "sectionRequired": "Please select a section"
   }
 
 

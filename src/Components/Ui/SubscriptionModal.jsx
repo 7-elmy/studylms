@@ -210,40 +210,77 @@ export default function SubscriptionModal({ course }) {
     return !!token;
   };
 
-  const handleSubscriptionApi = async () => {
-    // Check authentication first
-    if (!isAuthenticated()) {
-      setShowAuthWarning(true);
-      return;
-    }
+  // const handleSubscriptionApi = async () => {
+  //   // Check authentication first
+  //   if (!isAuthenticated()) {
+  //     setShowAuthWarning(true);
+  //     return;
+  //   }
 
-    if (!packageId) {
-      toast.error("Package ID is required");
-      return;
-    }
-    if (!course?.id) {
-      toast.error("Course ID is required");
-      return;
-    }
+  //   if (!packageId) {
+  //     toast.error("Package ID is required");
+  //     return;
+  //   }
+  //   if (!course?.id) {
+  //     toast.error("Course ID is required");
+  //     return;
+  //   }
     
-    // Create form data
-    const formData = new FormData();
-    formData.append('package_id', packageId);
-    formData.append('sessions', "1");
+  //   // Create form data
+  //   const formData = new FormData();
+  //   formData.append('package_id', packageId);
+  //   formData.append('lesson_id', course?.id);
  
-  let x=  await dispatch(apiRequest({
-      entity: "subscription",
-      url: `api/sub_scriptions/subscriptions/${course?.id}`,
-      method: "POST",
-      data: formData,
-      headers: {
-        "Accept-Language": localStorage.getItem('language') || 'en',
-        "Authorization": `${sessionStorage.getItem("token") || localStorage.getItem("token")}`,
-      },
-    }));
-    console.log({eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:x});
-  };
+  // let x=  await dispatch(apiRequest({
+  //     entity: "subscription",
+  //     url: `api/sub_scriptions/subscriptions`,
+  //     method: "POST",
+  //     data: formData,
+  //     headers: {
+  //       "Accept-Language": localStorage.getItem('language') || 'en',
+  //       "Authorization": `${sessionStorage.getItem("token") || localStorage.getItem("token")}`,
+  //     },
+  //   }));
+  //   console.log({eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:x});
+  // };
 
+
+  const handleSubscriptionApi = async () => {
+  // Check authentication first
+  if (!isAuthenticated()) {
+    setShowAuthWarning(true);
+    return;
+  }
+
+  if (!packageId) {
+    toast.error("Package ID is required");
+    return;
+  }
+  if (!course?.id) {
+    toast.error("Course ID is required");
+    return;
+  }
+  
+  // Create JSON data instead of FormData
+  const jsonData = {
+    package_id: packageId,
+    lesson_id: course.id
+  };
+ 
+  let x = await dispatch(apiRequest({
+    entity: "subscription",
+    url: `api/sub_scriptions/subscriptions`,
+    method: "POST",
+    data: jsonData, // Send JSON data instead of FormData
+    headers: {
+      "Accept-Language": localStorage.getItem('language') || 'en',
+      "Authorization": `${sessionStorage.getItem("token") || localStorage.getItem("token")}`,
+      "Content-Type": "application/json", // Add JSON content type
+    },
+  }));
+  
+  console.log({response: x});
+};
   
   const handleLogin = () => {
     // Navigate to login page - adjust the route according to your routing setup
@@ -273,6 +310,8 @@ export default function SubscriptionModal({ course }) {
       method: "GET",
       headers: {
         "Accept-Language": localStorage.getItem('language') || 'en',
+        "Authorization": `${sessionStorage.getItem("token") || localStorage.getItem("token") }`,
+
       }
     }));
   }, [dispatch, localStorage.getItem('language')]);

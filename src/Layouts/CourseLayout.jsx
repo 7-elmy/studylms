@@ -1025,7 +1025,7 @@ export default function CourseLayout({
     
     // Also update the parent component's selectedCategory if needed
     const categoryName = categoryId 
-      ? categoriesData.find(cat => cat.id === categoryId)?.name || "All Courses"
+      ? categoriesData.find(cat => cat.id === categoryId)?.name || "All Lessons"
       : "All Courses";
     if (setSelectedCategory) {
       setSelectedCategory(categoryName);

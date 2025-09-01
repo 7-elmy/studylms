@@ -72,17 +72,18 @@ const menuItems = [
     name: t("navbar.home"),
     href: "/",
   },
-   {
-    name:  t("navbar.courses"),
+  {
+    name: t("navbar.courses"),
     href: "/all-lessons",
   },
-  ...(isAuthenticated ? [  {
-    name: "Class-specific courses",
-    href: "/class-specific-lesson",
+  ...(isAuthenticated ? [{
+    name: t("navbar.yourLessons"),
+    href: "#",
     submenu: [
-      { name:  t("navbar.submenu.course_list"), href: '/lessons/subscriptions' },
+      { name: t("navbar.availableLessons"), href: '/class-specific-lesson' },
+      // { name: t("navbar.subscribedLessons"), href: '/lessons/subscriptions' },
     ],
-  },] : []),
+  }] : []),
   {
     name: t("navbar.submenu.subscriptions"),
     href: "/subscriptions",
@@ -170,138 +171,116 @@ const menuItems = [
         {/* Main header */}
         <div className="bg-white z-50 shadow-sm">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex items-center justify-between h-16 lg:h-20 py-2">
-              {/* Logo */}
-              <div className="flex-shrink-0 ">
-                <a href="home.html" className="flex items-center w-14 h-14 md:w-16 md:h-16 bg-amber-100 rounded-full overflow-hidden">
-                  <img src={logo} alt="" className="w-14 h-14 md:w-16 md:h-16 " />
-                </a>
-              </div>
-
-              {/* Desktop Navigation */}
-              <nav className="hidden lg:flex items-center space-x-8">
-                {menuItems.map((item, index) => (
-                  <div key={index} className="relative group">
-                    <Link
-                      to={item.href}
-                      className="text-gray-700 hover:text-yellow-600 uppercase text-sm font-medium flex items-center py-2 transition-colors"
-                    >
-                      {item.name}
-                    </Link>
-
-                    {item.submenu && (
-                      <div
-                        className={`absolute ${
-                          i18n.language == "ar" ? "right-0" : "left-0"
-                        }  mt-0 w-48 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50`}
-                      >
-                        <div className="py-2">
-                          {item.submenu.map((subItem, subIndex) => (
-                            <Link
-                              key={subIndex}
-                              to={subItem.href}
-                              className="block px-4 py-2 text-sm text-gray-700 hover:text-white hover:bg-yellow-500 transition-colors"
-                            >
-                              {subItem.name}
-                            </Link>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                ))}
-
-                {/* Desktop Search & Language */}
-                <div className="hidden lg:flex items-center space-x-4">
-                  {/* <div className="relative">
-                    <button
-                      onClick={handleToggleSearch}
-                      className="text-gray-600 hover:text-yellow-600 p-2 transition-colors"
-                    >
-                      <Search className="h-5 w-5" />
-                    </button>
-
-                    {toggleSearch && (
-                      <div className="absolute right-0 mt-2 w-64 bg-white rounded-md shadow-lg border">
-                        <div className="p-2">
-                          <input
-                            type="text"
-                            // placeholder="Search..."
-                            placeholder={t("navbar.search_placeholder")}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500 text-sm"
-                            autoFocus
-                          />
-                        </div>
-                      </div>
-                    )}
-                  </div> */}
-
-                  {/* Language Dropdown */}
-                  <div className="relative">
-                    <button
-                      onClick={handleLanguageDropdownToggle}
-                      className="flex items-center space-x-2 text-gray-600 hover:text-yellow-600 p-2 transition-colors"
-                    >
-                      <img
-                        src={getCurrentLanguage().flag}
-                        alt={getCurrentLanguage().name}
-                        className="w-5 h-5 rounded-sm"
-                      />
-                      <span className="text-sm font-medium">
-                        {getCurrentLanguage().name}
-                      </span>
-                      <ChevronDown
-                        className={`h-4 w-4 transition-transform ${
-                          languageDropdownOpen ? "rotate-180" : ""
-                        }`}
-                      />
-                    </button>
-
-                    {languageDropdownOpen && (
-                      <div className={`absolute ${i18n.language=="ar"? "left-0" :"right-0"}  mt-2 w-48 bg-white rounded-md shadow-lg border z-50`}>
-                        <div className="py-2">
-                          {languages.map((language) => (
-                            <button
-                              key={language.code}
-                              onClick={() =>
-                                handleLanguageChange(language.code)
-                              }
-                              className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
-                            >
-                              <div className="w-5 h-5 mr-3">
-                                {selectedLanguage === language.code ? (
-                                  <div className="bg-yellow-500 rounded-full flex items-center justify-center w-5 h-5">
-                                    <Check className="w-3 h-3 text-white" />
-                                  </div>
-                                ) : (
-                                  <div className="border-2 border-gray-300 rounded-full w-5 h-5"></div>
-                                )}
-                              </div>
-                              <img
-                                src={language.flag}
-                                alt={language.name}
-                                className="w-5 h-5 rounded-sm mr-3"
-                              />
-                              <span className="flex-1 text-left">
-                                {language.name}
-                              </span>
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-{sessionStorage.getItem("token") || localStorage.getItem("token")? 
-                  <Link to={"/profile"}>
-                    <div className=" w-10 h-10  cursor-pointer rounded-full flex justify-center items-center bg-yellow-100 text-yellow-400">
-                      {getInitials(sessionStorage.getItem("name"))}
-                    </div>
-                  </Link>
-
-:"" }
-
+                                      <div className="flex items-center justify-between h-16 lg:h-20 py-2">
+                               {/* Left Side - Logo */}
+                <div className="flex-shrink-0">
+                  <a href="home.html" className="flex items-center w-10 h-10 md:w-12 md:h-12 bg-amber-100 rounded-full overflow-hidden">
+                    <img src={logo} alt="" className="w-10 h-10 md:w-12 md:h-12 " />
+                  </a>
                 </div>
-              </nav>
+
+               {/* Center - Navigation Links */}
+               <nav className="hidden lg:flex items-center space-x-8">
+                 {menuItems.map((item, index) => (
+                   <div key={index} className="relative group">
+                     <Link
+                       to={item.href}
+                       className="text-gray-700 hover:text-yellow-600 uppercase text-sm font-medium flex items-center py-2 transition-colors"
+                     >
+                       {item.name}
+                     </Link>
+
+                     {item.submenu && (
+                       <div
+                         className={`absolute ${
+                           i18n.language == "ar" ? "right-0" : "left-0"
+                         }  mt-0 w-48 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50`}
+                       >
+                         <div className="py-2">
+                           {item.submenu.map((subItem, subIndex) => (
+                             <Link
+                               key={subIndex}
+                               to={subItem.href}
+                               className="block px-4 py-2 text-sm text-gray-700 hover:text-white hover:bg-yellow-500 transition-colors"
+                             >
+                               {subItem.name}
+                             </Link>
+                           ))}
+                         </div>
+                       </div>
+                     )}
+                   </div>
+                 ))}
+                   <div className="flex items-center space-x-4">
+                 {/* Language Dropdown */}
+                 <div className="relative">
+                   <button
+                     onClick={handleLanguageDropdownToggle}
+                     className="flex items-center space-x-2 text-gray-600 hover:text-yellow-600 p-2 transition-colors"
+                   >
+                     <img
+                       src={getCurrentLanguage().flag}
+                       alt={getCurrentLanguage().name}
+                       className="w-5 h-5 rounded-sm"
+                     />
+                     <span className="text-sm font-medium">
+                       {getCurrentLanguage().name}
+                     </span>
+                     <ChevronDown
+                       className={`h-4 w-4 transition-transform ${
+                         languageDropdownOpen ? "rotate-180" : ""
+                       }`}
+                     />
+                   </button>
+
+                   {languageDropdownOpen && (
+                     <div className={` absolute ${i18n.language=="ar"? "left-0" :"right-0"}  mt-2 w-48  rounded-md shadow-lg border z-50`}>
+                       <div className="py-2">
+                         {languages.map((language) => (
+                           <button
+                             key={language.code}
+                             onClick={() =>
+                               handleLanguageChange(language.code)
+                             }
+                             className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                           >
+                             <div className="w-5 h-5 mr-3">
+                               {selectedLanguage === language.code ? (
+                                 <div className="bg-yellow-500 rounded-full flex items-center justify-center w-5 h-5">
+                                   <Check className="w-3 h-3 text-white" />
+                                 </div>
+                               ) : (
+                                 <div className="border-2 border-gray-300 rounded-full w-5 h-5"></div>
+                               )}
+                             </div>
+                             <img
+                               src={language.flag}
+                               alt={language.name}
+                               className="w-5 h-5 rounded-sm mr-3"
+                             />
+                             <span className="flex-1 text-left">
+                               {language.name}
+                             </span>
+                           </button>
+                         ))}
+                       </div>
+                     </div>
+                   )}
+                 </div>
+
+                 {/* Profile */}
+                 {sessionStorage.getItem("token") || localStorage.getItem("token")? 
+                   <Link to={"/profile"}>
+                     <div className=" w-10 h-10  cursor-pointer rounded-full flex justify-center items-center bg-yellow-100 text-yellow-400">
+                       {getInitials(sessionStorage.getItem("name"))}
+                     </div>
+                   </Link>
+                 :"" }
+               </div>
+               </nav>
+
+               {/* Right Side - Language & Profile */}
+             
 
               {/* Mobile menu button */}
               <div className="lg:hidden flex items-center space-x-2">
@@ -371,7 +350,7 @@ const menuItems = [
             </div>
 
             {/* Mobile Search */}
-            {toggleSearch && (
+            {/* {toggleSearch && (
               <div className="lg:hidden border-t border-gray-200 py-3">
                 <input
                   type="text"
@@ -380,7 +359,7 @@ const menuItems = [
                   autoFocus
                 />
               </div>
-            )}
+            )} */}
 
             {/* Mobile Navigation Menu */}
             {mobileMenuOpen && (
@@ -390,7 +369,7 @@ const menuItems = [
                     <div key={index}>
                       <div className="flex items-center justify-between">
                         <Link
-                          to={item.submenu ? "/" : item.href}
+                          to={item.submenu ? "#" : item.href}
                           className="block px-4 py-3 text-gray-700 hover:text-yellow-600 hover:bg-gray-50 uppercase text-sm font-medium flex-1 transition-colors"
                           onClick={
                             item.submenu
@@ -420,13 +399,13 @@ const menuItems = [
                       {item.submenu && openDropdown === item.name && (
                         <div className="bg-gray-50">
                           {item.submenu.map((subItem, subIndex) => (
-                            <a
+                            <Link
                               key={subIndex}
-                              href={subItem.href}
+                              to={subItem.href}
                               className="block px-8 py-2 text-sm text-gray-600 hover:text-yellow-600 hover:bg-gray-100 transition-colors"
                             >
                               {subItem.name}
-                            </a>
+                            </Link>
                           ))}
                         </div>
                       )}

@@ -3296,7 +3296,7 @@ export default function ProfilePage({ userType = 'student' }) {
                                         <label className='block text-sm font-medium text-gray-700 mb-2'>
                                             {userType === 'student' ? t('profile.studentCode') : t('profile.studentCode')}
                                         </label>
-                                        <p className='p-3 bg-gray-50 rounded text-gray-900'>{profileData?.studentCode}</p>
+                                        <p className='p-3 bg-gray-50 rounded text-gray-900'>{profileData?.child_code}</p>
                                     </div>
 
                                     {/* Account Status */}
