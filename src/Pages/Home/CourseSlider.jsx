@@ -2,79 +2,97 @@ import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Users, MessageSquare, Star } from 'lucide-react';
 import CourseCard from '../../Components/Ui/CourseCard';
 import { useTranslation } from 'react-i18next';
+import { apiRequest } from '../../Redux/Apis/apiRequest';
+import { useDispatch, useSelector } from 'react-redux';
 
 const CourseSlider = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(4);
   const { t, i18n } = useTranslation();
-  const courses = [
-    {
-      id: 1,
-      title: "French for Beginners to Advanced Training",
-      instructor: "Keny White",
-      price: "$99.00",
-      students: 98,
-      comments: 10,
-      rating: 5,
-      image: "/api/placeholder/300/180",
-      featured: false
-    },
-    {
-      id: 2,
-      title: "Introduction to Mobile Apps Development",
-      instructor: "Sarah Johnson",
-      price: "FREE",
-      students: 150,
-      comments: 3,
-      rating: 4,
-      image: "/api/placeholder/300/180",
-      featured: true
-    },
-    {
-      id: 3,
-      title: "How to Become a Startup Founder",
-      instructor: "Jhon Milton",
-      price: "$85.60",
-      students: 200,
-      comments: 3,
-      rating: 4.5,
-      image: "/api/placeholder/300/180",
-      featured: false
-    },
-    {
-      id: 4,
-      title: "Your Complete Guide to Self Development",
-      instructor: "Peter Parker",
-      price: "FREE",
-      students: 48,
-      comments: 5,
-      rating: 5,
-      image: "/api/placeholder/300/180",
-      featured: false
-    },
-    {
-      id: 5,
-      title: "Advanced JavaScript Masterclass",
-      instructor: "Emma Watson",
-      price: "$120.00",
-      students: 89,
-      comments: 12,
-      rating: 4.8,
-      image: "/api/placeholder/300/180",
-      featured: false
-    },
-    {
-      id: 6,
-      title: "UI/UX Design Fundamentals",
-      instructor: "David Chen",
-      price: "$150.00",
-      students: 156,
-      comments: 8,
-      rating: 4.7,
-      image: "/api/placeholder/300/180",
-      featured: false
+  // const courses = [
+  //   {
+  //     id: 1,
+  //     title: "French for Beginners to Advanced Training",
+  //     instructor: "Keny White",
+  //     price: "$99.00",
+  //     students: 98,
+  //     comments: 10,
+  //     rating: 5,
+  //     image: "/api/placeholder/300/180",
+  //     featured: false
+  //   },
+  //   {
+  //     id: 2,
+  //     title: "Introduction to Mobile Apps Development",
+  //     instructor: "Sarah Johnson",
+  //     price: "FREE",
+  //     students: 150,
+  //     comments: 3,
+  //     rating: 4,
+  //     image: "/api/placeholder/300/180",
+  //     featured: true
+  //   },
+  //   {
+  //     id: 3,
+  //     title: "How to Become a Startup Founder",
+  //     instructor: "Jhon Milton",
+  //     price: "$85.60",
+  //     students: 200,
+  //     comments: 3,
+  //     rating: 4.5,
+  //     image: "/api/placeholder/300/180",
+  //     featured: false
+  //   },
+  //   {
+  //     id: 4,
+  //     title: "Your Complete Guide to Self Development",
+  //     instructor: "Peter Parker",
+  //     price: "FREE",
+  //     students: 48,
+  //     comments: 5,
+  //     rating: 5,
+  //     image: "/api/placeholder/300/180",
+  //     featured: false
+  //   },
+  //   {
+  //     id: 5,
+  //     title: "Advanced JavaScript Masterclass",
+  //     instructor: "Emma Watson",
+  //     price: "$120.00",
+  //     students: 89,
+  //     comments: 12,
+  //     rating: 4.8,
+  //     image: "/api/placeholder/300/180",
+  //     featured: false
+  //   },
+  //   {
+  //     id: 6,
+  //     title: "UI/UX Design Fundamentals",
+  //     instructor: "David Chen",
+  //     price: "$150.00",
+  //     students: 156,
+  //     comments: 8,
+  //     rating: 4.7,
+  //     image: "/api/placeholder/300/180",
+  //     featured: false
+  //   }
+  // ];
+   let {courses} = useSelector((state) => state.api);
+let dispatch = useDispatch();
+ console.log({courses});
+ 
+
+useEffect(() => {
+  dispatch(apiRequest({
+    url:"api/courses/allCourses",
+    entity:"courses",
+    method:"get",
+    headers:{
+      "Authorization": `${sessionStorage.getItem("token") || localStorage.getItem("token") }`,
+     'Accept-Language': localStorage.getItem('language') || 'en'
     }
-  ];
+  }));
+}, [dispatch , localStorage.getItem("language")]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -172,7 +190,7 @@ const CourseSlider = () => {
           className="flex transition-transform duration-300 ease-in-out"
           style={{ transform: `translateX(-${currentSlide * (100 / itemsPerPage)}%)` }}
         >
-          {courses.map((course) => (
+          {courses.data?.data?.map((course) => (
             <div
               key={course.id}
               className={`px-3 flex-shrink-0   ${
