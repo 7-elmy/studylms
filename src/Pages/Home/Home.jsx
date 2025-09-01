@@ -72,7 +72,7 @@ export default function Home() {
       <div className="mt-16">
         <CourseSlider />
       </div>
-          <About />
+          {/* <About /> */}
 
       <HowClassesWork />
 

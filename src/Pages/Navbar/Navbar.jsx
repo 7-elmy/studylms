@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Search, Menu, X, ChevronDown, Check, CheckCircle } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
@@ -58,70 +58,109 @@ const Header = () => {
       languages.find((lang) => lang.code === selectedLanguage) || languages[1]
     );
   };
+const [isAuthenticated, setIsAuthenticated] = useState(sessionStorage.getItem("token"));
+console.log({isAuthenticated});
 
-  const menuItems = [
-    {
-      name: t("navbar.home"),
-      href: "/",
-    },
-    {
-      name: t("navbar.courses"),
-      href: "/courses",
-      submenu: [
-          { name: t("navbar.submenu.course_list"), href: '/courses/subscriptions' },
-          // { name: t("navbar.submenu.course_single"), href: '/' }
-      ]
-    },
-    // {
-    //     name: t("navbar.events"),
-    //     href: '/eventsList',
-    //     submenu: [
-    //         { name: t("navbar.submenu.event_list"), href: '/eventsList' },
-    //         { name: t("navbar.submenu.event_single"), href: '/' }
-    //     ]
-    // },
-    // {
-    //     name: t("navbar.pages"),
-    //     href: '#',
-    //     submenu: [
-    //         // { name:t("navbar.submenu.404_page") , href: '404.html' },
-    //         { name: t("navbar.submenu.about_us"), href: '/' },
-    //         { name: t("navbar.submenu.forum_page"), href: '/' },
-    //         { name:  t("navbar.submenu.forum_single"), href: '/' },
-    //         { name:  t("navbar.submenu.instructors_list"), href: '/' },
-    //         { name: t("navbar.submenu.instructors_single"), href: '/' },
-    //         { name:  t("navbar.submenu.login_register"), href: '/' }
-    //     ]
-    // },
-    // {
-    //     name: t("navbar.blog"),
-    //     href: '#',
-    //     submenu: [
-    //         { name:  t("navbar.submenu.blog_list"), href: '/' },
-    //         { name:  t("navbar.submenu.blog_single"), href: '/' }
-    //     ]
-    // },
-    // {
-    //     name: t("navbar.shop"),
-    //     href: '/shop',
-    //     submenu: [
-    //         { name:  t("navbar.submenu.shop_list"), href: '/shop' },
-    //         { name:  t("navbar.submenu.shop_single"), href: '/' },
-    //         { name:  t("navbar.submenu.cart_page"), href: '/' },
-    //         { name:  t("navbar.submenu.checkout"), href: '/' }
-    //     ]
-    // },
-    {
-      name: t("navbar.submenu.subscriptions"),
-      href: "/subscriptions",
-      submenu: null,
-    },
-    {
-      name: t("navbar.contact"),
-      href: "/contact",
-      submenu: null,
-    },
-  ];
+// Update state when token changes
+useEffect(() => {
+  const token = sessionStorage.getItem("token");
+  setIsAuthenticated(sessionStorage.getItem("token"));
+}, [sessionStorage.getItem("token"),localStorage.getItem("token")]);
+
+const menuItems = [
+  {
+    name: t("navbar.home"),
+    href: "/",
+  },
+   {
+    name:  t("navbar.courses"),
+    href: "/all-lessons",
+  },
+  ...(isAuthenticated ? [  {
+    name: "Class-specific courses",
+    href: "/class-specific-lesson",
+    submenu: [
+      { name:  t("navbar.submenu.course_list"), href: '/lessons/subscriptions' },
+    ],
+  },] : []),
+  {
+    name: t("navbar.submenu.subscriptions"),
+    href: "/subscriptions",
+    submenu: null,
+  },
+  {
+    name: t("navbar.contact"),
+    href: "/contact",
+    submenu: null,
+  },
+];
+  // const menuItems = [
+  //   {
+  //     name: t("navbar.home"),
+  //     href: "/",
+  //   },
+  //   {
+  //     name: t("navbar.courses"),
+  //     href: "/courses",
+  //     submenu: [
+  //         { name: t("navbar.submenu.course_list"), href: '/courses/subscriptions' },
+  //         // { name: t("navbar.submenu.course_single"), href: '/' }
+  //     ]
+  //   },
+  //   ...(localStorage.getItem("token") ? [{
+  //     name: "Class-specific courses",
+  //     href: "/Class-specific-courses",
+  //   }] : []),
+  //   // {
+  //   //     name: t("navbar.events"),
+  //   //     href: '/eventsList',
+  //   //     submenu: [
+  //   //         { name: t("navbar.submenu.event_list"), href: '/eventsList' },
+  //   //         { name: t("navbar.submenu.event_single"), href: '/' }
+  //   //     ]
+  //   // },
+  //   // {
+  //   //     name: t("navbar.pages"),
+  //   //     href: '#',
+  //   //     submenu: [
+  //   //         // { name:t("navbar.submenu.404_page") , href: '404.html' },
+  //   //         { name: t("navbar.submenu.about_us"), href: '/' },
+  //   //         { name: t("navbar.submenu.forum_page"), href: '/' },
+  //   //         { name:  t("navbar.submenu.forum_single"), href: '/' },
+  //   //         { name:  t("navbar.submenu.instructors_list"), href: '/' },
+  //   //         { name: t("navbar.submenu.instructors_single"), href: '/' },
+  //   //         { name:  t("navbar.submenu.login_register"), href: '/' }
+  //   //     ]
+  //   // },
+  //   // {
+  //   //     name: t("navbar.blog"),
+  //   //     href: '#',
+  //   //     submenu: [
+  //   //         { name:  t("navbar.submenu.blog_list"), href: '/' },
+  //   //         { name:  t("navbar.submenu.blog_single"), href: '/' }
+  //   //     ]
+  //   // },
+  //   // {
+  //   //     name: t("navbar.shop"),
+  //   //     href: '/shop',
+  //   //     submenu: [
+  //   //         { name:  t("navbar.submenu.shop_list"), href: '/shop' },
+  //   //         { name:  t("navbar.submenu.shop_single"), href: '/' },
+  //   //         { name:  t("navbar.submenu.cart_page"), href: '/' },
+  //   //         { name:  t("navbar.submenu.checkout"), href: '/' }
+  //   //     ]
+  //   // },
+  //   {
+  //     name: t("navbar.submenu.subscriptions"),
+  //     href: "/subscriptions",
+  //     submenu: null,
+  //   },
+  //   {
+  //     name: t("navbar.contact"),
+  //     href: "/contact",
+  //     submenu: null,
+  //   },
+  // ];
 
   return (
     <>
@@ -174,7 +213,7 @@ const Header = () => {
 
                 {/* Desktop Search & Language */}
                 <div className="hidden lg:flex items-center space-x-4">
-                  <div className="relative">
+                  {/* <div className="relative">
                     <button
                       onClick={handleToggleSearch}
                       className="text-gray-600 hover:text-yellow-600 p-2 transition-colors"
@@ -195,7 +234,7 @@ const Header = () => {
                         </div>
                       </div>
                     )}
-                  </div>
+                  </div> */}
 
                   {/* Language Dropdown */}
                   <div className="relative">
@@ -219,7 +258,7 @@ const Header = () => {
                     </button>
 
                     {languageDropdownOpen && (
-                      <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg border z-50">
+                      <div className={`absolute ${i18n.language=="ar"? "left-0" :"right-0"}  mt-2 w-48 bg-white rounded-md shadow-lg border z-50`}>
                         <div className="py-2">
                           {languages.map((language) => (
                             <button
@@ -266,12 +305,12 @@ const Header = () => {
 
               {/* Mobile menu button */}
               <div className="lg:hidden flex items-center space-x-2">
-                <button
+                {/* <button
                   onClick={handleToggleSearch}
                   className="text-gray-600 hover:text-yellow-600 p-2 transition-colors"
                 >
                   <Search className="h-5 w-5" />
-                </button>
+                </button> */}
 
                 {/* Mobile Language Dropdown */}
                 <div className="relative">
@@ -287,7 +326,7 @@ const Header = () => {
                   </button>
 
                   {languageDropdownOpen && (
-                    <div className="absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg border z-50">
+                    <div className={`absolute ${i18n.language=="ar"? "left-0" :"right-0"}  mt-2 w-40 bg-white rounded-md shadow-lg border z-50`}>
                       <div className="py-2">
                         {languages.map((language) => (
                           <button

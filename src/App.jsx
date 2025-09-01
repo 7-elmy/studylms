@@ -34,6 +34,7 @@ import { ChevronUp } from 'lucide-react'
 import ProtectedRoute from './Utils/ProtectedRoute'
 // import LoginPage from './Pages/Auth/Login/login'
 import SubscriptionCourses from './Pages/Courses/SubscriptionCourses'
+import Classspecificcourses from './Pages/Class-specific-courses/Classspecificcourses'
 
 
 
@@ -89,16 +90,17 @@ function App() {
     </Route>
           <Route  element={<MainLayout />}>
       <Route path="/" element={<Home />} />
-      <Route path="/courses" element={<CoursesPage />} />
+      <Route path="/class-specific-lesson" element={<CoursesPage />} />
+      <Route path="/all-lessons" element={<Classspecificcourses />} />
 
       {/* protected route  */}
      
-      <Route path="/courses/subscriptions" element={
+      <Route path="/lessons/subscriptions" element={
         //  <ProtectedRoute>
            <SubscriptionCourses />
       //  </ProtectedRoute>
         } />
-      <Route path="/courses/:id" element={
+      <Route path="/class-specific-lesson/:id" element={
         //  <ProtectedRoute>
            <CourseDetailPage />
       // </ProtectedRoute>
@@ -114,9 +116,9 @@ function App() {
         
         } />
       <Route path="/QuizDetails/:id" element={
-        <ProtectedRoute>
+        // <ProtectedRoute>
            <QuizComponent />
-      </ProtectedRoute>
+      // </ProtectedRoute>
         
         } />
 

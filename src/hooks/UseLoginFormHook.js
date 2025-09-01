@@ -55,7 +55,7 @@ export function useLoginForm() {
         
         sessionStorage.setItem('token', response.data.data.token);
         sessionStorage.setItem('name', response.data.data.name);
-        navigate('/courses');
+        navigate('/class-specific-lesson');
       } catch (error) {
         console.error(error);
       } finally {

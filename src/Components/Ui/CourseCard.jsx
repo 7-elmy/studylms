@@ -259,10 +259,10 @@ export default function CourseCard({ course, renderStars }) {
           </div>
           
           {/* View Details Link */}
-                    {course.subscriber==false ?"" :        <>
+                    {course.subscriber==0 ?"" :        <>
  
           <Link 
-            to={`/courses/${course.id}`} 
+            to={`/class-specific-lesson/${course.id}`} 
             className="text-custom-yellow underline"
           >
             {t("course.viewDetails")}
