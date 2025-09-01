@@ -194,7 +194,7 @@ export default function Footer() {
     };
 
     fetchData();
-  }, [dispatch]);
+  }, [dispatch , i18n.language]);
 
   return (
     <div className='flex items-center bg-[#222222] justify-center text-gray-300 py-4'>

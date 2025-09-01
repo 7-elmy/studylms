@@ -1551,7 +1551,7 @@ export default function MainSlider() {
   if (isLoading) {
     return (
       <div className="relative min-h-screen pt-12 md:pt-8 overflow-hidden flex items-center justify-center bg-gray-900">
-        <div className="text-white text-xl">Loading...</div>
+        
       </div>
     );
   }
