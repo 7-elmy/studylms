@@ -212,6 +212,7 @@ import MapComponent, { ClickableMapText } from '../../Components/Ui/Map';
 import { useDispatch, useSelector } from 'react-redux';
 import { apiRequest } from '../../Redux/Apis/apiRequest';
 import { useTranslation } from 'react-i18next';
+import toast from 'react-hot-toast';
 
 export default function ContactUs() {
   const { t, i18n } = useTranslation();
@@ -245,7 +246,8 @@ export default function ContactUs() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert(t('contact.messageSent'));
+    // alert(t('contact.messageSent'));
+    toast("تم الارسال بنجاح")
     setFormData({ name: '', email: '', message: '' });
   };
 

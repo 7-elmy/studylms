@@ -7,6 +7,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { apiRequest } from '../../Redux/Apis/apiRequest';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { useTranslation } from 'react-i18next';
 
 // Enhanced Matching Question Component with SVG Lines
 const EnhancedMatchingQuestion = ({ question, questionId, matchingConnections, setMatchingConnections, selectedAnswers, setSelectedAnswers }) => {
@@ -268,15 +269,11 @@ export default function AssignmentDetails() {
  
   let {data} = assignmentDetail?.data || {};
   console.log({data , assignmentDetail});
-  
+  let {i18n}= useTranslation()
   let dispatch = useDispatch()
   let navigate = useNavigate()
   useEffect(() => {
-    if(data==undefined){
-      // data = undifine  معناه انه امتحن قبل كدا
-      // toast(assignmentDetail.error)
-      // navigate("/class-specific-lesson")
-    }
+   
     dispatch(apiRequest({
       url:`api/homeworks/${id}`,
       entity:"assignmentDetail",
@@ -285,7 +282,8 @@ export default function AssignmentDetails() {
         "Accept-Language": localStorage.getItem('language') || 'en',
       }
     }))
-  }, [localStorage.getItem("language")])
+  }, [localStorage.getItem("language") ,i18n.language])
+
 
 
 
@@ -356,7 +354,7 @@ let sendHomeworkAfterSubmit = () => {
   }));
 };
 
-
+ 
 
   // Assignment metadata
   const assignmentInfo = {
@@ -987,10 +985,10 @@ let sendHomeworkAfterSubmit = () => {
                 <span>صح/خطأ:</span>
                 <span>{data?.questions?.filter(q => q.format === 'TRUE_FALSE').length}</span>
               </div>
-              <div className="flex justify-between">
+              {/* <div className="flex justify-between">
                 <span>سؤال مقالي:</span>
                 <span>{data?.questions?.filter(q => q.format === 'TEXT').length}</span>
-              </div>
+              </div> */}
               <div className="flex justify-between">
                 <span>التوصيل:</span>
                 <span>{data?.questions?.filter(q => q.format === 'MATCHING').length}</span>

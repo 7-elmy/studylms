@@ -1,4 +1,19 @@
 {
+  "quiz": {
+    "unnamedQuiz": "اختبار بدون اسم",
+    "status": "الحالة",
+    "notAllowed": "غير مسموح به الآن",
+    "allowed": "مسموح به",
+    "startTime": "وقت البدء",
+    "endTime": "وقت الانتهاء",
+    "warning": "يرجى ملاحظة أن التأخير في التسليم قد يؤثر على درجتك النهائية",
+    "startBtn": "ابدأ",
+    "noQuizzes": "لا توجد اختبارات متاحة حالياً.",
+    "notSpecified": "غير محدد",
+    "invalidTime": "وقت غير صالح"
+  },
+
+
   "most":"دروس ذات صلة",
   "navbar": {
     "home": "الرئيسية",
@@ -38,6 +53,7 @@
 
   },
       "auth": {
+        "option":"اشترك",
       "authenticated": "✓ تم تسجيل الدخول",
          "warning": {
         "title": "مطلوب تسجيل الدخول",
@@ -224,7 +240,7 @@
 ,
 
 "course":{
-  "relatedVideos": "فيديوهات ذات صلة",
+  "relatedVideos": "دروس ذات صلة",
    "subscriptions": "اشتراك",
    "viewDetails":"عرض التفاصيل",
    "confirm":"تاكيد الاشتراك",

@@ -1421,6 +1421,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { apiRequest } from '../../Redux/Apis/apiRequest';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 export default function MainSlider() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -1679,7 +1680,7 @@ export default function MainSlider() {
             <div className="col-span-12 md:col-span-8">
               <div className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8">
                 <div className="max-w-7xl flex w-full">
-                  <div className="text-center text-left">
+                  <div className={i18n.language=="ar"? "text-right":"text-left"}>
                     {/* Title */}
                     <div className="mb-6 sm:mb-8">
                       <h1 className="animate-element animate-title text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white mb-2 sm:mb-4 leading-tight">
@@ -1697,16 +1698,16 @@ export default function MainSlider() {
 
                     {/* Buttons */}
                     <div className="animate-element animate-buttons flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start mb-8 sm:mb-12 px-4 lg:px-0">
-                      <button className="bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-semibold text-base sm:text-lg transition-all duration-300 transform hover:scale-105 button-glow shadow-lg text-center">
+                      <Link  to={"/register"} className="bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-semibold text-base sm:text-lg transition-all duration-300 transform hover:scale-105 button-glow shadow-lg text-center">
                         
                         {i18n.language =="ar" ?  "سجل الان" : "Register Now"}
-                      </button>
-                      <button className="glassmorphism text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-semibold text-base sm:text-lg hover:bg-white hover:bg-opacity-20 transition-all duration-300 transform hover:scale-105 text-center">
+                      </Link>
+                      <Link  to={"/login"} className="glassmorphism text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-semibold text-base sm:text-lg hover:bg-white hover:bg-opacity-20 transition-all duration-300 transform hover:scale-105 text-center">
                         
                         {i18n.language =="ar" ?  "تسجيل دخول" : "Sign In"}
 
 
-                      </button>
+                      </Link>
                     </div>
                   </div>
                 </div>

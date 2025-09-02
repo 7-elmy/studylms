@@ -265,6 +265,9 @@ export default function QuizComponent() {
   const dispatch = useDispatch();
   console.log({quizDetailAnswer});
   
+    useEffect(() => {
+         window.scrollTo(0, 0);
+      });
   // State management
   const [matchingConnections, setMatchingConnections] = useState({});
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -1008,7 +1011,7 @@ export default function QuizComponent() {
                 >
                   Single Question
                 </button>
-                <button
+                {/* <button
                   onClick={() => setViewMode('all')}
                   className={`px-4 py-2 rounded-lg transition duration-200 ${
                     viewMode === 'all' 
@@ -1017,7 +1020,7 @@ export default function QuizComponent() {
                   }`}
                 >
                   All Questions
-                </button>
+                </button> */}
               </div>
 
               {viewMode === 'single' && (

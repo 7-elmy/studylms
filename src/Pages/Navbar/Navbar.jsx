@@ -78,11 +78,11 @@ const menuItems = [
   },
   ...(isAuthenticated ? [{
     name: t("navbar.yourLessons"),
-    href: "#",
-    submenu: [
-      { name: t("navbar.availableLessons"), href: '/class-specific-lesson' },
-      // { name: t("navbar.subscribedLessons"), href: '/lessons/subscriptions' },
-    ],
+    href: '/class-specific-lesson'
+    // submenu: [
+    //   { name: t("navbar.availableLessons"), href: '/class-specific-lesson' },
+    //   // { name: t("navbar.subscribedLessons"), href: '/lessons/subscriptions' },
+    // ],
   }] : []),
   {
     name: t("navbar.submenu.subscriptions"),

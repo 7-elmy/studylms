@@ -80,6 +80,7 @@
 import { useState } from 'react';
 import { Mail, MailOpen } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import toast from 'react-hot-toast';
 
 export default function NewsletterSignup() {
   const [email, setEmail] = useState('');
@@ -92,6 +93,8 @@ export default function NewsletterSignup() {
       //console.log('Newsletter signup:', email);
       setIsSubmitted(true);
       setTimeout(() => {
+        
+        toast( )
         setIsSubmitted(false);
         setEmail('');
       }, 3000);

@@ -49,6 +49,9 @@ export default function Terms() {
             method: "GET"
         }))
     },[])
+      useEffect(() => {
+           window.scrollTo(0, 0);
+        });
    
   return (
     <div dir={i18n.language === 'ar' ? 'rtl' : 'ltr'}>

@@ -52,13 +52,15 @@
 //   );
 // }
 
+
 import { Clock, Calendar, FileText, AlertCircle, MoveRight } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 export default function AssignmentSubmission({ courseDetails }) {
   // Safely access nested data with optional chaining and provide fallbacks
   const lessons = courseDetails?.data?.data?.lessons || [];
-  
+  let {i18n}= useTranslation()
   // Format time function
   const formatTime = (dateString) => {
     if (!dateString) return "Not specified";
@@ -84,7 +86,8 @@ export default function AssignmentSubmission({ courseDetails }) {
                   {/* Header */}
                   <div className="text-center mb-6">
                     <h1 className="text-2xl font-bold text-gray-800 mb-2">
-                     Start Assignment {assignment.name }
+                      {i18n.language =="ar" ? `ابدا الواجب ${assignment.name }` : `Start Assignment ${assignment.name }`}
+                     
                     </h1>
                     <div className="w-16 h-1 bg-yellow-500 mx-auto"></div>
                   </div>
@@ -94,7 +97,7 @@ export default function AssignmentSubmission({ courseDetails }) {
                     <div className="flex items-center justify-between mb-3">
                       <div className="flex items-center">
                         <FileText className="w-5 h-5 text-yellow-600 mr-2" />
-                        <span className="font-medium text-gray-700">Status</span>
+                        <span className="font-medium text-gray-700">{i18n.language =="ar"? "الحالة" : "Status"}</span>
                       </div>
                       <span
                         className={`${
@@ -103,14 +106,15 @@ export default function AssignmentSubmission({ courseDetails }) {
                             : "text-green-800 bg-green-100"
                         } px-3 py-1 rounded-full text-sm font-medium`}
                       >
-                        {assignment.status === 0 ? "غير مسموح به الان" : "مسموح به"}
+                        
+                        {assignment.status === 0 ?  i18n.language=="ar"? "غير مسموح به الان":"Not allowed now" : i18n.language=="en"? "Open": "مسموح به"}
                       </span>
                     </div>
 
                     <div className="flex items-center justify-between mb-2">
                       <div className="flex items-center">
                         <Clock className="w-5 h-5 text-yellow-600 mr-2" />
-                        <span className="font-medium text-gray-700">Submission Deadline </span>
+                        <span className="font-medium text-gray-700">{i18n.language=="en"? "Submission Deadline" :"وقت التسليم"} </span>
                       </div>
                       <div className="flex items-center">
                         <Calendar className="w-5 h-5 text-yellow-600 mr-2" />
@@ -127,7 +131,7 @@ export default function AssignmentSubmission({ courseDetails }) {
                   {/* Start Button */}
                   {assignment.status !== 0 && (
                    <Link to={`/assignmentDetails/${assignment.id}`} className="w-full bg-yellow-600 hover:bg-yellow-700 text-white font-medium py-3 px-4 rounded-lg transition duration-200 flex gap-2 items-center justify-center">
-        <span className="ml-2">Start</span>
+        <span className="ml-2">{ i18n.language =="ar" ? "ابد" :"Start"}</span>
        <MoveRight className="w-6 h-6 text-white" />
       </Link>
                   )}
@@ -138,7 +142,7 @@ export default function AssignmentSubmission({ courseDetails }) {
         </div>
       ) : (
         <div className="col-span-full text-center py-10">
-          <p className="text-gray-500">No assignments available at this time.</p>
+          <p className="text-gray-500">{i18n.language=="en"? "No assignments available at this time." :"لا يوجد واجبات متاحة الان"}</p>
         </div>
       )}
     </div>

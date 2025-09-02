@@ -82,7 +82,7 @@ export default function CourseCard({ course, renderStars }) {
           <div className={`w-8 h-8 bg-gray-300 rounded-full ${i18n.language === 'ar' ? 'mx-3' : 'mx-3'} overflow-hidden flex items-center justify-center`}>
             {course.teacher_image ? (
               <img 
-                src={course.teacher_image} 
+                src={course.teacher_image } 
                 alt={course.teacher} 
                 className="w-full h-full object-cover"
               />

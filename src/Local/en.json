@@ -1,4 +1,16 @@
-{
+{"quiz": {
+    "unnamedQuiz": "Unnamed Quiz",
+    "status": "Status",
+    "notAllowed": "Not allowed now",
+    "allowed": "Allowed",
+    "startTime": "Start Time",
+    "endTime": "End Time",
+    "warning": "Please note that late submission may affect your final grade",
+    "startBtn": "Start",
+    "noQuizzes": "No quizzes available at this time.",
+    "notSpecified": "Not specified",
+    "invalidTime": "Invalid time"
+  },
   "most":"Related Lessons",
   "navbar": {
     "home": "Home",
@@ -37,6 +49,7 @@
     }
   },
   "auth":{
+    "option":"Subscribe",
      "authenticated": "✓ Authenticated",
     "cancel": "Cancel",
      "warning": {
@@ -238,7 +251,7 @@
 ,
 
     "course":{
-  "relatedVideos": "Related Videos",
+  "relatedVideos": "Related Lessons",
    "subscriptions": "Subscriptions",
    "viewDetails":"View Details",
    "confirm":"Confirm Subscription",

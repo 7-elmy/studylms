@@ -52,6 +52,8 @@ export default function Home() {
   useEffect(()=>{
     
   },[])
+
+ 
   return (
     <>
       <div className="relative ">
@@ -77,8 +79,8 @@ export default function Home() {
       <HowClassesWork />
 
 
-      <LearningPlatformHero />
-      <NewsletterSignup />
+      {/* <LearningPlatformHero /> */}
+      {/* <NewsletterSignup /> */}
     </>
   );
 }

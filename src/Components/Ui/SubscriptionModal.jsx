@@ -200,7 +200,7 @@ export default function SubscriptionModal({ course }) {
   
   const [packageId, setPackageId] = useState(null);
   
-  console.log({ packageId });
+  
   
   let { subscription } = useSelector((state) => state.api);
 
@@ -210,39 +210,6 @@ export default function SubscriptionModal({ course }) {
     return !!token;
   };
 
-  // const handleSubscriptionApi = async () => {
-  //   // Check authentication first
-  //   if (!isAuthenticated()) {
-  //     setShowAuthWarning(true);
-  //     return;
-  //   }
-
-  //   if (!packageId) {
-  //     toast.error("Package ID is required");
-  //     return;
-  //   }
-  //   if (!course?.id) {
-  //     toast.error("Course ID is required");
-  //     return;
-  //   }
-    
-  //   // Create form data
-  //   const formData = new FormData();
-  //   formData.append('package_id', packageId);
-  //   formData.append('lesson_id', course?.id);
- 
-  // let x=  await dispatch(apiRequest({
-  //     entity: "subscription",
-  //     url: `api/sub_scriptions/subscriptions`,
-  //     method: "POST",
-  //     data: formData,
-  //     headers: {
-  //       "Accept-Language": localStorage.getItem('language') || 'en',
-  //       "Authorization": `${sessionStorage.getItem("token") || localStorage.getItem("token")}`,
-  //     },
-  //   }));
-  //   console.log({eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:x});
-  // };
 
 
   const handleSubscriptionApi = async () => {
@@ -279,7 +246,7 @@ export default function SubscriptionModal({ course }) {
     },
   }));
   
-  console.log({response: x});
+  // console.log({response: x});
 };
   
   const handleLogin = () => {
@@ -315,6 +282,7 @@ export default function SubscriptionModal({ course }) {
       }
     }));
   }, [dispatch, localStorage.getItem('language')]);
+console.log({Packages});
 
   const handleOptionChange = (value) => {
     setPackageId(value);
@@ -376,7 +344,7 @@ export default function SubscriptionModal({ course }) {
                   </svg>
                 </div>
                 <h2 className="text-xl font-semibold text-gray-800">
-                  {t('course.subscriptionOptions')}
+                  {t('auth.option')}
                 </h2>
               </div>
               <button
@@ -409,12 +377,14 @@ export default function SubscriptionModal({ course }) {
               <div className="space-y-4">
                 {/* Subscription Options */}
                 <div>
-                  <h3 className="text-sm font-medium text-gray-700 mb-3">
-                    {t('course.selectPlan')}
-                  </h3>
+                  {/* <h3 className="text-sm font-medium text-gray-700 mb-3">
+                    {i18n.language=="ar"?"اختر" :"choose"}
+                  </h3> */}
                   <div className="space-y-3">
                     {Packages?.data?.data?.map(option => (
                       <div key={option.id}>
+                        {console.log({option})
+                        }
                         {(option.duration_label === "الحصة" || option.duration_label === "Section") && (
                           <label 
                             key={option.id}

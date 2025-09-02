@@ -26,13 +26,29 @@ export default function Subscriptions() {
     return !!token;
   };
 
+
+    useEffect(() => {
+         window.scrollTo(0, 0);
+      },[]);
   // Generate months array for dropdown
-  const months = Array.from({length: 12}, (_, i) => ({
-    value: i + 1,
-    label: i18n.language === 'ar' 
-      ? `${i + 1} شهر`
-      : `${i + 1} Month${i + 1 > 1 ? 's' : ''}`
-  }));
+  // const months = Array.from({length: 12}, (_, i) => ({
+  //   value: i + 1,
+  //   label: i18n.language === 'ar' 
+  //     ? `${i + 1} شهر`
+  //     : `${i + 1} Month${i + 1 > 1 ? 's' : ''}`
+  // }));
+
+  const monthNames = {
+  en: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", 
+       "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+  ar: ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو", 
+       "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"]
+};
+
+const months = Array.from({ length: 12 }, (_, i) => ({
+  value: i + 1,
+  label: i18n.language === "ar" ? monthNames.ar[i] : monthNames.en[i]
+}));
 
   // Semester options
   const semesters = [
@@ -515,8 +531,8 @@ console.log(requestData);
                           <span className="text-blue-800 font-medium text-sm">
                             {isMonthlyPackage(selectedPackage.duration_label) && (
                               i18n.language === 'ar' 
-                                ? `سيتم اشتراكك لمدة ${selectedMonth} شهر`
-                                : `You will be subscribed for ${selectedMonth} month${selectedMonth > 1 ? 's' : ''}`
+                                ? `سيتم اشتراكك لمدة  شهر`
+                                : `You will be subscribed for  month`
                             )}
                             {isSemesterPackage(selectedPackage.duration_label) && (
                               i18n.language === 'ar' 
@@ -539,21 +555,21 @@ console.log(requestData);
                           <p className="text-4xl font-bold text-amber-600 mb-2">
                             {selectedPackage.price} {t('packages.currency')}
                           </p>
-                          <p className="text-gray-600">
+                          {/* <p className="text-gray-600">
                             /{selectedPackage.duration_label}
                             {isMonthlyPackage(selectedPackage.duration_label) && 
                               ` × ${selectedMonth} ${i18n.language === 'ar' ? 'شهر' : 'month' + (selectedMonth > 1 ? 's' : '')}`
                             }
-                          </p>
+                          </p> */}
                           {/* Calculate total for monthly subscriptions */}
-                          {isMonthlyPackage(selectedPackage.duration_label) && selectedMonth > 1 && (
+                          {/* {isMonthlyPackage(selectedPackage.duration_label) && selectedMonth > 1 && (
                             <div className="mt-3 p-3 bg-emerald-50 rounded-lg border border-emerald-200">
                               <p className="text-lg font-bold text-emerald-700">
                                 {i18n.language === 'ar' ? 'المجموع: ' : 'Total: '}
                                 {selectedPackage.price * selectedMonth} {t('packages.currency')}
                               </p>
                             </div>
-                          )}
+                          )} */}
                         </div>
                       </div>
                     </div>
@@ -561,7 +577,7 @@ console.log(requestData);
                     <div className="flex flex-col sm:flex-row justify-center gap-4">
                       {isSessionPackage(selectedPackage.duration_label) ? (
                         <Link 
-                          to={"/courses"}
+                          to={"/all-lessons"}
                           className="bg-gradient-to-r from-amber-500 to-orange-600 text-white px-8 py-3 rounded-lg font-semibold hover:shadow-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center"
                         >
                           <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">

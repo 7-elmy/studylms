@@ -14,6 +14,9 @@ import toast from "react-hot-toast";
 export default function CourseDetailPage() {
   let {id}=useParams();
   console.log({id});
+    useEffect(() => {
+         window.scrollTo(0, 0);
+      },[]);
   
   const [selectedCategory, setSelectedCategory] = useState("All Courses");
   const [activeTab, setActiveTab] = useState("description");
@@ -177,6 +180,7 @@ const handleRatingSubmit = async () => {
     toast(response.data.message);
   } catch (error) {
     console.error("Error submitting rating:", error);
+    toast(error?.response?.data?.message)
   } finally {
     setIsSubmitting(false);
   }
@@ -216,6 +220,7 @@ const handleCommentSubmit = async () => {
     toast(response.data.message);
   } catch (error) {
     console.error("Error submitting review:", error);
+     toast(error?.response?.data?.message)
   } finally {
     setIsSubmitting(false);
   }
@@ -289,17 +294,20 @@ const handleCommentSubmit = async () => {
             allowFullScreen
           />
         </div>
+{/* <div className="relative w-full h-full pb-[56.25%] bg-gray-100">
+  <iframe
+    className="absolute top-0 left-0 w-full h-full"
+    src={video.video_path.replace("watch?v=", "embed/")}
+    title={video.title}
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen
+  />
+</div> */}
 
        
         <div className="p-6">
-            {/* <div className="flex items-center justify-between mb-3">
-              <span className="inline-block bg-blue-100 text-blue-800 text-xs font-semibold px-3 py-1 rounded-full">
-                {video.category}
-              </span>
-              <span className="text-sm text-gray-500 font-medium">
-                {video.duration}
-              </span>
-            </div> */}
+           
 
           <h3 className="text-xl font-bold text-gray-900 mb-3 leading-tight">
             {video.title}
@@ -357,7 +365,7 @@ const handleCommentSubmit = async () => {
         return (
           <div className="space-y-4">
             <div className="p-4 border border-gray-200 rounded-lg">
-              <h3 className="font-medium text-gray-900 mb-2">Course Materials</h3>
+              <h3 className="font-medium text-gray-900 mb-2">{i18n.language=="ar"? "الملفات":"files materials" }</h3>
               <ul className="space-y-2">
             {courseDetails?.data?.data?.lessons?.length > 0 ? (
                     courseDetails.data.data.lessons.flatMap((lesson, lessonIndex) => 
@@ -366,18 +374,20 @@ const handleCommentSubmit = async () => {
                                 <span className="text-gray-600">{file.title }</span>
                                 {/* <a href={file.file_path}  target="_blank"  className="text-blue-600 hover:underline font-medium">Download</a> */}
                                 <a
+                                target="_blank"
   href={file.file_path}
   download
   className="text-yellow-600 hover:underline font-medium"
 >
-  Download
+  {i18n.language=="ar" ? "تنزيل" :"Download"}
+  
 </a>
 
                             </li>
                         ))
                     )
                 ) : (
-                    <li className="py-3 text-gray-500 text-center">No lesson files available</li>
+                    <li className="py-3 text-gray-500 text-center">{i18n.language=="ar"?"لا توجد ملفات متاحة": "No lesson files available"}</li>
                 )}
               </ul>
             </div>
@@ -389,7 +399,7 @@ const handleCommentSubmit = async () => {
           <div className="space-y-8">
             
   <div className="bg-white p-6  ">
-              <h3 className="text-lg font-semibold mb-4">Rate this course</h3>
+              <h3 className="text-lg font-semibold mb-4">{i18n.language=="ar"? "تقييم الدرس": "Rate this lesson"}</h3>
 
               <div className=" ">
                 <div className="flex justify-between items-center">
@@ -406,7 +416,8 @@ const handleCommentSubmit = async () => {
                 disabled={isSubmitting}
                 className="bg-yellow-600 hover:bg-yellow-700 text-white font-medium py-2 px-4 rounded-lg transition disabled:opacity-50"
               >
-                {isSubmitting ? "Submitting..." : "Submit Rating"}
+                {/* {isSubmitting ? "Submitting..." : "Submit Rating"} */}
+                 {isSubmitting ? i18n.language=="ar"? "ارسال": "Submitting..." : i18n.language=="en"? "Submit Rating" :"ارسال"}
               </button>
 
                 </div>
@@ -414,7 +425,7 @@ const handleCommentSubmit = async () => {
               <textarea
                 className="w-full p-3 border border-yellow-300 rounded-lg mb-4 focus:ring-amber-500 focus:outline-none"
                 rows={4}
-                placeholder="Share your experience with this course..."
+                placeholder={ i18n.language =="ar" ?  "شارك تعليقك"  :"Share your experience with this lesson..."}
                 value={reviewText}
                 onChange={(e) => setReviewText(e.target.value)}
               />
@@ -424,22 +435,22 @@ const handleCommentSubmit = async () => {
                 disabled={isSubmitting}
                 className="bg-yellow-600 hover:bg-yellow-700 text-white font-medium py-2 px-4 rounded-lg transition disabled:opacity-50"
               >
-                {isSubmitting ? "Submitting..." : "Submit Review"}
+                {isSubmitting ? i18n.language=="ar"? "ارسال...": "Submitting..." : i18n.language=="en"? "Submit Review" :"ارسال"}
               </button>
               </div>
               
             </div>
             <div className="space-y-6">
-              <div className="flex items-center mb-4">
+              {/* <div className="flex items-center mb-4">
                 <div className="flex items-center mr-4">
                   {renderStars(5)}
                   <span className="ml-2 text-gray-600">
                     {calculateAverageRating()} ({reviews.length} reviews)
                   </span>
                 </div>
-              </div>
+              </div> */}
               
-              {reviews.map((review) => (
+              {/* {reviews.map((review) => (
                 <div key={review.id} className="border-b border-gray-200 pb-6 last:border-0">
                   <div className="flex items-center mb-2">
                     <div className="w-10 h-10 bg-gray-300 rounded-full mr-3 flex items-center justify-center text-white font-medium">
@@ -455,7 +466,7 @@ const handleCommentSubmit = async () => {
                   </div>
                   <p className="text-gray-600 mt-2 pl-13">{review.comment}</p>
                 </div>
-              ))}
+              ))} */}
 
             
             </div>
@@ -502,9 +513,9 @@ const handleCommentSubmit = async () => {
       <div className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center space-x-2 text-gray-600">
-            <span className="hover:text-custom-yellow cursor-pointer">Home</span>
+            <span className="hover:text-custom-yellow cursor-pointer">{i18n.language=="ar" ? "الرئيسية": "Home"}</span>
             <span>›</span>
-            <span className="hover:text-custom-yellow cursor-pointer">Course</span>
+            <span className="hover:text-custom-yellow cursor-pointer">{i18n.language=="ar" ? "الدروس": "Lessons"}</span>
             <span>›</span>
             <span className="text-gray-900">{courseDetails?.data?.data?.name }</span>
           </div>
@@ -533,8 +544,8 @@ const handleCommentSubmit = async () => {
                     )}
                   </div>
                   <div>
-                    <p className="text-sm text-gray-500 mb-1">Instructor</p>
-                    <p className="font-medium text-gray-900">{courseDetails?.data?.data?.teacher || "Not specified"}</p>
+                    <p className="text-sm text-gray-500 mb-1">{i18n.language =="ar" ?  "المدرب" :"Instructor"}</p>
+                    <p className="font-medium text-gray-900">{courseDetails?.data?.data?.teacher || ""}</p>
                   </div>
                 </div>
                 
@@ -543,8 +554,8 @@ const handleCommentSubmit = async () => {
                     <BookOpen className="w-4 h-4 text-white" />
                   </div>
                   <div>
-                    <p className="text-sm text-gray-500 mb-1">Category</p>
-                    <p className="font-medium text-gray-900">{courseDetails?.data?.data?.category || "Not specified"}</p>
+                    <p className="text-sm text-gray-500 mb-1"> {i18n.language =="ar" ?  "الفئة" :"Category"}</p>
+                    <p className="font-medium text-gray-900">{courseDetails?.data?.data?.category || ""}</p>
                   </div>
                 </div>
                 
@@ -569,7 +580,7 @@ const handleCommentSubmit = async () => {
         allowFullScreen
       ></iframe> */}
 
-      <img src={courseDetails?.data?.data?.image} alt={courseDetails?.data?.data?.average_rating+"12"} />
+      <img src={courseDetails?.data?.data?.image} className="w-full h-full" alt={courseDetails?.data?.data?.average_rating+"12"} />
        
 
      
@@ -592,7 +603,8 @@ const handleCommentSubmit = async () => {
                       : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
                   }`}
                 >
-                  Description
+                  {i18n.language =="ar" ? "الوصف" :"Description"}
+                  
                 </button>
                 <button
                   onClick={() => setActiveTab("videos")}
@@ -602,7 +614,8 @@ const handleCommentSubmit = async () => {
                       : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
                   }`}
                 >
-                 Videos
+                   {i18n.language =="ar" ? "فيديوهات" :"Videos"}
+                 
                 </button>
                 <button
                   onClick={() => setActiveTab("files")}
@@ -612,7 +625,8 @@ const handleCommentSubmit = async () => {
                       : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
                   }`}
                 >
-                  Files
+                   {i18n.language =="ar" ? "الملفات" :"Files"}
+                  
                 </button>
                 {/* <button
                   onClick={() => setActiveTab("comment")}
@@ -632,7 +646,8 @@ const handleCommentSubmit = async () => {
                       : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
                   }`}
                 >
-                  Ratings
+                   {i18n.language =="ar" ? "التقييم" :"Ratings"}
+                  
                 </button>
                 <button
                   onClick={() => setActiveTab("assignments")}
@@ -642,7 +657,8 @@ const handleCommentSubmit = async () => {
                       : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
                   }`}
                 >
-                  Assignments
+                   {i18n.language =="ar" ? "الواجبات" :"Assignments"}
+                  
                 </button>
                 <button
                   onClick={() => setActiveTab("Quiz")}
@@ -652,7 +668,8 @@ const handleCommentSubmit = async () => {
                       : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
                   }`}
                 >
-                  Quiz
+                   {i18n.language =="ar" ? "الاختبارات" :"Quiz"}
+                  
                 </button>
               </nav>
             </div>

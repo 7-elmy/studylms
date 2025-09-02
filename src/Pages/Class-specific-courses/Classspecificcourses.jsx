@@ -16,7 +16,9 @@ export default function Classspecificcourses() {
    let {courses} = useSelector((state) => state.api);
 let dispatch = useDispatch();
  console.log({courses});
- 
+   useEffect(() => {
+        window.scrollTo(0, 0);
+     },[]);
 
 useEffect(() => {
   dispatch(apiRequest({

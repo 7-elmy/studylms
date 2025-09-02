@@ -21,9 +21,9 @@ export default function FutureSection() {
       }
     );
 
-    console.log("Response in futer:", response.data.data[0].sections);
-    setCourses(response.data.data[0].sections)
-    console.log("Response in futer:", response?.data[0].sections);
+    
+    setCourses(response?.data?.data[0]?.sections)
+   
    
     
   } catch (error) {

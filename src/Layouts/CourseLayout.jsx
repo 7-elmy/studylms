@@ -1289,9 +1289,16 @@ export default function CourseLayout({
                 {totalPages > 1 && (
                   <div className="flex flex-col items-center mt-12 space-y-4">
                     {/* Page info */}
+                    {/* <div className="text-sm text-gray-600">
+                      {i18n.language=="en" ?  `Showing ${startIndex + 1}-${Math.min(endIndex, totalCourses)} of ${totalCourses} results  `:` ${totalCourses} من ${startIndex + 1}-${Math.min(endIndex, totalCourses)} عرض`}
+                     
+                    </div> */}
                     <div className="text-sm text-gray-600">
-                      Showing {startIndex + 1}-{Math.min(endIndex, totalCourses)} of {totalCourses} results
-                    </div>
+  {i18n.language === "en"
+    ? `Showing ${startIndex + 1}-${Math.min(endIndex, totalCourses)} of ${totalCourses} results`
+    : `عرض ${startIndex + 1}-${Math.min(endIndex, totalCourses)} من ${totalCourses}`}
+</div>
+
                     
                     {/* Pagination controls */}
                     <div className="flex items-center space-x-2">
@@ -1306,7 +1313,8 @@ export default function CourseLayout({
                         }`}
                       >
                         <ChevronLeft className="w-4 h-4 mr-1" />
-                        Previous
+                        
+                        {i18n.language=="ar"? "السابق" :"Previous"}
                       </button>
 
                       {/* Page numbers */}
@@ -1339,14 +1347,15 @@ export default function CourseLayout({
                             : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'
                         }`}
                       >
-                        Next
+                        {i18n.language=="ar"? "التالي" :"Next"}
+                        
                         <ChevronRight className="w-4 h-4 ml-1" />
                       </button>
                     </div>
 
                     {/* Items per page selector */}
                     <div className="flex items-center space-x-2">
-                      <span className="text-sm text-gray-600">Items per page:</span>
+                      <span className="text-sm text-gray-600">{i18n.language=="en"?"Items per page:"  :"عدد العناصر في كل صفحة"}</span>
                       <select
                         value={coursesPerPage}
                         onChange={(e) => {
@@ -1374,7 +1383,7 @@ export default function CourseLayout({
                 <h3 className="text-lg font-medium text-gray-900 mb-2">
                   {t('courses.noCoursesFound') || 'No courses found'}
                 </h3>
-                <p className="text-gray-500 mb-4">
+                {/* <p className="text-gray-500 mb-4">
                   {debouncedSearchTerm 
                     ? (t('courses.noMatchingSearch', { term: debouncedSearchTerm }) || `No courses match your search "${debouncedSearchTerm}"`)
                     : selectedCategoryId 
@@ -1383,13 +1392,13 @@ export default function CourseLayout({
                         }) || `No courses available in "${categoriesData.find(cat => String(cat.id) === String(selectedCategoryId))?.name}" category`)
                       : (t('courses.noCoursesAvailable') || "No courses available")
                   }
-                </p>
+                </p> */}
                 {(debouncedSearchTerm || selectedCategoryId) && (
                   <button
                     onClick={clearAllFilters}
                     className="text-yellow-600 hover:text-yellow-700 font-medium transition-colors duration-200"
                   >
-                    {t('courses.clearFilters') || 'Clear filters'}
+                    {i18n.language=="en" ?  "clear" :"اعادة"|| 'Clear filters'}
                   </button>
                 )}
               </div>

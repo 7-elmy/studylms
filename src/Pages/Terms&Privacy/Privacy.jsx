@@ -8,7 +8,10 @@ export default function Privacy() {
     let { t, i18n } = useTranslation();
     let { privacy } = useSelector((state) => state.api);
         //console.log({privacy});
-        
+          useEffect(() => {
+               window.scrollTo(0, 0);
+            });
+            
     useEffect(()=>{
         dispatch(apiRequest({
             entity: "privacy",
