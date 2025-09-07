@@ -323,38 +323,7 @@ const handleCommentSubmit = async () => {
     
     }
 
-        {/* {videos.map((video, index) => (
-          <div key={video.id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
-           
-            <div className="relative w-full h-0 pb-[56.25%] bg-gray-100">
-              <iframe
-                className="absolute top-0 left-0 w-full h-full"
-                src={`https://www.youtube.com/embed/${video.id}?modestbranding=1&showinfo=0&rel=0&controls=1&disablekb=1&fs=1&iv_load_policy=3&cc_load_policy=0&loop=0&autoplay=0&mute=0`}
-                title={video.title}
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
-            </div>
-           
-            <div className="p-6">
-              <div className="flex items-center justify-between mb-3">
-                <span className="inline-block bg-blue-100 text-blue-800 text-xs font-semibold px-3 py-1 rounded-full">
-                  {video.category}
-                </span>
-                <span className="text-sm text-gray-500 font-medium">
-                  {video.duration}
-                </span>
-              </div>
-              
-              <h3 className="text-xl font-bold text-gray-900 mb-3 leading-tight">
-                {video.title}
-              </h3>
-              
-            
-            </div>
-          </div>
-        ))}  */}
+        
       </div>
 
      
@@ -570,15 +539,7 @@ const handleCommentSubmit = async () => {
               </div>
               
               <div className="w-full h-[600px] bg-gradient-to-br from-blue-100 to-purple-100 rounded-lg mb-8">
-                {/* <iframe
-                className="w-full h-full rounded-lg"
-        
-        src="https://www.youtube.com/embed/xfgWXWyWWKc"
-        title="YouTube video player"
-        frameBorder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowFullScreen
-      ></iframe> */}
+             
 
       <img src={courseDetails?.data?.data?.image} className="w-full h-full" alt={courseDetails?.data?.data?.average_rating+"12"} />
        
@@ -587,11 +548,7 @@ const handleCommentSubmit = async () => {
               </div>
             </div>
 
-            {/* <div className="flex justify-end items-center">
-              <div className="md:w-1/4">
-                <SubscriptionModal/>
-              </div>
-            </div> */}
+           
 
             <div className="mb-8 border-b border-gray-200">
               <nav className="-mb-px flex space-x-8">
@@ -628,16 +585,7 @@ const handleCommentSubmit = async () => {
                    {i18n.language =="ar" ? "الملفات" :"Files"}
                   
                 </button>
-                {/* <button
-                  onClick={() => setActiveTab("comment")}
-                  className={`whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm ${
-                    activeTab === "comment"
-                      ? "border-yellow-400 text-yellow-500"
-                      : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
-                  }`}
-                >
-                  Comment
-                </button> */}
+                
                 <button
                   onClick={() => setActiveTab("ratings")}
                   className={`whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm ${
@@ -678,15 +626,7 @@ const handleCommentSubmit = async () => {
               {renderTabContent()}
             </div>
 
-            {/* {activeTab === "description" && (
-              <div>
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">What You Will Learn</h2>
-                <p className="text-gray-600 leading-relaxed">
-                  Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative 
-                  approaches to corporate strategy foster
-                </p>
-              </div>
-            )} */}
+           
           </div>
         </div>
       </div>

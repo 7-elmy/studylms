@@ -1,5 +1,4 @@
 
-
 // import { useState, useEffect } from 'react';
 // import { useDispatch, useSelector } from 'react-redux';
 // import { useTranslation } from 'react-i18next';
@@ -11,9 +10,6 @@
 // const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 // const validatePhone = (phone) => /^[0-9]{11}$/.test(phone);
 
-
-
-
 // // Initial form state
 // const initialFormState = {
 //   name: '',
@@ -21,7 +17,8 @@
 //   phone: '',
 //   country_id: '',
 //   governorate_id: '',
-//   class: '',
+//   grade_id: '',
+//   section_id: '',
 //   child_code: '',
 //   password: '',
 //   password_confirmation: '',
@@ -35,27 +32,78 @@
 //   const [isSubmitting, setIsSubmitting] = useState(false);
 //   const dispatch = useDispatch();
 //   const navigate = useNavigate();
-//   const { countries, register } = useSelector(state => state.api);
+//   const { countries, register, grades, sections } = useSelector(state => state.api);
 //   const [governorates, setGovernorates] = useState([]);
 //   const [loading, setLoading] = useState(false);
 //   const [countrySearchLoading, setCountrySearchLoading] = useState(false);
 //   const [governorateSearchLoading, setGovernorateSearchLoading] = useState(false);
+//   const [gradesLoading, setGradesLoading] = useState(false);
+//   const [sectionsLoading, setSectionsLoading] = useState(false);
 
 //   const [formData, setFormData] = useState(initialFormState);
 //   const [errors, setErrors] = useState({});
 //   const [touched, setTouched] = useState({});
 
-//   useEffect(() => { loadCountries(); }, [dispatch , localStorage.getItem('language') ]);
+//   useEffect(() => { 
+//     loadCountries(); 
+//     loadGrades();
+//   }, [dispatch, localStorage.getItem('language')]);
+  
 //   useEffect(() => resetForm(), [activeTab]);
 //   useEffect(() => { updateGovernorates(); }, [formData.country_id]);
+//   useEffect(() => { loadSections(); }, [formData.grade_id]);
 
 //   const loadCountries = async () => {
 //     setLoading(true);
 //     try {
-//       await dispatch(apiRequest({ url: "api/countries", entity: "countries" , headers:{
-//         "Accept-Language": localStorage.getItem('language') || 'en'
-//       } }));
+//       await dispatch(apiRequest({ 
+//         url: "api/countries", 
+//         entity: "countries", 
+//         headers: {
+//           "Accept-Language": localStorage.getItem('language') || 'en'
+//         } 
+//       }));
 //     } finally { setLoading(false); }
+//   };
+
+//   const loadGrades = async () => {
+//     setGradesLoading(true);
+//     try {
+//       await dispatch(apiRequest({ 
+//         entity: "grades",
+//         url: "api/grades", 
+//         method: "GET",
+//         headers: {
+//           "Accept-Language": localStorage.getItem('language') || 'en'
+//         }
+//       }));
+//     } catch (error) {
+//       console.error("Failed to load grades:", error);
+//     } finally { 
+//       setGradesLoading(false); 
+//     }
+//   };
+
+//   const loadSections = async () => {
+//     if (!formData.grade_id) {
+//       return;
+//     }
+    
+//     setSectionsLoading(true);
+//     try {
+//       await dispatch(apiRequest({ 
+//         entity: "sections",
+//         url: `api/sections/grade_id/${formData.grade_id}`, 
+//         method: "GET",
+//         headers: {
+//           "Accept-Language": localStorage.getItem('language') || 'en'
+//         }
+//       }));
+//     } catch (error) {
+//       console.error("Failed to load sections:", error);
+//     } finally { 
+//       setSectionsLoading(false); 
+//     }
 //   };
 
 //   const resetForm = () => {
@@ -105,31 +153,33 @@
 //                 : value.length < 8 ? t('auth.Register.errors.passwordLength') : '',
 //       password_confirmation: !value ? t('auth.Register.errors.required', { field: t('auth.Register.form.confirmPassword') }) 
 //                              : value !== formData.password ? t('auth.Register.errors.passwordMatch') : '',
-//       terms: !value ? t('auth.Register.errors.acceptTerms') : ''
+//       terms: !value ? t('auth.Register.errors.acceptTerms') : '',
+//       grade_id: !value ? t('auth.Register.errors.required', { field: t('auth.Register.form.grade') }) : '',
+//       section_id: !value ? t('auth.Register.errors.required', { field: t('auth.Register.form.section') }) : ''
 //     };
 //     return errorMessages[name] || '';
 //   };
 
 //   // Add this function to check if the form is valid
-// const isFormValid = () => {
-//   // Check all required fields are filled
-//   const requiredFields = ['name', 'phone', 'password', 'password_confirmation', 'terms'];
-//   if (activeTab === 'student') {
-//     requiredFields.push('email', 'country_id', 'governorate_id', 'class');
-//   } else if (activeTab === 'parent') {
-//     requiredFields.push('child_code');
-//   }
+//   const isFormValid = () => {
+//     // Check all required fields are filled
+//     const requiredFields = ['name', 'phone', 'password', 'password_confirmation', 'terms'];
+//     if (activeTab === 'student') {
+//       requiredFields.push('email', 'country_id', 'governorate_id', 'grade_id', 'section_id');
+//     } else if (activeTab === 'parent') {
+//       requiredFields.push('child_code');
+//     }
 
-//   const allFieldsFilled = requiredFields.every(field => {
-//     const value = formData[field];
-//     return value !== '' && value !== false && value !== undefined;
-//   });
+//     const allFieldsFilled = requiredFields.every(field => {
+//       const value = formData[field];
+//       return value !== '' && value !== false && value !== undefined;
+//     });
 
-//   // Check there are no errors
-//   const noErrors = Object.values(errors).every(error => error === '');
+//     // Check there are no errors
+//     const noErrors = Object.values(errors).every(error => error === '');
 
-//   return allFieldsFilled && noErrors;
-// };
+//     return allFieldsFilled && noErrors;
+//   };
 
 //   const handleInputChange = (e) => {
 //     const { name, value, type, checked } = e.target;
@@ -141,7 +191,6 @@
 //       setErrors(prev => ({ ...prev, [name]: validateField(name, fieldValue) }));
 //     }
 //   };
-
 
 //   const handleBlur = (e) => {
 //     const { name } = e.target;
@@ -156,7 +205,12 @@
 
 //     try {
 //       const endpoint = activeTab === 'student' ? 'api/register/student' : 'api/register/guardian';
-//       await dispatch(apiRequest({ url: endpoint, method: "POST", data: formData, entity: "register" })).unwrap();
+//       await dispatch(apiRequest({ 
+//         url: endpoint, 
+//         method: "POST", 
+//         data: formData, 
+//         entity: "register" 
+//       })).unwrap();
 //       navigate(`/verify-email/${formData.email}`);
 //     } catch (error) {
 //       setServerError(t('auth.Register.serverError'));
@@ -164,6 +218,17 @@
 //       setIsSubmitting(false);
 //     }
 //   };
+
+//   // Prepare grades and sections for Autocomplete
+//   const gradeOptions = grades?.data?.data?.map(grade => ({
+//     value: grade.id.toString(),
+//     label: grade.name
+//   })) || [];
+
+//   const sectionOptions = sections?.data?.data?.map(section => ({
+//     value: section.id.toString(),
+//     label: section.name
+//   })) || [];
 
 //   if (!activeTab) {
 //     return (
@@ -258,50 +323,37 @@
 //               />
 //               {touched.governorate_id && errors.governorate_id && <div className="text-red-500 text-sm mt-1">{errors.governorate_id}</div>}
 
-           
+//               {/* Grade Field */}
+//               <Autocomplete
+//                 name="grade_id"
+//                 placeholder={t('auth.Register.form.grade')}
+//                 className={`${touched.grade_id && errors.grade_id ? 'border-red-500' : ''}`}
+//                 items={gradeOptions}
+//                 value={formData.grade_id}
+//                 onChange={handleInputChange}
+//                 onBlur={handleBlur}
+//                 disabled={gradesLoading}
+//                 loading={gradesLoading}
+//                 searchPlaceholder={t('auth.Register.form.searchGrade')}
+//                 noResultsText={t('auth.Register.form.noGrade')}
+//               />
+//               {touched.grade_id && errors.grade_id && <div className="text-red-500 text-sm mt-1">{errors.grade_id}</div>}
 
-//               {/* <Autocomplete
-//   name="class"
-//   placeholder={t('auth.Register.form.class')}
-//   className={`${touched.class && errors.class ? 'border-red-500' : ''}`}
-//   items={
-//     t('slider.courses', { returnObjects: true }) 
-//   //   [
-//   //   { label: 'First Preparatory', value: 1 },
-//   //   { label: 'Second Preparatory', value: 2 },
-//   //   { label: 'Third Preparatory', value: 3 },
-//   //   { label: 'First Secondary', value: 4 },
-//   //   { label: 'Second Secondary', value: 5 },
-//   //   { label: 'Third Secondary', value: 6 }
-//   // ]
-
-// }
-//   value={formData.class}
-//   onChange={handleInputChange}
-//   onBlur={handleBlur}
-//   searchPlaceholder={t('auth.Register.form.searchClass')}
-//   noResultsText={t('auth.Register.form.noClass')}
-// /> */}
-
-// <Autocomplete
-//   name="class"
-//   placeholder={t('auth.Register.form.class')}
-//   className={`${touched.class && errors.class ? 'border-red-500' : ''}`}
-//   items={t('slider.courses', { returnObjects: true }).map((course, index) => ({
-//     label: course,
-//     value: index + 1, // assign numeric IDs
-//   }))}
-//   value={formData.class}
-//   onChange={handleInputChange}
-//   onBlur={handleBlur}
-//   searchPlaceholder={t('auth.Register.form.searchClass')}
-//   noResultsText={t('auth.Register.form.noClass')}
-// />
-
-// {touched.class && errors.class && (
-//   <div className="text-red-500 text-sm mt-1">{errors.class}</div>
-// )}
-
+//               {/* Section Field */}
+//               <Autocomplete
+//                 name="section_id"
+//                 placeholder={t('auth.Register.form.section')}
+//                 className={`${touched.section_id && errors.section_id ? 'border-red-500' : ''}`}
+//                 items={sectionOptions}
+//                 value={formData.section_id}
+//                 onChange={handleInputChange}
+//                 onBlur={handleBlur}
+//                 disabled={!formData.grade_id || sectionsLoading}
+//                 loading={sectionsLoading}
+//                 searchPlaceholder={t('auth.Register.form.searchSection')}
+//                 noResultsText={!formData.grade_id ? t('auth.Register.form.selectGradeFirst') : t('auth.Register.form.noSection')}
+//               />
+//               {touched.section_id && errors.section_id && <div className="text-red-500 text-sm mt-1">{errors.section_id}</div>}
 //             </>
 //           )}
 
@@ -349,11 +401,13 @@
 //           {touched.terms && errors.terms && <div className="text-red-500 text-sm -mt-3 text-center">{errors.terms}</div>}
 
 //           {/* Submit Button */}
-//           {/* <button type="submit"
+//           <button 
+//             type="submit"
 //             className={`w-full p-3 px-8 text-white rounded font-medium transition-all duration-200 shadow-sm hover:shadow-md ${
-//               !isSubmitting || !terms ? 'bg-yellow-500 hover:bg-yellow-600 cursor-pointer transform hover:scale-[1.02]' : 'bg-gray-400 cursor-not-allowed'
+//               isFormValid() && !isSubmitting ? 'bg-yellow-500 hover:bg-yellow-600 cursor-pointer transform hover:scale-[1.02]' : 'bg-gray-400 cursor-not-allowed'
 //             }`}
-//             disabled={isSubmitting}>
+//             disabled={!isFormValid() || isSubmitting}
+//           >
 //             {isSubmitting ? (
 //               <span className="flex items-center justify-center">
 //                 <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -363,34 +417,14 @@
 //                 {t('auth.Register.form.processing')}
 //               </span>
 //             ) : (
-//               t('auth.Register.form.submit') + t(activeTab=="student" ? 'auth.Register.form.student': 'auth.Register.form.parent')
+//               t('auth.Register.form.submit') + t(activeTab === 'student' ? 'auth.Register.form.student' : 'auth.Register.form.parent')
 //             )}
-//           </button> */}
-
-//           <button 
-//   type="submit"
-//   className={`w-full p-3 px-8 text-white rounded font-medium transition-all duration-200 shadow-sm hover:shadow-md ${
-//     isFormValid() && !isSubmitting ? 'bg-yellow-500 hover:bg-yellow-600 cursor-pointer transform hover:scale-[1.02]' : 'bg-gray-400 cursor-not-allowed'
-//   }`}
-//   disabled={!isFormValid() || isSubmitting}
-// >
-//   {isSubmitting ? (
-//     <span className="flex items-center justify-center">
-//       <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-//         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-//         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-//       </svg>
-//       {t('auth.Register.form.processing')}
-//     </span>
-//   ) : (
-//     t('auth.Register.form.submit') + t(activeTab === 'student' ? 'auth.Register.form.student' : 'auth.Register.form.parent')
-//   )}
-// </button>
+//           </button>
 
 //           {/* Login Link */}
 //           <p className='text-sm text-gray-600 text-center'>
 //            {  t('auth.Register.form.haveAccount')  }
-//               <Link to="/lo" className="text-yellow-500 hover:text-yellow-600 font-medium">{t('auth.Register.form.login')}</Link>
+//               <Link to="/login" className="text-yellow-500 hover:text-yellow-600 font-medium">{t('auth.Register.form.login')}</Link>
 //           </p>
 //         </form>
 //       </div>
@@ -399,6 +433,7 @@
 // };
 
 // export default RegisterPage;
+
 
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -556,7 +591,8 @@ const RegisterPage = () => {
                              : value !== formData.password ? t('auth.Register.errors.passwordMatch') : '',
       terms: !value ? t('auth.Register.errors.acceptTerms') : '',
       grade_id: !value ? t('auth.Register.errors.required', { field: t('auth.Register.form.grade') }) : '',
-      section_id: !value ? t('auth.Register.errors.required', { field: t('auth.Register.form.section') }) : ''
+      section_id: !value ? t('auth.Register.errors.required', { field: t('auth.Register.form.section') }) : '',
+      child_code: !value ? t('auth.Register.errors.required', { field: t('auth.Register.form.childCode') }) : ''
     };
     return errorMessages[name] || '';
   };
@@ -564,9 +600,9 @@ const RegisterPage = () => {
   // Add this function to check if the form is valid
   const isFormValid = () => {
     // Check all required fields are filled
-    const requiredFields = ['name', 'phone', 'password', 'password_confirmation', 'terms'];
+    const requiredFields = ['name', 'email', 'phone', 'password', 'password_confirmation', 'terms'];
     if (activeTab === 'student') {
-      requiredFields.push('email', 'country_id', 'governorate_id', 'grade_id', 'section_id');
+      requiredFields.push('country_id', 'governorate_id', 'grade_id', 'section_id');
     } else if (activeTab === 'parent') {
       requiredFields.push('child_code');
     }
@@ -675,7 +711,7 @@ const RegisterPage = () => {
           {t(`auth.Register.${activeTab}.title`)}
         </h2>
 
-        {serverError && <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-md">{serverError}</div>}
+        {/* {serverError && <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-md">{serverError}</div>} */}
 
         <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
           {/* Name Field */}
@@ -684,15 +720,11 @@ const RegisterPage = () => {
             onChange={handleInputChange} onBlur={handleBlur} value={formData.name} />
           {touched.name && errors.name && <div className="text-red-500 text-sm mt-1">{errors.name}</div>}
 
-          {/* Email Field (Student only) */}
-          {activeTab === 'student' && (
-            <>
-              <input type="email" name="email" placeholder={t('auth.Register.form.email')}
-                className={`border ${touched.email && errors.email ? 'border-red-500' : 'border-gray-200'} w-full p-3 rounded focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all duration-200`}
-                onChange={handleInputChange} onBlur={handleBlur} value={formData.email} />
-              {touched.email && errors.email && <div className="text-red-500 text-sm mt-1">{errors.email}</div>}
-            </>
-          )}
+          {/* Email Field (for both Student and Parent) */}
+          <input type="email" name="email" placeholder={t('auth.Register.form.email')}
+            className={`border ${touched.email && errors.email ? 'border-red-500' : 'border-gray-200'} w-full p-3 rounded focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all duration-200`}
+            onChange={handleInputChange} onBlur={handleBlur} value={formData.email} />
+          {touched.email && errors.email && <div className="text-red-500 text-sm mt-1">{errors.email}</div>}
 
           {/* Phone Field */}
           <input dir={i18n.language=="ar"?"rtl":"ltr"} type="tel" name="phone" placeholder={t('auth.Register.form.phone')}

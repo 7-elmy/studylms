@@ -182,7 +182,7 @@ export default function QuizSubmission({ courseDetails }) {
                       <div className="flex items-center">
                         <Calendar className="w-5 h-5 text-yellow-600 mr-2" />
                         <span className="text-gray-600">
-                          {formatTime(test.start_time)}
+                          {formatTime(test.start_time)} {test.start_time.split("T")[0]}
                         </span>
                       </div>
                     </div>
@@ -190,13 +190,13 @@ export default function QuizSubmission({ courseDetails }) {
                       <div className="flex items-center">
                         <Clock className="w-5 h-5 text-yellow-600 mr-2" />
                         <span className="font-medium text-gray-700">
-                          {t("quiz.endTime")}
+                          {t("quiz.endTime")} 
                         </span>
                       </div>
                       <div className="flex items-center">
                         <Calendar className="w-5 h-5 text-yellow-600 mr-2" />
                         <span className="text-gray-600">
-                          {formatTime(test.end_time)}
+                          {formatTime(test.end_time)} {test.end_time.split("T")[0]}
                         </span>
                       </div>
                     </div>

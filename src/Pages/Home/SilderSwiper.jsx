@@ -1649,7 +1649,7 @@ export default function MainSlider() {
       }} />
 
       <div 
-        className="relative min-h-screen pt-12 md:pt-8 overflow-hidden"
+        className="relative  pt-12 md:pt-8 overflow-hidden"
         style={{
           backgroundImage: `url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80')`,
           backgroundSize: 'cover',
@@ -1692,7 +1692,7 @@ export default function MainSlider() {
                     </div>
 
                     {/* Description */}
-                    <p className="animate-element animate-description text-base sm:text-lg md:text-xl text-gray-300 max-w-3xl mx-auto lg:mx-0 mb-6 sm:mb-8 leading-relaxed px-4 lg:px-0 text-left">
+                    <p className={`animate-element animate-description text-base sm:text-lg md:text-xl text-gray-300 max-w-3xl mx-auto lg:mx-0 mb-6 sm:mb-8 leading-relaxed px-4 lg:px-0 ${i18n.language== "ar" ? "text-right"  :"text-left"} `}>
                       {currentSlideData?.description || 'Loading content...'}
                     </p>
 

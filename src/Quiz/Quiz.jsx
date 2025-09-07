@@ -291,7 +291,7 @@ export default function QuizComponent() {
   // Handle quiz already solved error
   useEffect(() => {
     if (quizDetail?.error && quizDetail.error.includes("لقد تم حل هذا الامتحان مسبقًا")) {
-      toast.error("لقد تم حل هذا الامتحان مسبقًا");
+      // toast.error("لقد تم حل هذا الامتحان مسبقًا");
       // Redirect to previous page after 2 seconds
       setTimeout(() => {
         navigate(-1);
@@ -303,7 +303,7 @@ export default function QuizComponent() {
   useEffect(() => {
     if (quizDetailAnswer?.error) {
       if (quizDetailAnswer.error.includes("لقد تم حل هذا الامتحان مسبقًا")) {
-        toast.error("لقد تم حل هذا الامتحان مسبقًا");
+        // toast.error("لقد تم حل هذا الامتحان مسبقًا");
         // Redirect to previous page after 2 seconds
         setTimeout(() => {
           navigate(-1);
